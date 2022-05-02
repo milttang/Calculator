@@ -26,7 +26,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
     Double mountNum = 0.0;                            //최초 계산기 때 순서대로 값을 계산 및 저장한 변수
     boolean  minus;                               // 최초 숫자가 음수일 경우 값을 if를 나누기 위해 사용한 변수
     Button[] button = new Button[10];
-    String[] bit = new String[10];              //추가된 과제에서 부호를 용이하게 저장하기 위한 문자열
+    String[] bit = new String[8];              //추가된 과제에서 부호를 용이하게 저장하기 위한 문자열
     int count = 0;                              //숫자와 부호를 순차적으로 저장하기 위해 사용 된  count
     ArrayList<String> numBer = new ArrayList<>();    //부호 없이 오로지 숫자만 저장 될 변수
 
@@ -151,7 +151,6 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
     };
         @Override
         public void onClick(View v) {                                                               //버튼 어떤거 클릭 하냐에 따라 다른 결과
-
             double num;             //EditText에 적은 값을 저장하여 부호 버튼 클릭시 calculator()메소드로 값을 넘길 변수
             select(v);              //누른 버튼은 selected = true가 되고 이전 버튼은 false로 만듭니다.
             switch (v.getId()){
@@ -299,7 +298,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
                return;
             }*/
             bit[count] = col;
-            if(v != 0){
+            if(v != 0){                                 // 첫수로 인해 숫자 0을 받을시 문제가 생기기에 일단 if로 빼놓음
                 numBer.add(String.valueOf(1*v));
             }
             /*if(!minus){                                                         //첫수가 마이너스일 경우
@@ -423,9 +422,9 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
     //숫자 및 타입 배열화 및 정렬                  //여기는 아직 *,/ 우선순위가 구현이 안되어 있습니다.
     public void sort(){
         /*String[] a;*/
-        /*String[] abc;*/
-        String[] str = new String[10];
-        Double[] b = new Double[10];
+        String[] abc = new String[8];
+        String[] str = new String[8];
+        double[] b = new double[8];
         String strResult = new String();
         if(process.getText().toString().contains("=")){                    //이미 결과값을 받은 상태인지 아니면 과정인지 확인
             /*int index = process.getText().toString().indexOf("=");
@@ -460,38 +459,89 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
                 bitCount++;
             }
         }*/
-        for(int i = 0; i<numBer.size(); i++){       // 곱하기와 나누기 계산 정렬
+        double[] d = new double[8];
+        double[] move = new double[8];
+        String[] moveStr = new String[8];
+        int c = 0;
+ /*       for(int i =0; i<d.length; i++){
+            d[i] = -99.9;
+        }*/
+        for(int i = 0; i<numBer.size(); i++){      // 곱하기와 나누기 계산 정렬
             if(bit[i].equals("*")){
                 if(b[i-1]<b[i]){
                     Double change = b[i];
                     b[i] = b[i-1];
                     b[i-1] = change;
                 }
-                double d;
-                d = b[i-1] * b[i];
-                Log.d(String.valueOf(d),"메세지");
-                Log.d(b[i-1] +"*"+ b[i],"메세지");
+                d[c] = b[i-1];
+                if(b[i-1]<0){
+                    abc[c] = b[i-1] +"*"+ b[i];
+                }else{
+                    abc[c] = "+"+ b[i-1] +"*"+ b[i];
+                }
+                bit[i-1] = "n";
+                bit[i] = "n";
+                c++;
+            }
+            if(bit[i].equals("/")) {
+                if (b[i - 1] < b[i]) {
+                    double change = b[i];
+                    b[i] = b[i - 1];
+                    b[i - 1] = change;
+                }
+                d[c] = b[i-1];
+                abc[c] = b[i-1] +"/"+ b[i];
+                c++;
             }
         }
-        for(int i =0; i<numBer.size(); i++){                         //숫자 크기 내림순 저장
-            for(int k = 0; k<numBer.size(); k++) {
-            if(b[i]>b[k]){
-                    Double change = b[i];
-                    String change2 = bit[i];
-                    b[i] = b[k];
-                    b[k] = change;
-                    bit[i] = bit[k];
-                    bit[k] = change2;
+
+        for(int i = 0; i< c; i++){                                  //배열로 주면 빈칸이 문제고 ArraysList로 주면 정렬이 문제
+            for(int k = 0; k< c; k++){
+                if(d[i] != 0.0 || d[k] != 0.0){
+                    if(d[i]>d[k]) {
+                        double change = d[i];
+                        String ab = abc[i];
+                        d[i] = d[k];
+                        d[k] = change;
+                        abc[i] = abc[k];
+                        abc[k] = ab;
+                    }
                 }
             }
         }
-        for(int i = 0; i<numBer.size(); i++){                        //타입과 숫자 순차적으로 저장
-            if(b[i]<0){
-                str[i] = String.valueOf(b[i]);
-            }else{
-                str[i] = bit[i] + b[i] ;
+        int bcount = 0;
+        for(int i =0; i<bit.length; i++){
+            if(!(bit[i].equals("n") || bit[i].equals(""))){
+                move[bcount] = b[i];
+                moveStr[bcount] = bit[i];
+                bcount++;
             }
-            strResult += str[i].replace(".0", "");
+        }
+        for(int i = 0; i<bcount; i++){                         //숫자 크기 내림순 저장
+            for(int k = 0; k<bcount; k++) {
+                if(move[i] != 0.0 || move[k] != 0.0){
+                    if(move[i]>move[k]) {
+                        double change = move[i];
+                        String change2 = moveStr[i];
+                        move[i] = move[k];
+                        move[k] = change;
+                        moveStr[i] = moveStr[k];
+                        moveStr[k] = change2;
+                    }
+                }
+            }
+        }//----------------------------------------------
+        for(int i =0; i<c; i++){
+            str[i] = abc[i];
+            strResult += str[i];
+        }
+        for(int i = 0; i<bcount; i++){                        //타입과 숫자 순차적으로 저장
+            if(move[i]<0){
+                str[c+i] = String.valueOf(move[i]);
+            }else{
+                str[c+i] = moveStr[i] + move[i];
+            }
+            strResult += str[c+i].replace(".0", "");
         }
         if(process.getText().toString().contains("=")){
             process.setText(String.format("%s=%s", strResult.toString(), result.getText().toString().replace(".0", "")));
