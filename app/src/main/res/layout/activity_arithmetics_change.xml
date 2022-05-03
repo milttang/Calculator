@@ -8,7 +8,7 @@
         android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="사치견산 계산기" />
+        android:text="사칙연산 계산기" />
 
     <TextView
         android:id="@+id/text2"
