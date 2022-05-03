@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class ModActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnHome, btnBinary, btnOct;
+    private Button  btnHome, btnBinary, btnOct;
     private View view;
 
     @Override
