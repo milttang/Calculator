@@ -278,7 +278,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
             case R.id.sort:
                 sort();     //sort함수 대신 사용할 정렬기능
                 break;
-            case R.id.changeBtn:        //2진수 액티비티로 전환
+            case R.id.changeBtn:        // 2진수 액티비티로 전환
                 Intent intent = new Intent(getApplicationContext(), Arithmetics_Change.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Activity 전환 시 효과 제거
                 startActivity(intent);
