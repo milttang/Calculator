@@ -36,7 +36,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener, V
         super.onCreate(saved);
         setContentView(R.layout.activity_arithmetics);
         Button addBtn, subBtn, divBtn, mulBtn, equal, rollBackBtn, comma, backBtn, touchUp,touchDown, changeBtn,sort;
-
+//-------------------------------------------------------------------------------------------
         process = findViewById(R.id.process);
         arith = findViewById(R.id.arith);
         result = findViewById(R.id.result);
