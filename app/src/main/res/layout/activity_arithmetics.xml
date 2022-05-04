@@ -26,8 +26,7 @@
         android:maxLength="10"
         android:inputType="numberDecimal"
         android:gravity="right"
-        android:fontFamily="@font/lab"
-        android:text="0"/>
+        android:fontFamily="@font/lab" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:height="40dp"
-            android:text="0" />
+            android:text="" />
 
         <TextView
             android:id="@+id/arith"

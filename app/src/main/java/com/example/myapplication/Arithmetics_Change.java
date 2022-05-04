@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];;
-    private TextView process, arith;
+    private TextView process,arith;
     Button numBtn0, numBtn1, addBtn,subBtn, mulBtn,divBtn,equal,backBtn,rollBackBtn, touchBtn, changeBtn,andBtn,orBtn;
     int count = 0;
     String num1;
@@ -68,12 +68,6 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         }
     }
 
-    // Activity 종료 시 효과 제거
-    @Override
-    protected void onPause() {
-        super.onPause();
-        overridePendingTransition(0, 0);
-    }
 
     @Override
     public void onClick(View view) {
@@ -160,7 +154,6 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.changeBtn:
                 Intent intent = new Intent(getApplicationContext(),Arithmetics.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Activity 전환 시 효과 제거
                 startActivity(intent);
                 break;
             case R.id.backBtn:
