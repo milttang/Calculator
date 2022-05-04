@@ -18,6 +18,8 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:gravity="center"
+            android:background="#bebebe"
+            android:textColor="#000000"
             android:text="계산기"
             android:textSize="50sp"/>
 
@@ -52,6 +54,7 @@
         android:layout_weight="1"
         android:columnCount="4"
         android:orientation="horizontal"
+        android:background="#bebebe"
         android:rowCount="5">
 
         <Button
@@ -68,8 +71,44 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
-            android:text="C"
+            android:background="@drawable/btn_select"
+            android:text="clear"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/sort"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_select"
+            android:text="sort"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/hexa"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_select"
+            android:text="hexa"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/sqr"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_select"
+            android:text="x²"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/root"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_select"
+            android:text="√x"
             android:textColor="#ffffff" />
 
         <Button
@@ -77,17 +116,17 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="( )"
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/mod"
+            android:id="@+id/binary"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
-            android:text="M"
+            android:background="@drawable/btn_select"
+            android:text="binary"
             android:textColor="#ffffff" />
 
 
@@ -132,7 +171,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="4"
             android:textColor="#ffffff" />
 
@@ -141,7 +180,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="5"
             android:textColor="#ffffff" />
 
@@ -150,7 +189,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="6"
             android:textColor="#ffffff" />
 
@@ -159,7 +198,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="-"
             android:textColor="#ffffff" />
 
@@ -168,7 +207,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="1"
             android:textColor="#ffffff" />
 
@@ -177,7 +216,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="2"
             android:textColor="#ffffff" />
 
@@ -186,7 +225,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="3"
             android:textColor="#ffffff" />
 
@@ -195,7 +234,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="×"
             android:textColor="#ffffff" />
 
@@ -204,7 +243,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="0"
             android:textColor="#ffffff" />
 
@@ -213,7 +252,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="."
             android:textColor="#ffffff" />
 
@@ -222,7 +261,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="="
             android:textColor="#ffffff" />
 
@@ -231,7 +270,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="5dp"
-            android:background="@drawable/btn_color"
+            android:background="@drawable/btn_select"
             android:text="÷"
             android:textColor="#ffffff" />
     </GridLayout>

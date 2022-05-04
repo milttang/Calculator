@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ModActivity"/>
         <activity android:name=".BinaryActivity"/>
         <activity android:name=".OctaActivity"/>
     </application>

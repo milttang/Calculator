@@ -1,15 +1,14 @@
 package com.example.calculator;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class HexaActivity extends AppCompatActivity  {
 
     private CalculateHelper calculateHelper;
 
@@ -23,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private View view;
 
-    private Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9, add, sub, mul, div, clear, bracket, back, dot, equal, hexa, binary, sqr, root, sort;
+    private Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9
+            , add, sub, mul, div, clear, bracket, mod, back, dot, equal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +63,11 @@ public class MainActivity extends AppCompatActivity {
         sub = findViewById(R.id.sub);
         mul = findViewById(R.id.mul);
         div = findViewById(R.id.div);
-        sqr = findViewById(R.id.sqr);
-        root = findViewById(R.id.root);
-        equal = findViewById(R.id.equal);
         clear = findViewById(R.id.clear);
         bracket = findViewById(R.id.bracket);
-        binary = findViewById(R.id.binary);
-        hexa = findViewById(R.id.hexa);
-        sort = findViewById(R.id.sort);
         back = findViewById(R.id.back);
         dot = findViewById(R.id.dot);
-
+        equal = findViewById(R.id.equal);
 
         // number ClickListener
         num0.setOnClickListener(numClickListener);
@@ -92,18 +86,13 @@ public class MainActivity extends AppCompatActivity {
         sub.setOnClickListener(markClickListener);
         mul.setOnClickListener(markClickListener);
         div.setOnClickListener(markClickListener);
-        sqr.setOnClickListener(markClickListener);
-        root.setOnClickListener(markClickListener);
-        equal.setOnClickListener(markClickListener);
         clear.setOnClickListener(markClickListener);
         bracket.setOnClickListener(markClickListener);
-        binary.setOnClickListener(markClickListener);
-        hexa.setOnClickListener(markClickListener);
-        sort.setOnClickListener(markClickListener);
+        mod.setOnClickListener(markClickListener);
         back.setOnClickListener(markClickListener);
         dot.setOnClickListener(markClickListener);
+        equal.setOnClickListener(markClickListener);
     }
-
     // 숫자 버튼이 눌렸을 경우
     private final Button.OnClickListener numClickListener = new View.OnClickListener() {
         @Override
@@ -216,42 +205,6 @@ public class MainActivity extends AppCompatActivity {
                     isDot = true;
                     break;
 
-                case R.id.sqr:
-                    result = textView.getText().toString();
-                    int resultSqr = Integer.parseInt(result);
-                    double sqr = resultSqr * resultSqr;
-
-                    if (!isDot) {
-                        textView2.setText(String.valueOf((int) sqr));
-                        textView.setText(result + " * " + result);
-                    } else {
-                        textView2.setText(String.valueOf(sqr));
-                        textView.setText(result + " * " + result);
-                    }
-
-                    isDot = false;
-                    isPreview = false;
-                    break;
-
-                case R.id.root:
-                    result = textView.getText().toString();
-                    int resultRoot = Integer.parseInt(result);
-                    double root = resultRoot * resultRoot;
-
-                    if (!isDot)
-                        textView.setText(String.valueOf((int) root));
-                    else
-                        textView.setText(String.valueOf(root));
-
-                    textView2.setText("");
-                    isDot = false;
-                    isPreview = false;
-                    break;
-
-                case R.id.sort:
-
-                    break;
-
                 case R.id.equal:
                     result = textView.getText().toString();
                     double r = calculateHelper.process(result);
@@ -266,17 +219,12 @@ public class MainActivity extends AppCompatActivity {
                     isPreview = false;
                     break;
 
-                case R.id.binary:
+                case R.id.binary :
                     Intent intent = new Intent(getApplicationContext(), BinaryActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
 
-                case R.id.hexa:
-                    Intent intentHe = new Intent(getApplicationContext(), HexaActivity.class);
-                    intentHe.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intentHe);
-                    break;
             }
         }
     };
@@ -299,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void select(View view2) {
-        if (view != null) {
-            if (view.getId() != view2.getId()) {
+        if(view != null){
+            if(view.getId() != view2.getId()){
                 view.setSelected(false);
             }
         }
