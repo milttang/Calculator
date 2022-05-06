@@ -2,6 +2,7 @@ package com.example.calculator;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +59,20 @@ public class MainActivity extends AppCompatActivity {
         int[][] test = new int[5][4];
         setButton();
         setTextView();
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            showToast("방향: ORIENTATION_LANDSCAPE");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            showToast("방향: ORIENTATION_PORTRAIT");
+        }
+    }
+
+    public void showToast(String data) {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
 
     private void setButton() {
@@ -157,8 +173,6 @@ public class MainActivity extends AppCompatActivity {
             preview();
         }
     };
-
-
 
 
     //기호 버튼이 눌렸을 경우
