@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];;
     private TextView process, arith;
-    Button numBtn0, numBtn1, addBtn,subBtn, mulBtn,divBtn,equal,backBtn,rollBackBtn, touchBtn, changeBtn,andBtn,orBtn;
+    Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn;
     int count = 0;
     String num1;
     String resultNum = "";
@@ -38,10 +38,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         equal = findViewById(R.id.equla);
         backBtn = findViewById(R.id.backBtn);
         rollBackBtn = findViewById(R.id.rollBackBtn);
-        touchBtn = findViewById(R.id.touchBtn);
-        changeBtn = findViewById(R.id.changeBtn);
+        homeBtn = findViewById(R.id.homeBtn);
         andBtn = findViewById(R.id.andBtn);
         orBtn = findViewById(R.id.orBtn);
+        xorBtn = findViewById(R.id.xorBtn);
 
         arith.setOnClickListener(this);
         process.setOnClickListener(this);
@@ -54,10 +54,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         equal.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         rollBackBtn.setOnClickListener(this);
-        touchBtn.setOnClickListener(this);
-        changeBtn.setOnClickListener(this);
+        homeBtn.setOnClickListener(this);
         andBtn.setOnClickListener(this);
         orBtn.setOnClickListener(this);
+        xorBtn.setOnClickListener(this);
 
         Integer[] res ={R.id.result0, R.id.result1, R.id.result2,
                 R.id.result3, R.id.result4, R.id.result5,
@@ -131,6 +131,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 process.append("OR");
                 roll(count);
                 break;
+            case R.id.xorBtn:
+                num1 = process.getText().toString();
+                arith.setText("XOR");
+                process.append("XOR");
+                roll(count);
+                break;
             case R.id.equla:
                 int Re = 0;                             //계산 값 저장할 변수
                 int i = 0;                              // for 문에 들어갈 변수
@@ -159,19 +165,19 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
 
                 change(Re);                                 //10진수를 2진수로 바꾸는 메소드
 
-                // 2진수 계산 값 이미지 파일로 나오게 하기 // 이후 계산이나 Reset시 일부 남아 있는 문제
-                String [] binaryArray = resultNum.split("");
-                for (i = 0; i < binaryArray.length; i++) {
-                    if(binaryArray[i].equals("0")) {
-                        result[i].setImageResource(R.drawable.zero);
+                // 계산 결과 값 ImageView 표현(2진수)
+                String[] binaryArray = resultNum.split("");
+                for (count = 0; count < binaryArray.length; count++) {
+                    if (binaryArray[count].equals("0")) {
+                        result[count].setImageResource(R.drawable.zero);
                     } else {
-                        result[i].setImageResource(R.drawable.one);
+                        result[count].setImageResource(R.drawable.one);
                     }
                 }
 
                 process.setText(resultNum);
                 break;
-            case R.id.changeBtn:
+            case R.id.homeBtn:
                 Intent intent = new Intent(getApplicationContext(),Arithmetics.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Activity 전환 시 효과 제거
                 startActivity(intent);
