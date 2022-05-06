@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];;
-    private TextView process,arith;
+    private TextView process, arith;
     Button numBtn0, numBtn1, addBtn,subBtn, mulBtn,divBtn,equal,backBtn,rollBackBtn, touchBtn, changeBtn,andBtn,orBtn;
     int count = 0;
     String num1;
@@ -68,6 +68,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         }
     }
 
+    // Activity 종료 시 효과 제거
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
 
     @Override
     public void onClick(View view) {
@@ -80,7 +86,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     count++;
                 }
                 process.append("0");
-            break;
+                break;
 
             case R.id.numBtn1:
                 if(count < 10){
@@ -126,7 +132,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 roll(count);
                 break;
             case R.id.equla:
-                int Re = 0;                            //계산 값 저장할 변수
+                int Re = 0;                             //계산 값 저장할 변수
+                int i = 0;                              // for 문에 들어갈 변수
                 num2 = process.getText().toString().split("\\+|-|\\*|/|AND|OR");    //연산자로 문자열을 분할
                 String num3 = num2[1];                              //2번째 문자열을 저장
                 int binary1 = Integer.parseInt(num1,2);     //2진수 문자열을 10진수 숫자로 변환
@@ -149,11 +156,24 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 if(arith.getText() == "OR"){
                     Re = binary1 | binary2;
                 }
+
                 change(Re);                                 //10진수를 2진수로 바꾸는 메소드
+
+                // 2진수 계산 값 이미지 파일로 나오게 하기 // 이후 계산이나 Reset시 일부 남아 있는 문제
+                String [] binaryArray = resultNum.split("");
+                for (i = 0; i < binaryArray.length; i++) {
+                    if(binaryArray[i].equals("0")) {
+                        result[i].setImageResource(R.drawable.zero);
+                    } else {
+                        result[i].setImageResource(R.drawable.one);
+                    }
+                }
+
                 process.setText(resultNum);
                 break;
             case R.id.changeBtn:
                 Intent intent = new Intent(getApplicationContext(),Arithmetics.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Activity 전환 시 효과 제거
                 startActivity(intent);
                 break;
             case R.id.backBtn:
@@ -200,4 +220,3 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         }
     }
 }
-
