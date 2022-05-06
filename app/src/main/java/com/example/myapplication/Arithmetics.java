@@ -97,7 +97,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         backBtn.setOnTouchListener(touchEvent);
         }
 
-
+//
         @Override
         public void onClick(View v) {                                                               //버튼 어떤거 클릭 하냐에 따라 다른 결과
             double num;             //EditText에 적은 값을 저장하여 부호 버튼 클릭시 calculator()메소드로 값을 넘길 변수
