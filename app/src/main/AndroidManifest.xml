@@ -20,7 +20,6 @@
         </activity>
 
         <activity android:name=".BinaryActivity"/>
-        <activity android:name=".OctaActivity"/>
     </application>
 
 </manifest>

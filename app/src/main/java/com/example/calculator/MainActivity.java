@@ -1,10 +1,14 @@
 package com.example.calculator;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isDot, isBracket, isPreview;
 
-    private TextView textView, textView2;
+    private TextView textView, textView2, textView3;
 
     private int size;
 
@@ -29,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+//        int orientation = display.getRotation();
+//
+//        if(orientation== Surface.ROTATION_180)
+//        {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+//        }
 
         calculateHelper = new CalculateHelper();
 
@@ -146,34 +158,46 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
+
+
     //기호 버튼이 눌렸을 경우
     private final Button.OnClickListener markClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.add:
+                    textView3.setText(" ");
                     textView.append(" + ");
+                    textView3.append(" + ");
                     isPreview = true;
                     break;
 
                 case R.id.sub:
+                    textView3.setText(" ");
                     textView.append(" - ");
+                    textView3.append(" - ");
                     isPreview = true;
                     break;
 
                 case R.id.mul:
+                    textView3.setText(" ");
                     textView.append(" * ");
+                    textView3.append(" * ");
                     isPreview = true;
                     break;
 
                 case R.id.div:
+                    textView3.setText(" ");
                     textView.append(" / ");
+                    textView3.append(" / ");
                     isPreview = true;
                     break;
 
                 case R.id.clear:
                     textView.setText("");
                     textView2.setText("");
+                    textView3.setText("");
 
                     calculateHelper = new CalculateHelper();
 
@@ -262,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText(String.valueOf(r));
 
                     textView2.setText("");
+                    textView3.setText("");
                     isDot = false;
                     isPreview = false;
                     break;
@@ -296,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
     private void setTextView() {
         textView = findViewById(R.id.first_textView);
         textView2 = findViewById(R.id.second_textView);
+        textView3 = findViewById(R.id.third_textView);
     }
 
     private void select(View view2) {
