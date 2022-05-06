@@ -25,19 +25,19 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
     private TextView process, arith;
     String type, mountProcess, oneProcess,twoProcess;                  // 부호, 과정 문자열 , equals 사용시 저장 될 마지막 숫자 문자열
     Double mountNum = 0.0;                            //최초 계산기 때 순서대로 값을 계산 및 저장한 변수
-    boolean  minus, equalsort;                              // 최초 숫자가 음수일 경우 값을 if를 나누기 위해 사용한 변수
+    boolean  equalsort, sqr, bracket;                              // 최초 숫자가 음수일 경우 값을 if를 나누기 위해 사용한 변수
     Button[] button = new Button[10];
     String[] bit = new String[10];              //추가된 과제에서 부호를 용이하게 저장하기 위한 문자열
     int count = 0;                              //숫자와 부호를 순차적으로 저장하기 위해 사용 된  count
     ArrayList<String> numBer = new ArrayList<>();    //부호 없이 오로지 숫자만 저장 될 변수
     private Runnable runnable_up, runnable_down;
     private Handler handler_up, handler_down;
-
+    double sqrnum = 0.0;
     @Override
     protected void onCreate(@Nullable Bundle saved){        //시작
         super.onCreate(saved);
         setContentView(R.layout.activity_arithmetics);
-        Button addBtn, subBtn, divBtn, mulBtn, equal, rollBackBtn, comma, backBtn, binary,sort;
+        Button addBtn, subBtn, divBtn, mulBtn, equal, rollBackBtn, comma, backBtn, binary,sort, sqr, bracket;
 
         process = findViewById(R.id.process);
         arith = findViewById(R.id.arith);
@@ -52,6 +52,8 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         comma = findViewById(R.id.comma);
         binary = findViewById(R.id.binary);
         sort = findViewById(R.id.sort);
+        sqr = findViewById(R.id.sqr);
+        bracket = findViewById(R.id.bracket);
 
 
         process.setOnClickListener(this);
@@ -67,9 +69,13 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         comma.setOnClickListener(this);
         binary.setOnClickListener(this);
         sort.setOnClickListener(this);
+        sqr.setOnClickListener(this);
+        bracket.setOnClickListener(this);
+
         type = "";
         mountProcess = "";
         iv = null;
+        twoProcess ="";
         for(int i = 0; i <bit.length; i++) {         //부호 초기화
             bit[i] = "";
         }
@@ -99,35 +105,25 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
             switch (v.getId()){
                 //번호 클릭
                 case R.id.numBtn0:
-                    result.append("0");
-                    process.append("0");break;
+                    result.append("0");break;
                 case R.id.numBtn1:
-                    result.append("1");
-                    process.append("1");break;
+                    result.append("1");break;
                 case R.id.numBtn2:
-                    result.append("2");
-                    process.append("2");break;
+                    result.append("2");break;
                 case R.id.numBtn3:
-                    result.append("3");
-                    process.append("3");break;
+                    result.append("3");break;
                 case R.id.numBtn4:
-                    result.append("4");
-                    process.append("4");break;
+                    result.append("4");break;
                 case R.id.numBtn5:
-                    result.append("5");
-                    process.append("5");break;
+                    result.append("5");break;
                 case R.id.numBtn6:
-                    result.append("6");
-                    process.append("6");break;
+                    result.append("6");break;
                 case R.id.numBtn7:
-                    result.append("7");
-                    process.append("7");break;
+                    result.append("7");break;
                 case R.id.numBtn8:
-                    result.append("8");
-                    process.append("8");break;
+                    result.append("8");break;
                 case R.id.numBtn9:
-                    result.append("9");
-                    process.append("9");break;
+                    result.append("9");break;
                 
                 //부호
                 case R.id.addBtn:
@@ -178,7 +174,28 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                     calculator("/", num);
                     break;
 
+                case R.id.sqr:
+                    if(!sqr){
+                        sqrnum = Double.parseDouble(result.getText().toString());
+                        sqr = true;
+                    }
+                    double sqrnum1 = Double.parseDouble(result.getText().toString());
+                    double sqrnum2 = sqrnum1 * sqrnum;
+                    result.setText(String.valueOf(sqrnum2));
+                    equalsort = true;
+                    break;
 
+                case R.id.bracket:
+                    if(!bracket){
+                        result.append("(");
+                        process.append("(");
+                        bracket = true;
+                    }else{
+                        result.append(")");
+                        process.append(")");
+                        bracket = false;
+                    }
+                    break;
                 //콤마
                 case R.id.comma:
                     result.append(".");
@@ -209,12 +226,6 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
             }
         }
 
-
-
-
-
-
-
     // 결과값을 받고 난 뒤에 추가로 계산할 시 결과값만 받고 기존에 저장된 배열 및 List 초기화
         public void resultNot(){
             if (process.getText().toString().contains("=")) {
@@ -223,7 +234,6 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                 Arrays.fill(bit, "");
                 mountProcess = "";
                 mountNum = 0.0;
-                minus = false;
                 equalsort = false;
                 process.setText(result.getText().toString());
             }
@@ -231,40 +241,35 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
 
     //계산 과정
     public void calculator(String col, Double v) {
+            sqr = false;
             bit[count] = col;                           //부호 배열로 저장 sort나 equals
             if(!process.getText().toString().equals("0")){                                 // 첫수로 인해 숫자 0을 받을시 문제가 생기기에 일단 if로 빼놓음
                 numBer.add(String.valueOf(1*v));
+                String doubleStr = String.valueOf(v).replace(".0","");
+                String minusnull = doubleStr.replace("-","");
+                process.append(minusnull + col);
             }else{
-                process.setText("");
+                process.setText(col);
             }
             count++;
             arith.setText(col);
-            process.setText(process.getText() + col);
             if(col.equals("-")){
-                mountProcess += v;
                 result.setText("-");
             }else{
-                mountProcess += v + col;
                 result.setText("");
             }
         }
 
     // 계산 완료( = )
     public void equals(){
-        if(result.getText().toString().equals("") || arith.getText().toString().equals("")){
+        if(arith.getText().toString().equals("")){
             return;
         }
-        if(mountProcess.charAt(0) == '0'){
-            mountProcess = mountProcess.substring(3);
-        }
-        Log.d(String.valueOf(count), String.valueOf(numBer.size()));
         if(!equalsort){
             numBer.add(result.getText().toString());
         }
         double lastResult = 0.0;
         String lastResultStr = "";
-        oneProcess = result.getText().toString();
-        twoProcess = (mountProcess + oneProcess).replace(".0","");
         for(int i = 0; i<numBer.size(); i ++){
             if(bit[i].equals("*")){
                 double test1 = Double.parseDouble(numBer.get(i-1));
@@ -275,6 +280,11 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                 double test1 = Double.parseDouble(numBer.get(i-1));
                 double test2 = Double.parseDouble(numBer.get(i));
                 lastResult += test1 / test2;
+            }
+            if(bit[i] == "-"){
+                twoProcess += numBer.get(i);
+            }else{
+                twoProcess += bit[i] + numBer.get(i);
             }
         }
         ArrayList<String> subNum = new ArrayList<>();
@@ -289,11 +299,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
             lastResult += Double.parseDouble(subNum.get(i));
         }
         lastResultStr = String.valueOf(lastResult).replace(".0","");
-        if(!equalsort){
-            process.setText(twoProcess + "=" + lastResultStr);
-        }else{
-            process.append("=" + lastResultStr);
-        }
+        process.setText(twoProcess.replaceAll(".0","")+ "=" + lastResultStr);
         result.setText(lastResultStr);
         arith.setText("");
         }
@@ -307,13 +313,18 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
             result.setText(result.getText().toString().substring(0, size - 1));
         }
         if(size1 > 1){
-            if (process.getText().toString().substring(size1-1).equals("+")) {
-                Log.d(String.valueOf(count), "버그");
-                int a = count -1;
-                bit[a] = "";
-                numBer.remove(count -2);
+            String getProcess = process.getText().toString().substring(size1-1);
+            if (getProcess.equals("+") || getProcess.equals("-")|| getProcess.equals("*")|| getProcess.equals("/")) {
+                if(numBer.size() == count){
+                    numBer.remove(count-1);
+                }
+                bit[count - 1] = "";
                 count--;
+                equalsort= true;
             }
+            process.setText(process.getText().toString().substring(0, size1 - 1));
+        }
+        if(size1 == 1){
             process.setText(process.getText().toString().substring(0, size1 - 1));
         }
         if(process.getText().toString().equals("")){
@@ -323,6 +334,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
 
     //초기화
     public void rollBack() {
+        bracket = false;
         mountNum = 0.0;
         arith.setText("");
         process.setText("0");
@@ -331,7 +343,6 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         mountProcess = "";
         oneProcess = "";
         twoProcess ="";
-        minus = false;
         equalsort = false;
         count = 0;
         numBer.clear();
@@ -358,7 +369,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         String strResult = new String();
         ArrayList<String> bitstr = new ArrayList<>();
         ArrayList<Double> bitb = new ArrayList<>();
-        if(!process.getText().toString().contains("=")){                    //이미 결과값을 받은 상태인지 아니면 과정인지 확인
+        if(!equalsort){                    //이미 결과값을 받은 상태인지 아니면 과정인지 확인
             numBer.add(result.getText().toString());
         }
         for (String s : bit) {
@@ -465,6 +476,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         }
         process.setText(strResult);
     }
+
 
     // 핸들러 세팅
     public void setHandler(Button button) {
