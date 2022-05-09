@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];
@@ -175,12 +178,17 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
 
                 change(Re);                                 //10진수를 2진수로 바꾸는 메소드
 
+                Log.v("resultNum","resultNum : " + resultNum);
+
                 // 계산 결과 값 ImageView 표현(2진수)
                 String[] binaryArray = resultNum.split("");
 
+                // binaryArray[0] 값을 제거한 String[] - 배열 저장시 10진수 2의 경우 10이지만, [, 1, 0]으로 표시되어 첫 번째 index 제거
+                String[] binaryArray2 = Arrays.copyOfRange(binaryArray, 1, binaryArray.length);
+
                 if (lengthOne >= lengthTwo) {
-                    if (binaryArray.length >= lengthOne) {
-                        for (count = 0; count <= binaryArray.length; count++) {
+                    if (binaryArray2.length >= lengthOne) {
+                        for (count = 0; count <= binaryArray2.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -189,8 +197,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         }
                     }
                 } else {
-                    if (binaryArray.length >= lengthTwo) {
-                        for (count = 0; count <= binaryArray.length; count++) {
+                    if (binaryArray2.length >= lengthTwo) {
+                        for (count = 0; count <= binaryArray2.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -200,8 +208,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     }
                 }
 
-                for (count = 0; count < binaryArray.length; count++) {
-                    if (binaryArray[count].equals("0")) {
+                for (count = 0; count < binaryArray2.length; count++) {
+                    if (binaryArray2[count].equals("0")) {
                         result[count].setImageResource(R.drawable.zero);
                     } else {
                         result[count].setImageResource(R.drawable.one);
