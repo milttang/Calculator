@@ -3,9 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,11 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];
@@ -26,7 +22,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn;
     int count = 0;
     String num1;
-    String resultNum = "";
+    ArrayList<String> resultNum = new ArrayList<>();
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +79,6 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         String[] num2;
-        resultNum = "";
         switch (view.getId()) {
             case R.id.numBtn0:
                 if (count < 10) {                                            //10자리까지만 이미지 나열
@@ -104,55 +99,56 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 num1 = process.getText().toString();
                 arith.setText("+");
                 process.append("+");
-                roll(count);
+                roll();
                 break;
             case R.id.subBtn:
                 num1 = process.getText().toString();
                 arith.setText("-");
                 process.append("-");
-                roll(count);
+                roll();
                 break;
             case R.id.mulBtn:
                 num1 = process.getText().toString();
                 arith.setText("*");
                 process.append("*");
-                roll(count);
+                roll();
                 break;
             case R.id.divBtn:
                 num1 = process.getText().toString();
                 arith.setText("/");
                 process.append("/");
-                roll(count);
+                roll();
                 break;
             case R.id.andBtn:
                 num1 = process.getText().toString();
                 arith.setText("AND");
                 process.append("AND");
-                roll(count);
+                roll();
                 break;
             case R.id.orBtn:
                 num1 = process.getText().toString();
                 arith.setText("OR");
                 process.append("OR");
-                roll(count);
+                roll();
                 break;
             case R.id.xorBtn:
                 num1 = process.getText().toString();
                 arith.setText("XOR");
                 process.append("XOR");
-                roll(count);
+                roll();
                 break;
             case R.id.equla:
+                count = 0;
                 int Re = 0;                             //계산 값 저장할 변수
                 num2 = process.getText().toString().split("\\+|-|\\*|/|AND|OR|XOR");    //연산자로 문자열을 분할
                 String num3 = num2[1];                              //2번째 문자열을 저장
                 int binary1 = Integer.parseInt(num1, 2);     //2진수 문자열을 10진수 숫자로 변환
                 int binary2 = Integer.parseInt(num3, 2);
 
-                String binaryOne = Integer.toBinaryString(binary1); // 입력된 첫 번째 수를 2진수로 변환
+                /*String binaryOne = Integer.toBinaryString(binary1); // 입력된 첫 번째 수를 2진수로 변환
                 String binaryTwo = Integer.toBinaryString(binary2); // 입력된 두 번째 수를 2진수로 변환
                 int lengthOne = binaryOne.length();                 // 2진수로 변환된 값의 길이 Check
-                int lengthTwo = binaryTwo.length();                 // 2진수로 변환된 값의 길이 Check
+                int lengthTwo = binaryTwo.length();                 // 2진수로 변환된 값의 길이 Check*/
 
                 if (arith.getText() == "+") {                     //10진수로 바꾼 숫자를 연산자에 따라 계산
                     Re = binary1 + binary2;
@@ -178,17 +174,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
 
                 change(Re);                                 //10진수를 2진수로 바꾸는 메소드
 
-                Log.v("resultNum","resultNum : " + resultNum);
-
                 // 계산 결과 값 ImageView 표현(2진수)
-                String[] binaryArray = resultNum.split("");
+                /*String[] binaryArray = resultNum.split("");
+                String[] binaryArray2 = Arrays.copyOfRange(binaryArray, 1, binaryArray.length);*/
 
-                // binaryArray[0] 값을 제거한 String[] - 배열 저장시 10진수 2의 경우 10이지만, [, 1, 0]으로 표시되어 첫 번째 index 제거
-                String[] binaryArray2 = Arrays.copyOfRange(binaryArray, 1, binaryArray.length);
 
-                if (lengthOne >= lengthTwo) {
-                    if (binaryArray2.length >= lengthOne) {
-                        for (count = 0; count <= binaryArray2.length; count++) {
+                /*if (lengthOne >= lengthTwo) {
+                    if (binaryArray.length >= lengthOne) {
+                        for (count = 0; count <= binaryArray.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -197,8 +190,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         }
                     }
                 } else {
-                    if (binaryArray2.length >= lengthTwo) {
-                        for (count = 0; count <= binaryArray2.length; count++) {
+                    if (binaryArray.length >= lengthTwo) {
+                        for (count = 0; count <= binaryArray.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -206,17 +199,20 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             result[count].setImageResource(0);
                         }
                     }
-                }
-
-                for (count = 0; count < binaryArray2.length; count++) {
-                    if (binaryArray2[count].equals("0")) {
-                        result[count].setImageResource(R.drawable.zero);
-                    } else {
-                        result[count].setImageResource(R.drawable.one);
+                }*/
+                String resultNum1 = "";
+                for (int i = 0; i < resultNum.size(); i++) {
+                    if (resultNum.get(i).equals("0")) {
+                        result[i].setImageResource(R.drawable.zero);
+                        }else{
+                            result[i].setImageResource(R.drawable.one);
+                        }
+                    count++;
+                    resultNum1 += resultNum.get(i);
                     }
-                }
-
-                process.setText(resultNum);
+                arith.setText("");
+                process.setText(resultNum1);
+                resultNum.clear();
                 break;
             case R.id.homeBtn:
                 Intent intent = new Intent(getApplicationContext(), Arithmetics.class);
@@ -234,13 +230,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.rollBackBtn:
-                roll(count);
+                roll();
                 process.setText("");
                 arith.setText("");
+                resultNum.clear();
         }
     }
 
-    public void roll(int c) {                        //이미지 초기화
+    public void roll() {                        //이미지 초기화
         for (int i = 0; i <= count; i++) {               //for문으로 1-10까지 저장된 이미지 초기화
             if (count > 9) {
                 for (int k = 0; k < i; k++)
@@ -259,12 +256,13 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
             num += String.valueOf(n % 2);
             n = n / 2;
             c++;
-            if (n <= 0) {
+            if (n < 1) {
                 break;
             }
         }
         for (int i = num.length() - 1; i >= 0; i--) {         //계산된 2진수 문자열을 거꾸로 다시 저장
-            resultNum += num.charAt(i);
+            String strnum = String.valueOf(num.charAt(i));
+            resultNum.add(strnum);
         }
     }
 
