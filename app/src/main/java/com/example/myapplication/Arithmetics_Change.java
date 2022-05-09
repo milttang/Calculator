@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,10 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
@@ -161,6 +165,23 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 if (arith.getText() == "/") {
                     Re = binary1 / binary2;
+
+//                    // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
+//                    if (Re == 0){
+//                        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+//                        myAlertBuilder.setTitle("Alert");
+//                        myAlertBuilder.setMessage("Cannot Calculate Double Data.");
+//                        myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+//                            public void onClick(DialogInterface dialog, int which){
+//                                // OK 버튼을 눌렸을 경우
+//                                Toast.makeText(getApplicationContext(),"Double", Toast.LENGTH_SHORT).show();
+//                                roll(0);
+//                                process.setText("");
+//                                arith.setText("");
+//                            }
+//                        });
+//                        myAlertBuilder.show();
+//                    }
                 }
                 if (arith.getText() == "AND") {
                     Re = binary1 & binary2;
@@ -172,16 +193,34 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     Re = binary1 ^ binary2;
                 }
 
+                // 2진수 계산 값이 음수일 때, 계산 불가 및 Reset 처리
+//                if (Re < 0) {
+//                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+//                    myAlertBuilder.setTitle("Alert");
+//                    myAlertBuilder.setMessage("Cannot Calculate Negative Data.");
+//                    myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+//                        public void onClick(DialogInterface dialog, int which){
+//                            // OK 버튼을 눌렸을 경우
+//                            roll(0);
+//                            process.setText("");
+//                            arith.setText("");
+//                            Toast.makeText(getApplicationContext(),"Negative Number", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    myAlertBuilder.show();
+//                }
+
                 change(Re);                                 //10진수를 2진수로 바꾸는 메소드
 
                 // 계산 결과 값 ImageView 표현(2진수)
                 /*String[] binaryArray = resultNum.split("");
-                String[] binaryArray2 = Arrays.copyOfRange(binaryArray, 1, binaryArray.length);*/
 
+                // 배열의 Empty Data 지우는 함수 호출
+                String[] resultArray = deleteEmpty(binaryArray);
 
-                /*if (lengthOne >= lengthTwo) {
-                    if (binaryArray.length >= lengthOne) {
-                        for (count = 0; count <= binaryArray.length; count++) {
+                if (lengthOne >= lengthTwo) {
+                    if (resultArray.length >= lengthOne) {
+                        for (count = 0; count <= resultArray.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -190,8 +229,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         }
                     }
                 } else {
-                    if (binaryArray.length >= lengthTwo) {
-                        for (count = 0; count <= binaryArray.length; count++) {
+                    if (resultArray.length >= lengthTwo) {
+                        for (count = 0; count <= resultArray.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -199,7 +238,18 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             result[count].setImageResource(0);
                         }
                     }
-                }*/
+                }
+
+                for (count = 0; count < resultArray.length; count++) {
+                    if (resultArray[count].equals("0")) {
+                        result[count].setImageResource(R.drawable.zero);
+                    } else {
+                        result[count].setImageResource(R.drawable.one);
+                    }
+                }
+
+                process.setText(resultNum);
+                break;*/
                 String resultNum1 = "";
                 for (int i = 0; i < resultNum.size(); i++) {
                     if (resultNum.get(i).equals("0")) {
@@ -280,4 +330,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
             showToast("방향: ORIENTATION_PORTRAIT");
         }
     }
+
+//    // String[]의 Empty Data 삭제
+//    public static String[] deleteEmpty(final String[] array){
+//        List<String> list = new ArrayList<String>(Arrays.asList(array));
+//        // list에서 Data가 ""인 것을 찾아서 모두 제거
+//        list.removeAll(Collections.singleton(""));
+//        return list.toArray(new String[list.size()]);
+//    }
 }
