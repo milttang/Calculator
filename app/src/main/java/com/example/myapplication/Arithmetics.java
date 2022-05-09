@@ -176,7 +176,20 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                     double sqrnum1 = Double.parseDouble(result.getText().toString());
                     double sqrnum2 = sqrnum1 * sqrnum;
                     result.setText(String.valueOf(sqrnum2));
-                    equalsort = true;
+                    double sqrnum3 = Double.parseDouble(result.getText().toString());
+                    int i = process.getText().toString().length()-1;
+                    String sqrstr = process.getText().toString().substring(i);
+                    if (sqrnum3 > 0) {
+                        if(!sqrstr.equals("*") || !sqrstr.equals("/")) {
+                            bit[count] = "+";
+                            arith.setText("+");
+                            process.setText(String.format("%s+", process.getText().toString().substring(0, i)));
+                        }
+                    } else {
+                        bit[count] = "-";
+                        arith.setText("-");
+                        process.setText(String.format("%s-", process.getText().toString().substring(0, i)));
+                    }
                     break;
                 
                 case R.id.root:
@@ -185,7 +198,8 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                     double rtnum4 = Math.sqrt(Double.parseDouble(rtstr));                       //루트
                     String rootResult = String.valueOf(Math.floor(rtnum4*100)/100).replace(".0","");    //소수점 2자리까지만 표시
                     if(rtnum3<0){                                                               //받은 값이 음수냐 양수냐
-                        result.setText(String.format("-%s", rootResult));
+                        Toast.makeText(Arithmetics.this,"No such number exists.",Toast.LENGTH_LONG).show();
+                        /*result.setText(String.format("-%s", rootResult));*/
                     }else{
                         result.setText(rootResult);
                     }
