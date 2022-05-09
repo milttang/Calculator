@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,16 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];
-    ;
     private TextView process, arith;
     Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn;
     int count = 0;
@@ -145,10 +149,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 int binary1 = Integer.parseInt(num1, 2);     //2진수 문자열을 10진수 숫자로 변환
                 int binary2 = Integer.parseInt(num3, 2);
 
-                String binaryOne = Integer.toBinaryString(binary1);
-                String binaryTwo = Integer.toBinaryString(binary2);
-                int lengthOne = binaryOne.length();
-                int lengthTwo = binaryTwo.length();
+                String binaryOne = Integer.toBinaryString(binary1); // 입력된 첫 번째 수를 2진수로 변환
+                String binaryTwo = Integer.toBinaryString(binary2); // 입력된 두 번째 수를 2진수로 변환
+                int lengthOne = binaryOne.length();                 // 2진수로 변환된 값의 길이 Check
+                int lengthTwo = binaryTwo.length();                 // 2진수로 변환된 값의 길이 Check
 
                 if (arith.getText() == "+") {                     //10진수로 바꾼 숫자를 연산자에 따라 계산
                     Re = binary1 + binary2;
@@ -174,12 +178,17 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
 
                 change(Re);                                 //10진수를 2진수로 바꾸는 메소드
 
+                Log.v("resultNum","resultNum : " + resultNum);
+
                 // 계산 결과 값 ImageView 표현(2진수)
                 String[] binaryArray = resultNum.split("");
 
+                // binaryArray[0] 값을 제거한 String[] - 배열 저장시 10진수 2의 경우 10이지만, [, 1, 0]으로 표시되어 첫 번째 index 제거
+                String[] binaryArray2 = Arrays.copyOfRange(binaryArray, 1, binaryArray.length);
+
                 if (lengthOne >= lengthTwo) {
-                    if (count >= lengthOne) {
-                        for (count = 0; count <= binaryArray.length; count++) {
+                    if (binaryArray2.length >= lengthOne) {
+                        for (count = 0; count <= binaryArray2.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -188,8 +197,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         }
                     }
                 } else {
-                    if (count >= lengthTwo) {
-                        for (count = 0; count <= binaryArray.length; count++) {
+                    if (binaryArray2.length >= lengthTwo) {
+                        for (count = 0; count <= binaryArray2.length; count++) {
                             result[count].setImageResource(0);
                         }
                     } else {
@@ -199,8 +208,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     }
                 }
 
-                for (count = 0; count < binaryArray.length; count++) {
-                    if (binaryArray[count].equals("0")) {
+                for (count = 0; count < binaryArray2.length; count++) {
+                    if (binaryArray2[count].equals("0")) {
                         result[count].setImageResource(R.drawable.zero);
                     } else {
                         result[count].setImageResource(R.drawable.one);
@@ -256,6 +265,21 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         }
         for (int i = num.length() - 1; i >= 0; i--) {         //계산된 2진수 문자열을 거꾸로 다시 저장
             resultNum += num.charAt(i);
+        }
+    }
+
+    public void showToast(String data) {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+    }
+
+    // 화면 회전시 표시
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            showToast("방향: ORIENTATION_LANDSCAPE");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            showToast("방향: ORIENTATION_PORTRAIT");
         }
     }
 }
