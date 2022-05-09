@@ -137,10 +137,10 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                     break;
 
                 case R.id.subBtn:
-                    if(result.getText().toString().equals("")) {
+/*                    if(result.getText().toString().equals("")) {
                         Toast.makeText(Arithmetics.this, "NOT NUMBER", Toast.LENGTH_LONG).show();
                         return;
-                    }
+                    }*/
                     int size = process.getText().length()-1;
                     String pro = process.getText().toString().substring(size);
                     if(pro.equals("*") || pro.equals("/")){
@@ -241,16 +241,19 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
 
     //계산 과정
     public void calculator(String col, Double v) {
-            sqr = false;
-            bit[count] = col;                           //부호 배열로 저장 sort나 equals
             if(!process.getText().toString().equals("0")){                                 // 첫수로 인해 숫자 0을 받을시 문제가 생기기에 일단 if로 빼놓음
                 numBer.add(String.valueOf(1*v));
                 String doubleStr = String.valueOf(v).replace(".0","");
                 String minusnull = doubleStr.replace("-","");
                 process.append(minusnull + col);
             }else{
+                if(col.equals("*") || col.equals("/")){
+                    return;
+                }
                 process.setText(col);
             }
+            sqr = false;
+            bit[count] = col;                           //부호 배열로 저장 sort나 equals
             count++;
             arith.setText(col);
             if(col.equals("-")){
@@ -298,11 +301,14 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
         for(int i =0; i<subNum.size(); i++){
             lastResult += Double.parseDouble(subNum.get(i));
         }
+        if(equalsort){
+            twoProcess = process.getText().toString();
+        }
         lastResultStr = String.valueOf(lastResult).replace(".0","");
         process.setText(twoProcess.replaceAll(".0","")+ "=" + lastResultStr);
         result.setText(lastResultStr);
         arith.setText("");
-        }
+    }
 
 
     //한칸지우기
