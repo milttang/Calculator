@@ -34,7 +34,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
     private Handler handler_up, handler_down;
     double sqrnum = 0.0;
     @Override
-    protected void onCreate(@Nullable Bundle saved){        //시작
+    protected void onCreate(@Nullable Bundle saved){        //시작  
         super.onCreate(saved);
         setContentView(R.layout.activity_arithmetics);
         Button addBtn, subBtn, divBtn, mulBtn, equal, rollBackBtn, comma, backBtn, binary,sort, sqr, bracket, root;
