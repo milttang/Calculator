@@ -175,7 +175,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener{  
                     }
                     double sqrnum1 = Double.parseDouble(result.getText().toString());
                     double sqrnum2 = sqrnum1 * sqrnum;
-                    result.setText(String.valueOf(sqrnum2));
+                    result.setText(String.valueOf(sqrnum2).replace(".0",""));
                     double sqrnum3 = Double.parseDouble(result.getText().toString());
                     int i = process.getText().toString().length()-1;
                     String sqrstr = process.getText().toString().substring(i);
