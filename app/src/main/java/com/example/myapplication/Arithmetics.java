@@ -266,6 +266,7 @@ public class Arithmetics extends AppCompatActivity implements OnClickListener { 
                 break;
             case R.id.binary:        //2진수 액티비티로 전환
                 Intent intent = new Intent(getApplicationContext(), Arithmetics_Change.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); // Activity 전환 시 효과 제거
                 startActivity(intent);
         }
     }
