@@ -493,7 +493,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     }
                 }
                 process.setText(resultNum);
+<<<<<<< HEAD
                 arith.setText("");
+=======
+>>>>>>> 38b7d0b3bf46dd1a23af89b9d4394e7ec27f40a5
                 break;
             case R.id.homeBtn:
                 Intent intent = new Intent(getApplicationContext(), Arithmetics.class);

@@ -22,5 +22,6 @@
         <activity
             android:name=".Arithmetics_Change"
             android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".DateArithmetics"/>
     </application>
 </manifest>
