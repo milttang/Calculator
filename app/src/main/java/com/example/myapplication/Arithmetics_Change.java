@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,20 +15,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];
     private TextView process, arith;
-    Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn;
-    int count = 0;
-    String num1, substr, operator;
-    String resultNum = "";
+    private View iv;
+    private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn;
+    private int count = 0;
+    private String num1, substr, operator;
+    private String resultNum = "";
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +66,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         andBtn.setOnClickListener(this);
         orBtn.setOnClickListener(this);
         xorBtn.setOnClickListener(this);
+
+        iv = null;
 
         Integer[] res = {R.id.result0, R.id.result1, R.id.result2,
                 R.id.result3, R.id.result4, R.id.result5,
@@ -480,6 +480,17 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         for (int i = num.length() - 1; i >= 0; i--) {         //계산된 2진수 문자열을 거꾸로 다시 저장
             resultNum += num.charAt(i);
         }
+    }
+
+    // 버튼 style 유지 셀렉터
+    public void select(View ew){
+        if(iv != null){                     //저장된 View가 있을 시
+            if(iv.getId() != ew.getId()){   //저장된 View와 받은 View를 비교
+                iv.setSelected(false);      //다를시 이전 View를 false로 변환
+            }
+        }
+        ew.setSelected(true);               //받은 View를 ture로 변환
+        iv = ew;                            //다음 View와 받은 View를 비교하기 위해 다시 저장
     }
 
     public void showToast(String data) {
