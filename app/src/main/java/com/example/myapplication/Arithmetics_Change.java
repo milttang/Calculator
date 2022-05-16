@@ -32,7 +32,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     private View iv;
     private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn, empty;
     private int count = 0;
-    private String num1, substr, operator;
+    private String num1, num3, substr, operator;                                 //num3 - 2번째 문자열을 저장
     private String resultNum = "";
     // 추가한 부분(shin 2022.05.12)
     private Toolbar mainToolBar;
@@ -135,10 +135,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 process.append("1");
                 break;
             case R.id.addBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){   // 값이 없는데 부호를 누르면 막습니다.
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("+");
+                }
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%"))  {
@@ -165,10 +167,13 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     break;
                 }
             case R.id.subBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("-");
+                }
+                Log.v("Calculate","Calculate Sub Num1 = " + num1);
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
@@ -196,10 +201,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
 
             case R.id.mulBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("*");
+                }
                 Log.v("num1", "num1 값 : " + num1);
                 operator = arith.getText().toString();
                 Log.v("operator", "operator 값 : " + operator);
@@ -229,10 +236,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     break;
                 }
             case R.id.divBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("/");
+                }
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
@@ -259,10 +268,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     break;
                 }
             case R.id.remainBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("%");
+                }
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
@@ -289,10 +300,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     break;
                 }
             case R.id.andBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("AND");
+                }
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
@@ -319,10 +332,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     break;
                 }
             case R.id.orBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("OR");
+                }
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
@@ -349,10 +364,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     break;
                 }
             case R.id.xorBtn:
-                if(process.getText().toString().equals("") && arith.getText().toString().equals("")){
-                    return;
-                }
                 num1 = process.getText().toString();
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                    arith.setText("XOR");
+                }
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
@@ -380,13 +397,27 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
 
             case R.id.equla:
-                if(result[0].getDrawable() == null || arith.getText().toString().equals("")){   //부호가 없거나 계산값이 없다면 리턴
-                    return;
-                }
                 int Re = 0;                             //계산 값 저장할 변수
                 num2 = process.getText().toString().split("\\+|-|\\*|/|AND|OR|XOR|%");    //연산자로 문자열을 분할
                 Log.v("num2", "num2 : " + Arrays.toString(num2));
-                String num3 = num2[1];                              //2번째 문자열을 저장
+
+                if (num1 == null || num1.equals("")){
+                    num1 = "0";
+                    process.setText(num1);
+                }
+
+                if (num2.length == 1){
+                    num3 = num2[0];
+                    process.append(num3);
+                } else if (num2.length == 0) {
+                    num3 = "0";
+                    process.append("0");
+                } else {
+                    num3 = num2[1];
+                }
+
+                Log.v("Calculate","Calculate equal Num3 = " + num3);
+
                 int binary1 = Integer.parseInt(num1, 2);     //2진수 문자열을 10진수 숫자로 변환
                 int binary2 = Integer.parseInt(num3, 2);
 
@@ -395,17 +426,25 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 int lengthOne = binaryOne.length();                 // 2진수로 변환된 값의 길이 Check
                 int lengthTwo = binaryTwo.length();                 // 2진수로 변환된 값의 길이 Check
 
+                if(arith.getText() == null || arith.getText().equals("")){
+                    Re = binary2 + binary2;
+                    process.setText(binaryTwo + "+" + binaryTwo);
+                }
                 if (arith.getText() == "+") {                     //10진수로 바꾼 숫자를 연산자에 따라 계산
                     Re = binary1 + binary2;
+                    process.setText(binaryOne + "+" + binaryTwo);
                 }
                 if (arith.getText() == "-") {
                     Re = binary1 - binary2;
+                    process.setText(binaryOne + "-" + binaryTwo);
                 }
                 if (arith.getText() == "*") {
                     Re = binary1 * binary2;
+                    process.setText(binaryOne + "*" + binaryTwo);
                 }
                 if (arith.getText() == "/") {
                     Re = binary1 / binary2;
+                    process.setText(binaryOne + "/" + binaryTwo);
 
                     // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
                     if (Re == 0) {
@@ -492,11 +531,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         result[count].setImageResource(R.drawable.one);
                     }
                 }
-                process.setText(resultNum);
-<<<<<<< HEAD
-                arith.setText("");
-=======
->>>>>>> 38b7d0b3bf46dd1a23af89b9d4394e7ec27f40a5
+                arith.setText(resultNum);
                 break;
             case R.id.homeBtn:
                 Intent intent = new Intent(getApplicationContext(), Arithmetics.class);
