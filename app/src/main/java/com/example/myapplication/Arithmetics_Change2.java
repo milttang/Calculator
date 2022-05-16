@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
+public class Arithmetics_Change2 extends AppCompatActivity implements View.OnClickListener {
     private ImageView[] result = new ImageView[10];
     private TextView process, arith;
     private View iv;
@@ -34,6 +33,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     private int count = 0;
     private String num1, num3, substr, operator;                                 //num3 - 2번째 문자열을 저장
     private String resultNum = "";
+    private String arithNum = "";
     private Toolbar mainToolBar;
     private ActionBarDrawerToggle drawerToggle;
 
@@ -42,14 +42,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_arithmetics_change);
 
         // toolbar
-        mainToolBar = (Toolbar)findViewById(R.id.main_tool_bar);
+        mainToolBar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(mainToolBar);
 
-        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mainToolBar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-        NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         MenuBarEvent menuBarEvent = new MenuBarEvent(this);
         navigationView.setNavigationItemSelectedListener(menuBarEvent);
 
@@ -114,31 +114,54 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         resultNum = "";
         switch (view.getId()) {
             case R.id.numBtn0:
-                if (count < 10) {                                            //10자리까지만 이미지 나열
-                    result[count].setImageResource(R.drawable.zero);
-                    count++;
+                arithNum = arith.getText().toString();
+                if (arithNum.equals("") || arithNum.equals("AND") || arithNum.equals("OR") || arithNum.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
+                    if (count < 10) {                                            //10자리까지만 이미지 나열
+                        result[count].setImageResource(R.drawable.zero);
+                        count++;
+                    }
+                } else {
+                    if (count < 10) {                                            //10자리까지만 이미지 나열
+                        roll(0);
+                        result[count].setImageResource(R.drawable.zero);
+                        count++;
+                    }
+                    process.setText(arithNum);
                 }
                 process.append("0");
                 break;
 
             case R.id.numBtn1:
-                if (count < 10) {
-                    result[count].setImageResource(R.drawable.one);
-                    count++;
+                arithNum = arith.getText().toString();
+                if (arithNum.equals("") || arithNum.equals("AND") || arithNum.equals("OR") || arithNum.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
+                    if (count < 10) {                                            //10자리까지만 이미지 나열
+                        result[count].setImageResource(R.drawable.one);
+                        count++;
+                    }
+                } else {
+                    if (count < 10) {                                            //10자리까지만 이미지 나열
+                        roll(0);
+                        result[count].setImageResource(R.drawable.one);
+                        count++;
+                    }
+                    process.setText(arithNum);
                 }
                 process.append("1");
                 break;
+
             case R.id.addBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("+");
                 }
                 operator = arith.getText().toString();
+                Log.v("operator","operator : " + operator);
                 substr = num1.substring(num1.length() - 1);
-                if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%"))  {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                Log.v("substr","substr : " + substr);
+                if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -147,31 +170,31 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
                     });
                     myAlertBuilder.show();
-                    break;
                 } else {
                     arith.setText("+");
                     process.append("+");
                     roll(count);
-                    break;
                 }
+                break;
             case R.id.subBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("-");
                 }
-                Log.v("Calculate","Calculate Sub Num1 = " + num1);
                 operator = arith.getText().toString();
+                Log.v("operator","operator : " + operator);
                 substr = num1.substring(num1.length() - 1);
+                Log.v("substr","substr : " + substr);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -180,23 +203,22 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
                     });
                     myAlertBuilder.show();
-                    break;
                 } else {
                     arith.setText("-");
                     process.append("-");
                     roll(count);
-                    break;
                 }
+                break;
 
             case R.id.mulBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("*");
@@ -206,8 +228,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 Log.v("operator", "operator 값 : " + operator);
                 substr = num1.substring(num1.length() - 1);
                 Log.v("substr", "substr 값 : " + substr);
-                if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")){
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -216,7 +238,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
@@ -231,7 +253,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
             case R.id.divBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("/");
@@ -239,7 +261,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -248,7 +270,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
@@ -263,7 +285,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
             case R.id.remainBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("%");
@@ -271,7 +293,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -280,7 +302,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
@@ -295,15 +317,21 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
             case R.id.andBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                Log.v("num1", "AND BTN NUM1 = " + num1);
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("AND");
+                } else if (resultNum != "") {
+                    num1 = resultNum;
+                    process.setText(resultNum);
+                    arith.setText("AND");
                 }
+
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -312,7 +340,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
@@ -327,7 +355,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
             case R.id.orBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("OR");
@@ -335,7 +363,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -344,7 +372,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
@@ -359,7 +387,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
             case R.id.xorBtn:
                 num1 = process.getText().toString();
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
                     process.setText(num1);
                     arith.setText("XOR");
@@ -367,7 +395,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 operator = arith.getText().toString();
                 substr = num1.substring(num1.length() - 1);
                 if (substr.equals("D") || substr.equals("R") || substr.equals("+") || substr.equals("-") || substr.equals("*") || substr.equals("/") || substr.equals("%")) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Enter the Number Behind Operator.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -376,7 +404,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                             roll(0);
                             process.setText(num1);
-                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%","");
+                            num1 = process.getText().toString().replaceAll("\\+|-|\\*|/|AND|OR|XOR|%", "");
                             arith.setText(operator);
                             select(empty);
                         }
@@ -395,12 +423,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 num2 = process.getText().toString().split("\\+|-|\\*|/|AND|OR|XOR|%");    //연산자로 문자열을 분할
                 Log.v("num2", "num2 : " + Arrays.toString(num2));
 
-                if (num1 == null || num1.equals("")){
+                if (num1 == null || num1.equals("")) {
                     num1 = "0";
-                    process.setText(num1);
                 }
-
-                if (num2.length == 1){
+                if (num2.length == 1) {
                     num3 = num2[0];
                     process.append(num3);
                 } else if (num2.length == 0) {
@@ -410,8 +436,6 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     num3 = num2[1];
                 }
 
-                Log.v("Calculate","Calculate equal Num3 = " + num3);
-
                 int binary1 = Integer.parseInt(num1, 2);     //2진수 문자열을 10진수 숫자로 변환
                 int binary2 = Integer.parseInt(num3, 2);
 
@@ -420,29 +444,29 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 int lengthOne = binaryOne.length();                 // 2진수로 변환된 값의 길이 Check
                 int lengthTwo = binaryTwo.length();                 // 2진수로 변환된 값의 길이 Check
 
-                if(arith.getText() == null || arith.getText().equals("")){
-                    Re = binary2 + binary2;
-                    process.setText(binaryTwo + "+" + binaryTwo);
+                if (arith.getText() == null || arith.getText().equals("")) {
+                    Re = binary2;
+                    arith.setText(binaryTwo);
                 }
                 if (arith.getText() == "+") {                     //10진수로 바꾼 숫자를 연산자에 따라 계산
                     Re = binary1 + binary2;
-                    process.setText(binaryOne + "+" + binaryTwo);
+                    arith.setText(binaryOne + "+" + binaryTwo);
                 }
                 if (arith.getText() == "-") {
                     Re = binary1 - binary2;
-                    process.setText(binaryOne + "-" + binaryTwo);
+                    arith.setText(binaryOne + "-" + binaryTwo);
                 }
                 if (arith.getText() == "*") {
                     Re = binary1 * binary2;
-                    process.setText(binaryOne + "*" + binaryTwo);
+                    arith.setText(binaryOne + "*" + binaryTwo);
                 }
                 if (arith.getText() == "/") {
                     Re = binary1 / binary2;
-                    process.setText(binaryOne + "/" + binaryTwo);
+                    arith.setText(binaryOne + "/" + binaryTwo);
 
                     // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
                     if (Re == 0) {
-                        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                         myAlertBuilder.setTitle("Alert");
                         myAlertBuilder.setMessage("Cannot Calculate Double Data.");
                         myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -471,7 +495,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 // 2진수 계산 값이 음수일 때, 계산 불가 및 Reset 처리
                 if (Re < 0) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change2.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Cannot Calculate Negative Data.");
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -491,10 +515,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 // 계산 결과 값 ImageView 표현(2진수)
                 String[] binaryArray = resultNum.split("");
 
-                Log.v("binaryArray","binaryArray : " + Arrays.toString(binaryArray));
+                Log.v("binaryArray", "binaryArray : " + Arrays.toString(binaryArray));
                 // 배열의 Empty Data 지우는 함수 호출
                 String[] resultArray = deleteEmpty(binaryArray);
-                Log.v("resultArray","resultArray : " + Arrays.toString(resultArray));
+                Log.v("resultArray", "resultArray : " + Arrays.toString(resultArray));
 
                 if (lengthOne >= lengthTwo) {
                     if (resultArray.length >= lengthOne) {
@@ -525,7 +549,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         result[count].setImageResource(R.drawable.one);
                     }
                 }
-                arith.setText(resultNum);
+                process.setText(resultNum);
                 break;
             case R.id.homeBtn:
                 Intent intent = new Intent(getApplicationContext(), Arithmetics.class);
@@ -579,14 +603,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     }
 
     // 버튼 style 유지 셀렉터
-    public void select(View ew){
-        if(iv != null){                     //저장된 View가 있을 시
-            if(iv.getId() != ew.getId()){   //저장된 View와 받은 View를 비교
-                iv.setSelected(false);      //다를시 이전 View를 false로 변환
+    public void select(View ew) {
+        if (iv != null) {                     //저장된 View 있을 시
+            if (iv.getId() != ew.getId()) {   //저장된 View 받은 View 비교
+                iv.setSelected(false);      //다를시 이전 View false 변환
             }
         }
-        ew.setSelected(true);               //받은 View를 true로 변환
-        iv = ew;                            //다음 View와 받은 View를 비교하기 위해 다시 저장
+        ew.setSelected(true);               //받은 View true 변환
+        iv = ew;                            //다음 View 받은 View 비교하기 위해 다시 저장
     }
 
     public void showToast(String data) {
@@ -607,7 +631,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     // String[]의 Empty Data 삭제
     public static String[] deleteEmpty(final String[] array) {
         List<String> list = new ArrayList<String>(Arrays.asList(array));
-        // list에서 Data가 ""인 것을 찾아서 모두 제거
+        // list Data 값이 ""인 것을 찾아서 모두 제거
         list.removeAll(Collections.singleton(""));
         return list.toArray(new String[list.size()]);
     }
