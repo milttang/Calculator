@@ -1,27 +1,23 @@
-package com.example.myapplication;
+package com.example.calculator;
 
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class TouchEvent implements View.OnTouchListener {
-    private Arithmetics arithmetics;
+    private MainActivity mainActivity;
 
-    public TouchEvent(Arithmetics arithmetics) {
-        this.arithmetics = arithmetics;
+    public TouchEvent(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-            Toast.makeText(arithmetics,"down",Toast.LENGTH_LONG).show();
         }
         if(motionEvent.getAction() == MotionEvent.ACTION_UP){                               //handler_down이 runnable_down을 removeCallbacks 함
-            Toast.makeText(arithmetics,"up",Toast.LENGTH_LONG).show();
             switch (view.getId()) {
                 case R.id.backBtn:
-                    arithmetics.getHandler_down().removeCallbacks(arithmetics.getRunnable_down());
+                    mainActivity.getHandler_down().removeCallbacks(mainActivity.getRunnable_down());
                     break;
                 case R.id.numBtn0:
                 case R.id.numBtn1:
@@ -33,7 +29,7 @@ public class TouchEvent implements View.OnTouchListener {
                 case R.id.numBtn7:
                 case R.id.numBtn8:
                 case R.id.numBtn9:
-                    arithmetics.getHandler_up().removeCallbacks(arithmetics.getRunnable_up());
+                    mainActivity.getHandler_up().removeCallbacks(mainActivity.getRunnable_up());
                     break;
             }
         }
