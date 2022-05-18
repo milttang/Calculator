@@ -301,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     String sortStr = textView.getText().toString();
                     String sortresult = calculateHelper.sorted(sortStr);
                     textView.setText(sortresult);
+                    preview();
                     break;
 
                 case R.id.equal:
@@ -338,11 +339,12 @@ public class MainActivity extends AppCompatActivity {
             result = textView.getText().toString();
             double r = calculateHelper.process(result);
 
-            if (!isDot)
+            if (!isDot) {
                 textView2.setText(String.valueOf((int) r));
-            else
-                r = Math.floor(r*100)/100;
+            }else {
+                r = Math.floor(r * 100) / 100;
                 textView2.setText(String.valueOf(r));
+            }
         }
     }
 

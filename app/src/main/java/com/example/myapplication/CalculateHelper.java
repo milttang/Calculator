@@ -232,6 +232,10 @@ public class CalculateHelper {
         }
         if (resultList3.size() != 0) {
             str1 = merge(resultList3);
+            if(resultList2.size() != 0){
+                str1 = str1.substring(3);
+                str1 = "+ "+ str1;
+            }
         }
         if(resultList4.size() != 0){
             str2 = merge(resultList4);
