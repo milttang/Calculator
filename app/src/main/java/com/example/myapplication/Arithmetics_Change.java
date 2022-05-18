@@ -406,14 +406,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         binaryView[count].setImageResource(R.drawable.one);
                     }
                 }
-<<<<<<< HEAD
                 process.setText(resultNum);
-                arith.setText("");
-=======
                 operator.setText(resultNum);
-
->>>>>>> 7976e493881f2578ad266b88574f41d1b6e26e56
-                break;
         }
     }
 
