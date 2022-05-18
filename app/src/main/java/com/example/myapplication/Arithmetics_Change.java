@@ -39,8 +39,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     public String firstNum = "";
     public String secondNum = "";
     public String firstResultNum = "";
+    public String tefirstResultNum = "";
     public String operaTor = "";
     public String resultNum = "";
+    public String teresultNum = "";
     public String firstNumNo = "";
     private Toolbar mainToolBar;
     private ActionBarDrawerToggle drawerToggle;
@@ -119,6 +121,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         select(view);
         resultNum = "";
+        teresultNum = "";
         switch (view.getId()) {
             case R.id.numBtn0:
                 if (count < 10) {                                            //10자리까지만 이미지 나열
@@ -139,113 +142,153 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
             case R.id.andBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "";
-                    firstNumNo = firstNum + "AND";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "AND";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "AND";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("AND");
                 }
                 operator.setText("AND");
-                clear(count);
+                clear();
                 break;
 
             case R.id.orBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "OR";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "OR";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "OR";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("OR");
                 }
                 operator.setText("OR");
-                clear(count);
+                clear();
                 break;
 
             case R.id.xorBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "XOR";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "XOR";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "XOR";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("XOR");
                 }
                 operator.setText("XOR");
-                clear(count);
+                clear();
                 break;
 
             case R.id.addBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "+";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "+";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "+";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("+");
                 }
                 operator.setText("+");
-                clear(count);
+                clear();
                 break;
 
             case R.id.subBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "-";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "-";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "-";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("-");
                 }
                 operator.setText("-");
-                clear(count);
+                clear();
                 break;
 
             case R.id.mulBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "*";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "*";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "*";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("*");
                 }
                 operator.setText("*");
-                clear(count);
+                clear();
                 break;
 
             case R.id.divBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "/";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "/";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "/";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("/");
                 }
                 operator.setText("/");
-                clear(count);
+                clear();
                 break;
 
             case R.id.remainBtn:
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "%";
-                    binaryView[0].setImageResource(R.drawable.zero);
-                    process.setText(firstNumNo);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "%";
+                        process.setText(firstNumNo);
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "%";
+                        process.setText(firstNumNo);
+                    }
                 } else {
                     process.append("%");
                 }
                 operator.setText("%");
-                clear(count);
+                clear();
                 break;
 
             case R.id.backBtn:
@@ -260,8 +303,9 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.clearBtn:
-                clear(count);
+                clear();
                 firstResultNum = "";
+                tefirstResultNum = "";
                 process.setText("");
                 operator.setText("");
                 break;
@@ -276,6 +320,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.equalBtn:
+                clear();
+                String extraNum = "";
                 String[] processArray = process.getText().toString().split(("\\+|-|\\*|/|AND|OR|XOR|%"));
                 Log.v("processArray", "processArray = " + Arrays.toString(processArray));
                 Log.v("firstNum", "firstNum = " + firstNum);
@@ -283,12 +329,17 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 if (processArray.length == 1) {
                     if (firstResultNum.equals("")) {
                         secondNum = firstNum;
+                        Log.v("secondNum1", "secondNum1 = " + secondNum);
                     } else {
                         secondNum = firstResultNum;
+                        Log.v("secondNum2", "secondNum2 = " + secondNum);
                     }
+                    Log.v("secondNum3", "secondNum3 = " + secondNum);
+                    extraNum = secondNum;
                 } else {
                     secondNum = processArray[processArray.length - 1];
                 }
+
                 Log.v("secondNum", "secondNum = " + secondNum);
 
                 if (firstResultNum.equals("")) {
@@ -328,7 +379,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                                 public void onClick(DialogInterface dialog, int which) {
                                     // OK 버튼을 눌렸을 경우
                                     Toast.makeText(getApplicationContext(), "Double", Toast.LENGTH_SHORT).show();
-                                    clear(0);
+                                    clear();
                                     process.setText("");
                                     operator.setText("");
                                 }
@@ -357,7 +408,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // OK 버튼을 눌렸을 경우
-                            clear(0);
+                            clear();
                             process.setText("");
                             operator.setText("");
                             Toast.makeText(getApplicationContext(), "Negative Number", Toast.LENGTH_SHORT).show();
@@ -377,50 +428,31 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 String[] resultArray = deleteEmpty(binaryArray);
                 Log.v("resultArray", "resultArray : " + Arrays.toString(resultArray));
 
-                if (firstLength >= secondLength) {
-                    if (resultArray.length >= firstLength) {
-                        for (count = 0; count <= resultArray.length; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    } else {
-                        for (count = 0; count <= firstLength; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    }
-                } else {
-                    if (resultArray.length >= secondLength) {
-                        for (count = 0; count <= resultArray.length; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    } else {
-                        for (count = 0; count <= secondLength; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    }
-                }
+                String[] tebinaryArray = teresultNum.split("");
+
+                Log.v("tebinaryArray", "tebinaryArray : " + Arrays.toString(tebinaryArray));
+                // 배열의 Empty Data 지우는 함수 호출
+                String[] teresultArray = deleteEmpty(tebinaryArray);
+                Log.v("teresultArray", "teresultArray : " + Arrays.toString(teresultArray));
 
                 for (count = 0; count < resultArray.length; count++) {
-                    if (resultArray[count].equals("0")) {
-                        binaryView[count].setImageResource(R.drawable.zero);
+                    if (teresultArray[count].equals("0")) {
+                        binaryView[9-count].setImageResource(R.drawable.zero);
                     } else {
-                        binaryView[count].setImageResource(R.drawable.one);
+                        binaryView[9-count].setImageResource(R.drawable.one);
                     }
                 }
-                process.setText(resultNum);
-                operator.setText(resultNum);
+                String resultProcess = process.getText().toString();
+                String resultOperator = resultProcess + extraNum;
+                operator.setText(resultOperator);
+                process.setText("");
                 break;
         }
     }
 
-    public void clear(int c) {                                        // Image 초기화
-        for (int i = 0; i <= count; i++) {
-            if (count > 9) {
-                for (int k = 0; k < i; k++) {
-                    binaryView[k].setImageResource(0);
-                }
-            } else {
-                binaryView[i].setImageResource(0);
-            }
+    public void clear() {                                        // Image 초기화
+        for (int i = 0; i <= 9; i++) {
+            binaryView[i].setImageResource(0);
         }
         count = 0;
     }
@@ -428,13 +460,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     public void toBinary(int n) {                                // 10진수를 2진수로 변환
         String num = "";
         int c = 0;
-        while (true) {
+        do {
             num += String.valueOf(n % 2);
             n = n / 2;
             c++;
-            if (n <= 0) {
-                break;
-            }
+        } while (n > 0);
+        for (int i = 0; i < num.length(); i++) {
+            teresultNum += num.charAt(i);
+            tefirstResultNum += num.charAt(i);
         }
         for (int i = num.length() - 1; i >= 0; i--) {                 // 값을 거꾸로 저장
             resultNum += num.charAt(i);
