@@ -193,13 +193,13 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/clearBtn"
+                    android:id="@+id/leftShiftBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_color_selector"
-                    android:text="@string/c"
+                    android:text="@string/left"
                     tools:ignore="NestedWeights" />
 
                 <Button
@@ -238,14 +238,13 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/empty"
+                    android:id="@+id/rightShiftBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_color"
-                    android:enabled="false"
-                    android:text=""
+                    android:background="@drawable/btn_color_selector"
+                    android:text="@string/right"
                     tools:ignore="NestedWeights" />
 
                 <Button
@@ -283,13 +282,13 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/hexBtn"
+                    android:id="@+id/clearBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_color_selector"
-                    android:text="@string/hex"
+                    android:text="@string/c"
                     tools:ignore="NestedWeights" />
 
                 <Button

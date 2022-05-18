@@ -19,4 +19,6 @@
     <string name="home">Home</string>
     <string name="divide">/</string>
     <string name="remain">%</string>
+    <string name="right"><![CDATA[>>]]></string>
+    <string name="left"><![CDATA[<<]]></string>
 </resources>
