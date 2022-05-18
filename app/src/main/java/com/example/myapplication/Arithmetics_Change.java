@@ -29,18 +29,17 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     private final ImageView[] binaryView = new ImageView[10];               // 계산 결과 값 Image 표시
     private View selectView;                                                // 선택된 버튼 표시
     private TextView process, operator;
-    private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equalBtn, backBtn, clearBtn, homeBtn, andBtn, orBtn, xorBtn, empty;
+    private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equalBtn, backBtn, clearBtn, homeBtn, andBtn, orBtn, xorBtn, leftShiftBtn, rightShiftBtn;
     private int count = 0;                                                  // Image View 를 위한 Count
     private int result = 0;
-    private int firstBinary;
-    private int firstLength;
-    private int secondBinary;
-    private int secondLength;
+    public String inputNum = "";
     public String firstNum = "";
     public String secondNum = "";
     public String firstResultNum = "";
+    public String tefirstResultNum = "";
     public String operaTor = "";
     public String resultNum = "";
+    public String teresultNum = "";
     public String firstNumNo = "";
     private Toolbar mainToolBar;
     private ActionBarDrawerToggle drawerToggle;
@@ -77,7 +76,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         andBtn = findViewById(R.id.andBtn);
         orBtn = findViewById(R.id.orBtn);
         xorBtn = findViewById(R.id.xorBtn);
-        empty = findViewById(R.id.empty);
+        leftShiftBtn = findViewById(R.id.leftShiftBtn);
+        rightShiftBtn = findViewById(R.id.rightShiftBtn);
 
         operator.setOnClickListener(this);
         process.setOnClickListener(this);
@@ -95,7 +95,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         andBtn.setOnClickListener(this);
         orBtn.setOnClickListener(this);
         xorBtn.setOnClickListener(this);
-        empty.setOnClickListener(this);
+        leftShiftBtn.setOnClickListener(this);
+        rightShiftBtn.setOnClickListener(this);
 
         selectView = null;
 
@@ -117,138 +118,279 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
+        clear();
         select(view);
         resultNum = "";
+        teresultNum = "";
         switch (view.getId()) {
             case R.id.numBtn0:
-                if (count < 10) {                                            //10자리까지만 이미지 나열
-                    binaryView[count].setImageResource(R.drawable.zero);
-                    count++;
+                inputNum = inputNum + "0";
+                String[] zeroArray = inputNum.split("");
+                String[] realZeroArray = deleteEmpty(zeroArray);
+                String[] reverseZeroArray = new String[realZeroArray.length];
+                for (int i = 0; i < realZeroArray.length; i++) {
+                    String temp = realZeroArray[i];
+                    reverseZeroArray[i] = realZeroArray[realZeroArray.length - i - 1];
+                    realZeroArray[i] = temp;
+                }
+                Log.v("realZeroArray", "realZeroArray : " + Arrays.toString(realZeroArray));
+                Log.v("reverseZeroArray", "reverseZeroArray : " + Arrays.toString(reverseZeroArray));
+                if (realZeroArray.length > 10){
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    myAlertBuilder.setTitle("Alert");
+                    myAlertBuilder.setMessage("Error.");
+                    myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // OK 버튼을 눌렸을 경우
+                            clear();
+                            process.setText("");
+                            inputNum = "";
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    myAlertBuilder.show();
+                } else {
+                    for (count = 0; count < realZeroArray.length; count++) {
+                        if (reverseZeroArray[count].equals("0")) {
+                            binaryView[9 - count].setImageResource(R.drawable.zero);
+                        } else {
+                            binaryView[9 - count].setImageResource(R.drawable.one);
+                        }
+                    }
                 }
                 process.append("0");
                 break;
 
             case R.id.numBtn1:
-                if (count < 10) {                                            //10자리까지만 이미지 나열
-                    binaryView[count].setImageResource(R.drawable.one);
-                    count++;
+                inputNum = inputNum + "1";
+                String[] oneArray = inputNum.split("");
+                String[] realOneArray = deleteEmpty(oneArray);
+                String[] reverseOneArray = new String[realOneArray.length];
+                for (int i = 0; i < realOneArray.length; i++) {
+                    String temp = realOneArray[i];
+                    reverseOneArray[i] = realOneArray[realOneArray.length - i - 1];
+                    realOneArray[i] = temp;
+                }
+                Log.v("realOneArray", "realOneArray : " + Arrays.toString(realOneArray));
+                Log.v("reverseOneArray", "reverseOneArray : " + Arrays.toString(reverseOneArray));
+                if (realOneArray.length > 10){
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    myAlertBuilder.setTitle("Alert");
+                    myAlertBuilder.setMessage("Error.");
+                    myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // OK 버튼을 눌렸을 경우
+                            clear();
+                            process.setText("");
+                            inputNum = "";
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    myAlertBuilder.show();
+                } else {
+                    for (count = 0; count < realOneArray.length; count++) {
+                        if (reverseOneArray[count].equals("0")) {
+                            binaryView[9 - count].setImageResource(R.drawable.zero);
+                        } else {
+                            binaryView[9 - count].setImageResource(R.drawable.one);
+                        }
+                    }
                 }
                 process.append("1");
                 break;
 
             case R.id.andBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "";
-                    firstNumNo = firstNum + "AND";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "AND";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "AND";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("AND");
                 }
                 operator.setText("AND");
-                clear(count);
+                clear();
                 break;
 
             case R.id.orBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "OR";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "OR";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "OR";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("OR");
                 }
                 operator.setText("OR");
-                clear(count);
+                clear();
                 break;
 
             case R.id.xorBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "XOR";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "XOR";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "XOR";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("XOR");
                 }
                 operator.setText("XOR");
-                clear(count);
+                clear();
                 break;
 
             case R.id.addBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "+";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "+";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "+";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("+");
                 }
                 operator.setText("+");
-                clear(count);
+                clear();
                 break;
 
             case R.id.subBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "-";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "-";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "-";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("-");
                 }
                 operator.setText("-");
-                clear(count);
+                clear();
                 break;
 
             case R.id.mulBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "*";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "*";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "*";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("*");
                 }
                 operator.setText("*");
-                clear(count);
+                clear();
                 break;
 
             case R.id.divBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "/";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "/";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "/";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("/");
                 }
                 operator.setText("/");
-                clear(count);
+                clear();
                 break;
 
             case R.id.remainBtn:
+                inputNum = "";
                 firstNum = process.getText().toString();
                 if (firstNum.equals("")) {
-                    firstNum = "0";
-                    firstNumNo = firstNum + "%";
-                    binaryView[0].setImageResource(R.drawable.zero);
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "%";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "%";
+                    }
                     process.setText(firstNumNo);
                 } else {
                     process.append("%");
                 }
                 operator.setText("%");
-                clear(count);
+                clear();
+                break;
+
+            case R.id.leftShiftBtn:
+                inputNum = "";
+                firstNum = process.getText().toString();
+                if (firstNum.equals("")) {
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + "<<";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + "<<";
+                    }
+                    process.setText(firstNumNo);
+                } else {
+                    process.append("<<");
+                }
+                operator.setText("<<");
+                clear();
+                break;
+
+            case R.id.rightShiftBtn:
+                inputNum = "";
+                firstNum = process.getText().toString();
+                if (firstNum.equals("")) {
+                    if (firstResultNum.equals("")) {
+                        firstNum = "0";
+                        firstNumNo = firstNum + ">>";
+                    } else {
+                        firstNum = firstResultNum;
+                        firstNumNo = firstResultNum + ">>";
+                    }
+                    process.setText(firstNumNo);
+                } else {
+                    process.append(">>");
+                }
+                operator.setText(">>");
+                clear();
                 break;
 
             case R.id.backBtn:
+                inputNum = "";
                 int size = process.getText().length();
                 if (count > 0) {
                     binaryView[count - 1].setImageResource(0);
@@ -260,13 +402,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.clearBtn:
-                clear(count);
+                clear();
+                inputNum = "";
                 firstResultNum = "";
+                tefirstResultNum = "";
                 process.setText("");
                 operator.setText("");
-                break;
-
-            case R.id.hexBtn:
                 break;
 
             case R.id.homeBtn:
@@ -276,19 +417,27 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.equalBtn:
-                String[] processArray = process.getText().toString().split(("\\+|-|\\*|/|AND|OR|XOR|%"));
+                clear();
+                inputNum = "";
+                String extraNum = "";
+                String[] processArray = process.getText().toString().split(("\\+|-|\\*|/|AND|OR|XOR|%|<<|>>"));
                 Log.v("processArray", "processArray = " + Arrays.toString(processArray));
                 Log.v("firstNum", "firstNum = " + firstNum);
 
                 if (processArray.length == 1) {
                     if (firstResultNum.equals("")) {
                         secondNum = firstNum;
+                        Log.v("secondNum1", "secondNum1 = " + secondNum);
                     } else {
                         secondNum = firstResultNum;
+                        Log.v("secondNum2", "secondNum2 = " + secondNum);
                     }
+                    Log.v("secondNum3", "secondNum3 = " + secondNum);
+                    extraNum = secondNum;
                 } else {
                     secondNum = processArray[processArray.length - 1];
                 }
+
                 Log.v("secondNum", "secondNum = " + secondNum);
 
                 if (firstResultNum.equals("")) {
@@ -297,10 +446,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     firstNum = firstResultNum;
                 }
 
-                firstBinary = Integer.parseInt(firstNum, 2);                               // 2진수 문자열을 10진수로 변환
-                firstLength = firstNum.length();                                                // 2진수 문자열의 길이 계산
-                secondBinary = Integer.parseInt(secondNum, 2);                             // 2진수 문자열을 10진수로 변환
-                secondLength = secondNum.length();                                              // 2진수 문자열의 길이 계산
+                int firstBinary = Integer.parseInt(firstNum, 2);                               // 2진수 문자열을 10진수로 변환
+                int secondBinary = Integer.parseInt(secondNum, 2);                             // 2진수 문자열을 10진수로 변환
                 firstResultNum = "";                                                            // 저장되어있는 계산 결과 값 초기화
                 operaTor = operator.getText().toString();
 
@@ -313,6 +460,22 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         break;
                     case "-":
                         result = firstBinary - secondBinary;
+                        if (result < 0 && result != 0) {
+                            AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                            myAlertBuilder.setTitle("Alert");
+                            myAlertBuilder.setMessage("Cannot Calculate Negative Data.");
+                            myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // OK 버튼을 눌렸을 경우
+                                    clear();
+                                    process.setText("");
+                                    operator.setText("");
+                                    firstResultNum = "";
+                                    Toast.makeText(getApplicationContext(), "Negative Number", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            myAlertBuilder.show();
+                        }
                         break;
                     case "*":
                         result = firstBinary * secondBinary;
@@ -328,9 +491,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                                 public void onClick(DialogInterface dialog, int which) {
                                     // OK 버튼을 눌렸을 경우
                                     Toast.makeText(getApplicationContext(), "Double", Toast.LENGTH_SHORT).show();
-                                    clear(0);
+                                    clear();
                                     process.setText("");
                                     operator.setText("");
+                                    firstResultNum = "";
                                 }
                             });
                             myAlertBuilder.show();
@@ -348,22 +512,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     case "XOR":
                         result = firstBinary ^ secondBinary;
                         break;
-                }
-                // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
-                if (result < 0) {
-                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
-                    myAlertBuilder.setTitle("Alert");
-                    myAlertBuilder.setMessage("Cannot Calculate Negative Data.");
-                    myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // OK 버튼을 눌렸을 경우
-                            clear(0);
-                            process.setText("");
-                            operator.setText("");
-                            Toast.makeText(getApplicationContext(), "Negative Number", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    myAlertBuilder.show();
+                    case "<<":
+                        result = firstBinary << secondBinary;
+                        break;
+                    case ">>":
+                        result = firstBinary >> secondBinary;
+                        break;
                 }
                 Log.v("result", "result = " + result);
                 toBinary(result);                                 //10진수를 2진수로 바꾸는 메소드
@@ -377,50 +531,52 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 String[] resultArray = deleteEmpty(binaryArray);
                 Log.v("resultArray", "resultArray : " + Arrays.toString(resultArray));
 
-                if (firstLength >= secondLength) {
-                    if (resultArray.length >= firstLength) {
-                        for (count = 0; count <= resultArray.length; count++) {
-                            binaryView[count].setImageResource(0);
+                String[] tebinaryArray = teresultNum.split("");
+
+                Log.v("tebinaryArray", "tebinaryArray : " + Arrays.toString(tebinaryArray));
+                // 배열의 Empty Data 지우는 함수 호출
+                String[] teresultArray = deleteEmpty(tebinaryArray);
+                Log.v("teresultArray", "teresultArray : " + Arrays.toString(teresultArray));
+
+                // 계산 값 10자리 넘어갈 때, Reset
+                if (resultArray.length > 10) {
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                    myAlertBuilder.setTitle("Alert");
+                    myAlertBuilder.setMessage("Cannot Calculate.");
+                    myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // OK 버튼을 눌렸을 경우
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                            clear();
+                            process.setText("");
+                            operator.setText("");
+                            inputNum = "";
+                            firstResultNum = "";
                         }
-                    } else {
-                        for (count = 0; count <= firstLength; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    }
-                } else {
-                    if (resultArray.length >= secondLength) {
-                        for (count = 0; count <= resultArray.length; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    } else {
-                        for (count = 0; count <= secondLength; count++) {
-                            binaryView[count].setImageResource(0);
-                        }
-                    }
+                    });
+                    myAlertBuilder.show();
                 }
 
                 for (count = 0; count < resultArray.length; count++) {
-                    if (resultArray[count].equals("0")) {
-                        binaryView[count].setImageResource(R.drawable.zero);
+                    if (teresultArray[count].equals("0")) {
+                        binaryView[9 - count].setImageResource(R.drawable.zero);
                     } else {
-                        binaryView[count].setImageResource(R.drawable.one);
+                        binaryView[9 - count].setImageResource(R.drawable.one);
                     }
                 }
-                process.setText(resultNum);
-                operator.setText(resultNum);
+                String resultProcess = process.getText().toString();
+                String resultOperator = resultProcess + extraNum;
+                operator.setText(resultOperator);
+                process.setText("");
+                count = 0;
+                inputNum = resultNum;
                 break;
         }
     }
 
-    public void clear(int c) {                                        // Image 초기화
-        for (int i = 0; i <= count; i++) {
-            if (count > 9) {
-                for (int k = 0; k < i; k++) {
-                    binaryView[k].setImageResource(0);
-                }
-            } else {
-                binaryView[i].setImageResource(0);
-            }
+    public void clear() {                                        // Image 초기화
+        for (int i = 0; i <= 9; i++) {
+            binaryView[i].setImageResource(0);
         }
         count = 0;
     }
@@ -428,13 +584,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     public void toBinary(int n) {                                // 10진수를 2진수로 변환
         String num = "";
         int c = 0;
-        while (true) {
+        do {
             num += String.valueOf(n % 2);
             n = n / 2;
             c++;
-            if (n <= 0) {
-                break;
-            }
+        } while (n > 0);
+        for (int i = 0; i < num.length(); i++) {
+            teresultNum += num.charAt(i);
+            tefirstResultNum += num.charAt(i);
         }
         for (int i = num.length() - 1; i >= 0; i--) {                 // 값을 거꾸로 저장
             resultNum += num.charAt(i);
