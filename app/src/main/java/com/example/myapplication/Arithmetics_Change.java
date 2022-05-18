@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,12 +29,16 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     private final ImageView[] binaryView = new ImageView[10];               // 계산 결과 값 Image 표시
     private View selectView;                                                // 선택된 버튼 표시
     private TextView process, operator;
-    private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equal, backBtn, rollBackBtn, homeBtn, andBtn, orBtn, xorBtn, empty;
+    private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equalBtn, backBtn, clearBtn, homeBtn, andBtn, orBtn, xorBtn, empty;
     private int count = 0;                                                  // Image View 를 위한 Count
     private int result = 0;
+    private int firstBinary;
+    private int firstLength;
+    private int secondBinary;
+    private int secondLength;
     public String firstNum = "";
     public String secondNum = "";
-    public String firstResult = "";
+    public String firstResultNum = "";
     public String operaTor = "";
     public String resultNum = "";
     public String firstNumNo = "";
@@ -67,9 +70,9 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         divBtn = findViewById(R.id.divBtn);
         remainBtn = findViewById(R.id.remainBtn);
         mulBtn = findViewById(R.id.mulBtn);
-        equal = findViewById(R.id.equla);
+        equalBtn = findViewById(R.id.equalBtn);
         backBtn = findViewById(R.id.backBtn);
-        rollBackBtn = findViewById(R.id.rollBackBtn);
+        clearBtn = findViewById(R.id.clearBtn);
         homeBtn = findViewById(R.id.homeBtn);
         andBtn = findViewById(R.id.andBtn);
         orBtn = findViewById(R.id.orBtn);
@@ -85,9 +88,9 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         divBtn.setOnClickListener(this);
         remainBtn.setOnClickListener(this);
         mulBtn.setOnClickListener(this);
-        equal.setOnClickListener(this);
+        equalBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-        rollBackBtn.setOnClickListener(this);
+        clearBtn.setOnClickListener(this);
         homeBtn.setOnClickListener(this);
         andBtn.setOnClickListener(this);
         orBtn.setOnClickListener(this);
@@ -114,7 +117,6 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        String[] num2;
         select(view);
         resultNum = "";
         switch (view.getId()) {
@@ -183,11 +185,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                     firstNumNo = firstNum + "+";
                     binaryView[0].setImageResource(R.drawable.zero);
                     process.setText(firstNumNo);
-                    operator.setText("+");
                 } else {
                     process.append("+");
-                    operator.setText("+");
                 }
+                operator.setText("+");
                 clear(count);
                 break;
 
@@ -258,139 +259,95 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 break;
 
-            case R.id.rollBackBtn:
+            case R.id.clearBtn:
                 clear(count);
+                firstResultNum = "";
                 process.setText("");
                 operator.setText("");
                 break;
 
             case R.id.hexBtn:
-                Intent hexIntent = new Intent(getApplicationContext(), Arithmetics.class);
-                hexIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);      // Activity 전환 시 효과 제거
-                startActivity(hexIntent);
                 break;
 
             case R.id.homeBtn:
-                Intent homeIntent = new Intent(getApplicationContext(), Arithmetics_Change.class);
+                Intent homeIntent = new Intent(getApplicationContext(), Arithmetics.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                 startActivity(homeIntent);
                 break;
 
-            case R.id.equla:
+            case R.id.equalBtn:
                 String[] processArray = process.getText().toString().split(("\\+|-|\\*|/|AND|OR|XOR|%"));
                 Log.v("processArray", "processArray = " + Arrays.toString(processArray));
                 Log.v("firstNum", "firstNum = " + firstNum);
+
                 if (processArray.length == 1) {
-                    secondNum = firstNum;
+                    if (firstResultNum.equals("")) {
+                        secondNum = firstNum;
+                    } else {
+                        secondNum = firstResultNum;
+                    }
                 } else {
                     secondNum = processArray[processArray.length - 1];
                 }
                 Log.v("secondNum", "secondNum = " + secondNum);
 
-                int firstBinary = Integer.parseInt(firstNum, 2);       // 2진수 문자열을 10진수로 변환
-                Log.v("firstBinary", "firstBinary = " + firstBinary);
-                int secondBinary = Integer.parseInt(secondNum, 2);              // 2진수 문자열을 10진수로 변환
-                Log.v("secondBinary", "secondBinary = " + secondBinary);
-
-                int firstLength = firstNum.length();                                // 2진수 문자열의 길이 계산
-                int secondLength = secondNum.length();                              // 2진수 문자열의 길이 계산
-                Log.v("firstResult", "firstResult = " + firstResult);
-                operaTor = operator.getText().toString();
-                if (firstResult.equals("")) {
-                    switch (operaTor) {
-                        case "":
-                            result = firstBinary;
-                            break;
-                        case "+":
-                            result = firstBinary + secondBinary;
-                            break;
-                        case "-":
-                            result = firstBinary - secondBinary;
-                            break;
-                        case "*":
-                            result = firstBinary * secondBinary;
-                            break;
-                        case "/":
-                            result = firstBinary / secondBinary;
-                            // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
-                            if (result == 0) {
-                                AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
-                                myAlertBuilder.setTitle("Alert");
-                                myAlertBuilder.setMessage("Cannot Calculate Double Data.");
-                                myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // OK 버튼을 눌렸을 경우
-                                        Toast.makeText(getApplicationContext(), "Double", Toast.LENGTH_SHORT).show();
-                                        clear(0);
-                                        process.setText("");
-                                        operator.setText("");
-                                    }
-                                });
-                                myAlertBuilder.show();
-                            }
-                            break;
-                        case "%":
-                            result = firstBinary % secondBinary;
-                            break;
-                        case "AND":
-                            result = firstBinary & secondBinary;
-                            break;
-                        case "OR":
-                            result = firstBinary | secondBinary;
-                            break;
-                        case "XOR":
-                            result = firstBinary ^ secondBinary;
-                            break;
-                    }
+                if (firstResultNum.equals("")) {
+                    firstNum = processArray[0];
                 } else {
-                    int firstResultBinary = Integer.parseInt(firstResult, 2);
-                    Log.v("firstResultBinary", "firstResultBinary = " + firstResultBinary);
-                    firstBinary = firstResultBinary;
-                    switch (operaTor) {
-                        case "":
-                            result = firstBinary;
-                            break;
-                        case "+":
-                            result = firstBinary + secondBinary;
-                            break;
-                        case "-":
-                            result = firstBinary - secondBinary;
-                            break;
-                        case "*":
-                            result = firstBinary * secondBinary;
-                            break;
-                        case "/":
-                            result = firstBinary / secondBinary;
-                            // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
-                            if (result == 0) {
-                                AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
-                                myAlertBuilder.setTitle("Alert");
-                                myAlertBuilder.setMessage("Cannot Calculate Double Data.");
-                                myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // OK 버튼을 눌렸을 경우
-                                        Toast.makeText(getApplicationContext(), "Double", Toast.LENGTH_SHORT).show();
-                                        clear(0);
-                                        process.setText("");
-                                        operator.setText("");
-                                    }
-                                });
-                                myAlertBuilder.show();
-                            }
-                            break;
-                        case "%":
-                            result = firstBinary % secondBinary;
-                            break;
-                        case "AND":
-                            result = firstBinary & secondBinary;
-                            break;
-                        case "OR":
-                            result = firstBinary | secondBinary;
-                            break;
-                        case "XOR":
-                            result = firstBinary ^ secondBinary;
-                            break;
-                    }
+                    firstNum = firstResultNum;
+                }
+
+                firstBinary = Integer.parseInt(firstNum, 2);                               // 2진수 문자열을 10진수로 변환
+                firstLength = firstNum.length();                                                // 2진수 문자열의 길이 계산
+                secondBinary = Integer.parseInt(secondNum, 2);                             // 2진수 문자열을 10진수로 변환
+                secondLength = secondNum.length();                                              // 2진수 문자열의 길이 계산
+                firstResultNum = "";                                                            // 저장되어있는 계산 결과 값 초기화
+                operaTor = operator.getText().toString();
+
+                switch (operaTor) {
+                    case "":
+                        result = firstBinary;
+                        break;
+                    case "+":
+                        result = firstBinary + secondBinary;
+                        break;
+                    case "-":
+                        result = firstBinary - secondBinary;
+                        break;
+                    case "*":
+                        result = firstBinary * secondBinary;
+                        break;
+                    case "/":
+                        result = firstBinary / secondBinary;
+                        // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
+                        if (result == 0) {
+                            AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
+                            myAlertBuilder.setTitle("Alert");
+                            myAlertBuilder.setMessage("Cannot Calculate Double Data.");
+                            myAlertBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // OK 버튼을 눌렸을 경우
+                                    Toast.makeText(getApplicationContext(), "Double", Toast.LENGTH_SHORT).show();
+                                    clear(0);
+                                    process.setText("");
+                                    operator.setText("");
+                                }
+                            });
+                            myAlertBuilder.show();
+                        }
+                        break;
+                    case "%":
+                        result = firstBinary % secondBinary;
+                        break;
+                    case "AND":
+                        result = firstBinary & secondBinary;
+                        break;
+                    case "OR":
+                        result = firstBinary | secondBinary;
+                        break;
+                    case "XOR":
+                        result = firstBinary ^ secondBinary;
+                        break;
                 }
                 // 2진수 계산 값이 소수값으로 나올 때, 계산 불가 및 Reset 처리
                 if (result < 0) {
@@ -411,6 +368,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 Log.v("result", "result = " + result);
                 toBinary(result);                                 //10진수를 2진수로 바꾸는 메소드
                 Log.v("resultNum", "resultNum = " + resultNum);
+                Log.v("firstResultNum", "firstResultNum = " + firstResultNum);
                 // 계산 결과 값 ImageView 표현(2진수)
                 String[] binaryArray = resultNum.split("");
 
@@ -480,6 +438,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         }
         for (int i = num.length() - 1; i >= 0; i--) {                 // 값을 거꾸로 저장
             resultNum += num.charAt(i);
+            firstResultNum += num.charAt(i);
         }
     }
 
