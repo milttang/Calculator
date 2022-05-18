@@ -155,6 +155,8 @@ public class CalculateHelper {
         String str = "";
         String str1 = "";
         String str2 = "";
+        String str3 = "";
+        String str4 = "";
         for (int i = 0; i < resultList.size(); i++) {
             if (resultList.get(i).equals("(")) {
                 if (resultList2.size() > 0) {
@@ -194,7 +196,7 @@ public class CalculateHelper {
             }
             if (i > 0) {                                                                //+, - 만 분리
                 int count = -1;
-                if (resultList4.size() == 0 && !resultList.get(i - 1).equals(")")) {
+                if (resultList4.size() == 0 && checkNumber(resultList.get(i - 1))) {
                     resultList4.add(resultList.get(i - 1));
                     count++;
                 }
@@ -224,14 +226,46 @@ public class CalculateHelper {
             }
         }
         if (resultList2.size() != 0) {
-            str = merge(resultList2);
-            str = " ( "+ str.substring(3) + " ) ";
+            ArrayList<String> resultList5 = new ArrayList<>();              //괄호 곱셈 나눗셈
+            ArrayList<String> resultList6 = new ArrayList<>();              //괄호 덧셈 뺄셈
+            if(resultList2.contains("*") || resultList2.contains("/")){                     //괄호 안에서 우선순위 적용해서 곱셈나눗셈, 뺄셈 덧셈 따로 나누기
+                for(int i = 0; i<resultList2.size(); i++){
+                    if(resultList2.get(i).equals("*") || resultList2.get(i).equals("/")){
+                        resultList5.add(resultList2.get(i));
+                        resultList5.add(resultList2.get(i+1));
+                    }
+                    if(resultList2.get(i).equals("+") || resultList2.get(i).equals("-")){
+                        if(resultList2.get(i+2).equals("*") || resultList2.get(i+2).equals("/")){
+                            resultList5.add(resultList2.get(i+2));
+                            resultList5.add(resultList2.get(i+1));
+                        }else{
+                            resultList6.add(resultList2.get(i));
+                            resultList6.add(resultList2.get(i+1));
+                        }
+                    }
+                    if(i==1){
+                        if(resultList2.get(2).equals("*") || resultList2.get(2).equals("/")){
+                            resultList5.add(resultList2.get(1));
+                        }else{
+                            resultList6.add(resultList2.get(1));
+                        }
+                    }
+                }
+                str3 = merge(resultList5);                              //괄호안에 곱셈, 나눗셈 먼저 적용
+                str4 = merge(resultList6);                              //괄호안에 덧셈, 뺄셈 적용
+                str3 = "( "+ str3.substring(3);
+                str4 = str4 + " )";
+                str = str3 + str4;
+            }else{
+                str = merge(resultList2);
+                str = "( "+ str.substring(3) + " )";                //괄호안에 곱셈 나눗셈이 없을 경우 숫자 우선순위만 적용한다.
+            }
         }
         if (resultList3.size() != 0) {
             str1 = merge(resultList3);
             if(resultList2.size() != 0){
                 str1 = str1.substring(3);
-                str1 = "+ "+ str1;
+                str1 = " + "+ str1;
             }
         }
         if(resultList4.size() != 0){
@@ -240,8 +274,8 @@ public class CalculateHelper {
         String result = "";
         result = str + str1 + str2;
         if(!checkNumber(String.valueOf(result.charAt(0)))){
-            if(result.charAt(1) != '('){
-                result = result.substring(3);
+            if(result.charAt(0) != '('){
+                result = result.substring(2);
             }
         }
         Log.d(result,"결과");
@@ -273,7 +307,7 @@ public class CalculateHelper {
         int count1 = 0;
         if(checkNumber(String.valueOf(b.get(count1)))){
             if(b.size()>1){
-            z.add(" " +b.get(count1+1) + " "+ b.get(count1));
+            z.add(" " + b.get(count1+1) + " "+ b.get(count1));
             count1++;
             }else{
                 z.add(" + "+ b.get(count1));
@@ -288,7 +322,7 @@ public class CalculateHelper {
                 if(b.get(count1 - 1).equals("(")){
                     z.add(" + " + b.get(count1));
                 }else{
-                    z.add(" "+b.get(count1 - 1)+" "+b.get(count1));
+                    z.add(" " + b.get(count1 - 1) + " "+b.get(count1));
                 }
             }
             count1++;
