@@ -408,6 +408,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 process.setText(resultNum);
                 operator.setText(resultNum);
+                break;
         }
     }
 
