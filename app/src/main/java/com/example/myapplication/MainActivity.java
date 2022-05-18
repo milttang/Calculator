@@ -248,35 +248,53 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.sqr:
-                    result = textView.getText().toString();
-                    int resultSqr = Integer.parseInt(result);
+                    String[] sqa;
+                    String sqb = "";
+                    result = "";
+                    sqa = textView.getText().toString().split(" ");
+                    sqb = sqa[sqa.length-1];
+                    double resultSqr = Double.parseDouble(sqb);
                     double sqr = resultSqr * resultSqr;
-
-                    if (!isDot) {
-                        textView2.setText(String.valueOf((int) sqr));
-                        textView.setText(result + " * " + result);
+                    sqr = Math.floor(sqr*100)/100;
+                    if (!isDot || !sqb.contains(".")) {
+                        sqa[sqa.length-1] = String.valueOf((int) sqr);
                     } else {
-                        textView2.setText(String.valueOf(sqr));
-                        textView.setText(result + " * " + result);
+                        sqa[sqa.length-1] = String.valueOf(sqr);
                     }
-
+                    for(String date : sqa){
+                        result += date + " ";
+                    }
+                    textView.setText(result);
                     isDot = false;
-                    isPreview = false;
+                    isPreview = true;
+                    preview();
                     break;
 
                 case R.id.root:
-                    result = textView.getText().toString();
-                    int resultRoot = Integer.parseInt(result);
-                    double root = resultRoot * resultRoot;
-
-                    if (!isDot)
+                    String[] roa;
+                    String rob = "";
+                    result = "";
+                    roa = textView.getText().toString().split(" ");
+                    rob = roa[roa.length-1];
+                    double root = Math.sqrt(Double.parseDouble(rob));
+                    root = Math.floor(root*100)/100;
+                    if (!isDot) {
                         textView.setText(String.valueOf((int) root));
-                    else
+                    }else {
                         textView.setText(String.valueOf(root));
-
-                    textView2.setText("");
-                    isDot = false;
-                    isPreview = false;
+                    }
+                    roa[roa.length-1] = String.valueOf(root);
+                    if(roa[roa.length-1].contains(".")){
+                        isDot = true;
+                    }else{
+                        isDot = false;
+                    }
+                    for(String date : roa){
+                        result += date + " ";
+                    }
+                    textView.setText(result);
+                    isPreview = true;
+                    preview();
                     break;
 
                 case R.id.sort:
@@ -323,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
             if (!isDot)
                 textView2.setText(String.valueOf((int) r));
             else
+                r = Math.floor(r*100)/100;
                 textView2.setText(String.valueOf(r));
         }
     }
