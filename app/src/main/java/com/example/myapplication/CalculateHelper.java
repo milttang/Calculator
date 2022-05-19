@@ -142,7 +142,7 @@ public class CalculateHelper {
         }
         return true;
     }
-    public boolean checkError(String str) {        //숫자면 true 부호면 false
+    public boolean checkError(String str) {
         char check;
 
         if (str.equals(""))         //비어있는지 체크
