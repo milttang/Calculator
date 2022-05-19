@@ -220,7 +220,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     String sinProcess = "sin(" + sin + ")";
                     edit_process.setText(sinProcess);
                     edit_arith.append(" sin ");
-                    Double sinValue = Math.sin(Double.parseDouble(sin));
+                    Double sinValue = Math.sin(Double.parseDouble(sin) * Math.PI / 180);
                     String sinResult = sinValue.toString();
                     edit_result.setText(sinResult);
                     isPreview = true;
@@ -232,7 +232,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     String cosProcess = "cos(" + cos + ")";
                     edit_process.setText(cosProcess);
                     edit_arith.append(" cos ");
-                    Double cosValue = Math.cos(Double.parseDouble(cos));
+                    Double cosValue = Math.cos(Double.parseDouble(cos) * Math.PI / 180);
                     String cosResult = cosValue.toString();
                     edit_result.setText(cosResult);
                     isPreview = true;
@@ -244,7 +244,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     String tanProcess = "tan(" + tan + ")";
                     edit_process.setText(tanProcess);
                     edit_arith.append(" tan ");
-                    Double tanValue = Math.cos(Double.parseDouble(tan));
+                    Double tanValue = Math.cos(Double.parseDouble(tan) * Math.PI / 180);
                     String tanResult = tanValue.toString();
                     edit_result.setText(tanResult);
                     isPreview = true;
