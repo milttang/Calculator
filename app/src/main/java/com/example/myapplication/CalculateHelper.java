@@ -175,6 +175,7 @@ public class CalculateHelper {
         String addsubStr = "";
         String bracketMuldivStr = "";
         String bracketAddsubStr = "";
+        int count = 0;
         for (int i = 0; i < resultList.size(); i++) {
             if (resultList.get(i).equals("(")) {
                 if (bracket.size() > 0) {
@@ -218,7 +219,6 @@ public class CalculateHelper {
                 }
             }
             if (i > 0) {
-                int count = 0;
                 if(addsub.size() == 0){
                     if (checkNumber(resultList.get(i - 1))) {
                         addsub.add(resultList.get(i - 1));
