@@ -127,23 +127,7 @@ public class CalculateHelper {
         return result;
     }
 
-    public boolean checkNumber(String str) {        //부호인지 정수인지 실수인지 확인
-        char check;
-
-        if (str.equals(""))         //비어있는지 체크
-            return false;
-
-        for (int i = 0; i < str.length(); i++) {
-            check = str.charAt(i);
-            if (check < 48 || check > 58) {         //숫자 인지
-                if (check != '.')                   //실수 인지
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean checkError(String str) {        //부호인지 정수인지 실수인지 확인
+    public boolean checkNumber(String str) {        //숫자면 true 부호면 false
         char check;
 
         if (str.equals(""))         //비어있는지 체크
@@ -152,15 +136,27 @@ public class CalculateHelper {
         for (int i = 0; i < str.length(); i++) {
             check = str.charAt(i);
             if (check < 48 || check > 58) {
-
-            }
-            if(!(check == '+' ||check == '-' ||check == '*' ||check == '/' ||check == '(' ||check == ')')){
-                return false;
+                if (check != '.')
+                    return false;
             }
         }
         return true;
     }
+    public boolean checkError(String str) {        //숫자면 true 부호면 false
+        char check;
 
+        if (str.equals(""))         //비어있는지 체크
+            return false;
+
+        for (int i = 0; i < str.length(); i++) {
+            check = str.charAt(i);
+            if (check < 48 || check > 58) {
+                if (check != '.' && check != '+' && check != '-' && check != '*' && check != '/' && check != '(' && check != ')' && check != ' ')
+                    return true;
+            }
+        }
+        return false;
+    }
 
 
     public String sorted(String reNumber) {
@@ -194,6 +190,7 @@ public class CalculateHelper {
             if (resultList.get(i).equals("*") || resultList.get(i).equals("/")) {               // * , / 만 분리
                 if(i>1){
                     if(resultList.get(i-2).equals("+") || resultList.get(i-2).equals("-")){
+                        muldiv.add(resultList.get(i-2));
                         muldiv.add(resultList.get(i));
                     }
                 }

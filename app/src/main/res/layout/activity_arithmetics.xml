@@ -16,21 +16,20 @@
         <include
             layout="@layout/tool_bar"
             />
-        <TextView
-            android:id="@+id/text1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="사칙연산 계산기" />
-
+            android:layout_height="10pt"
+            />
         <TextView
             android:id="@+id/text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="사칙연산계산기"
             android:textAlignment="center"
+            android:fontFamily="@font/malgun"
             android:textSize="30dp" />
 
-        <EditText
+        <TextView
             android:id="@+id/edit_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +38,13 @@
             android:gravity="right"
             android:inputType="numberDecimal"
             android:maxLength="10"
+            android:textSize="20pt"
             android:text="" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2pt"
+            android:background="@color/teal_200"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

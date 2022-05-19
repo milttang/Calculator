@@ -308,6 +308,9 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                 case R.id.sort:
                     String sortStr = edit_process.getText().toString();
                     String sortresult = calculateHelper.sorted(sortStr);
+                    if(calculateHelper.checkError(sortresult)){
+                        return;
+                    }
                     edit_process.setText(sortresult);
                     preview();
                     break;
