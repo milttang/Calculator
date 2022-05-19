@@ -218,20 +218,17 @@ public class CalculateHelper {
                 }
             }
             if (i > 0) {
+                int count = 0;
                 if(addsub.size() == 0){
                     if (checkNumber(resultList.get(i - 1))) {
                         addsub.add(resultList.get(i - 1));
                     }else if(checkNumber(resultList.get(i))){
                         addsub.add(resultList.get(i));
+                    }else{
+                        count = -1;
                     }
                 }
                 if (resultList.get(i).equals("+") || resultList.get(i).equals("-")) {
-                    int count;
-                    if(addsub.get(0).equals("+") || addsub.get(0).equals("-")){
-                        count = -1;
-                    }else{
-                        count = 0;
-                    }
                     boolean bo = true;
                     while (bo) {
                         if (resultList.get(i).equals("*") || resultList.get(i).equals("/") || resultList.get(i).equals("(")) {  //곱셈 나눗셈 괄호열기 부호 나올때까지 다 남아라
