@@ -152,9 +152,9 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 } else {
                     for (count = 0; count < realZeroArray.length; count++) {
                         if (reverseZeroArray[count].equals("0")) {
-                            binaryView[9 - count].setImageResource(R.drawable.zero);
+                            binaryView[count].setImageResource(R.drawable.zero);
                         } else {
-                            binaryView[9 - count].setImageResource(R.drawable.one);
+                            binaryView[count].setImageResource(R.drawable.one);
                         }
                     }
                 }
@@ -190,9 +190,9 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 } else {
                     for (count = 0; count < realOneArray.length; count++) {
                         if (reverseOneArray[count].equals("0")) {
-                            binaryView[9 - count].setImageResource(R.drawable.zero);
+                            binaryView[count].setImageResource(R.drawable.zero);
                         } else {
-                            binaryView[9 - count].setImageResource(R.drawable.one);
+                            binaryView[count].setImageResource(R.drawable.one);
                         }
                     }
                 }
@@ -530,6 +530,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 // 배열의 Empty Data 지우는 함수 호출
                 String[] resultArray = deleteEmpty(binaryArray);
                 Log.v("resultArray", "resultArray : " + Arrays.toString(resultArray));
+                Log.v("resultArrayLength", "resultArrayLength : " + resultArray.length);
 
                 String[] tebinaryArray = teresultNum.split("");
 
@@ -555,13 +556,14 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                         }
                     });
                     myAlertBuilder.show();
+                    break;
                 }
 
                 for (count = 0; count < resultArray.length; count++) {
                     if (teresultArray[count].equals("0")) {
-                        binaryView[9 - count].setImageResource(R.drawable.zero);
+                        binaryView[count].setImageResource(R.drawable.zero);
                     } else {
-                        binaryView[9 - count].setImageResource(R.drawable.one);
+                        binaryView[count].setImageResource(R.drawable.one);
                     }
                 }
                 String resultProcess = process.getText().toString();

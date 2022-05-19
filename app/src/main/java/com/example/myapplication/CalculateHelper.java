@@ -143,6 +143,24 @@ public class CalculateHelper {
         return true;
     }
 
+    public boolean checkError(String str) {        //부호인지 정수인지 실수인지 확인
+        char check;
+
+        if (str.equals(""))         //비어있는지 체크
+            return false;
+
+        for (int i = 0; i < str.length(); i++) {
+            check = str.charAt(i);
+            if (check < 48 || check > 58) {
+
+            }
+            if(!(check == '+' ||check == '-' ||check == '*' ||check == '/' ||check == '(' ||check == ')')){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 
     public String sorted(String reNumber) {
@@ -173,6 +191,11 @@ public class CalculateHelper {
                 }
             }
             if (resultList.get(i).equals("*") || resultList.get(i).equals("/")) {               // * , / 만 분리
+                if(i>1){
+                    if(resultList.get(i-2).equals("+") || resultList.get(i-2).equals("-")){
+                        resultList3.add(resultList.get(i));
+                    }
+                }
                 resultList3.add(resultList.get(i - 1));
                 boolean vo = true;
                 while (vo) {
@@ -194,13 +217,21 @@ public class CalculateHelper {
                     break;
                 }
             }
-            if (i > 0) {                                                                //+, - 만 분리
-                int count = -1;
-                if (resultList4.size() == 0 && checkNumber(resultList.get(i - 1))) {
-                    resultList4.add(resultList.get(i - 1));
-                    count++;
+            if (i > 0) {
+                if(resultList4.size() == 0){
+                    if (checkNumber(resultList.get(i - 1))) {
+                        resultList4.add(resultList.get(i - 1));
+                    }else if(checkNumber(resultList.get(i))){
+                        resultList4.add(resultList.get(i));
+                    }
                 }
                 if (resultList.get(i).equals("+") || resultList.get(i).equals("-")) {
+                    int count;
+                    if(resultList4.get(0).equals("+") || resultList4.get(0).equals("-")){
+                        count = -1;
+                    }else{
+                        count = 0;
+                    }
                     boolean bo = true;
                     while (bo) {
                         if (resultList.get(i).equals("*") || resultList.get(i).equals("/") || resultList.get(i).equals("(")) {  //곱셈 나눗셈 괄호열기 부호 나올때까지 다 남아라
@@ -266,7 +297,7 @@ public class CalculateHelper {
             if(resultList2.size() != 0){
                 str1 = str1.substring(3);
                 str1 = " + "+ str1;
-            } 
+            }
         }
         if(resultList4.size() != 0){
             str2 = merge(resultList4);
@@ -275,7 +306,7 @@ public class CalculateHelper {
         result = str + str1 + str2;
         if(!checkNumber(String.valueOf(result.charAt(0)))){
             if(result.charAt(0) != '('){
-                result = result.substring(2);
+                result = result.substring(3);
             }
         }
         Log.d(result,"결과");

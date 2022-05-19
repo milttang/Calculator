@@ -35,64 +35,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/result0"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/result1"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="50dp" />
-
-            <ImageView
-                android:id="@+id/result2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/result3"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/result4"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/result5"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="50dp" />
-
-            <ImageView
-                android:id="@+id/result6"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/result7"
+                android:id="@+id/result9"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -105,8 +48,65 @@
                 android:layout_weight="1"
                 tools:ignore="ContentDescription" />
 
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="50dp" />
+
             <ImageView
-                android:id="@+id/result9"
+                android:id="@+id/result7"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/result6"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/result5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/result4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="50dp" />
+
+            <ImageView
+                android:id="@+id/result3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/result2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/result1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/result0"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
