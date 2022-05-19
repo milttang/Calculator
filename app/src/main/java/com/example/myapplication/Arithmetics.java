@@ -45,7 +45,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
 
     Button[] button = new Button[10];
 
-    private Button addBtn, subBtn, mulBtn, divBtn, clear, bracket, backBtn, dot, equal, hexa, binary, sqr, root, sort;
+    private Button addBtn, subBtn, mulBtn, divBtn, clear, bracket, backBtn, dot, equal, sinBtn, cosBtn, tanBtn, binary, sqr, root, sort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +95,12 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
         clear = findViewById(R.id.clear);
         bracket = findViewById(R.id.bracket);
         binary = findViewById(R.id.binary);
-        hexa = findViewById(R.id.hexa);
         sort = findViewById(R.id.sort);
         backBtn = findViewById(R.id.backBtn);
         dot = findViewById(R.id.dot);
+        sinBtn = findViewById(R.id.sinBtn);
+        cosBtn = findViewById(R.id.cosBtn);
+        tanBtn = findViewById(R.id.tanBtn);
 
         // number ClickListener
         Integer[] btn ={R.id.numBtn0, R.id.numBtn1, R.id.numBtn2,
@@ -128,10 +130,12 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
         clear.setOnClickListener(markClickListener);
         bracket.setOnClickListener(markClickListener);
         binary.setOnClickListener(markClickListener);
-        hexa.setOnClickListener(markClickListener);
         sort.setOnClickListener(markClickListener);
         backBtn.setOnClickListener(markClickListener);
         dot.setOnClickListener(markClickListener);
+        sinBtn.setOnClickListener(markClickListener);
+        cosBtn.setOnClickListener(markClickListener);
+        tanBtn.setOnClickListener(markClickListener);
     }
 
     // 숫자 버튼이 눌렸을 경우
@@ -207,6 +211,42 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     edit_arith.setText(" ");
                     edit_process.append(" / ");
                     edit_arith.append(" / ");
+                    isPreview = true;
+                    break;
+
+                case R.id.sinBtn:
+                    edit_arith.setText(" ");
+                    String sin = edit_process.getText().toString();
+                    String sinProcess = "sin(" + sin + ")";
+                    edit_process.setText(sinProcess);
+                    edit_arith.append(" sin ");
+                    Double sinValue = Math.sin(Double.parseDouble(sin));
+                    String sinResult = sinValue.toString();
+                    edit_result.setText(sinResult);
+                    isPreview = true;
+                    break;
+
+                case R.id.cosBtn:
+                    edit_arith.setText(" ");
+                    String cos = edit_process.getText().toString();
+                    String cosProcess = "cos(" + cos + ")";
+                    edit_process.setText(cosProcess);
+                    edit_arith.append(" cos ");
+                    Double cosValue = Math.cos(Double.parseDouble(cos));
+                    String cosResult = cosValue.toString();
+                    edit_result.setText(cosResult);
+                    isPreview = true;
+                    break;
+
+                case R.id.tanBtn:
+                    edit_arith.setText(" ");
+                    String tan = edit_process.getText().toString();
+                    String tanProcess = "tan(" + tan + ")";
+                    edit_process.setText(tanProcess);
+                    edit_arith.append(" tan ");
+                    Double tanValue = Math.cos(Double.parseDouble(tan));
+                    String tanResult = tanValue.toString();
+                    edit_result.setText(tanResult);
                     isPreview = true;
                     break;
 
@@ -332,12 +372,6 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     break;
-
-                /*case R.id.hexa:
-                    Intent intentHe = new Intent(getApplicationContext(), HexaActivity.class);
-                    intentHe.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intentHe);
-                    break;*/
             }
         }
     };
