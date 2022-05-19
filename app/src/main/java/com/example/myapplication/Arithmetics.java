@@ -257,22 +257,23 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     break;
 
                 case R.id.sqr:
-                    String[] sqa;
-                    String sqb = "";
-                    result = "";
-                    sqa = edit_process.getText().toString().split(" ");
-                    sqb = sqa[sqa.length-1];
-                    double resultSqr = Double.parseDouble(sqb);
-                    double sqr = resultSqr * resultSqr;
-                    sqr = Math.floor(sqr*100)/100;
-                    if (!isDot || !sqb.contains(".")) {
-                        sqa[sqa.length-1] = String.valueOf((int) sqr);
-                        isDot = false;
+                    String[] processSqr;                   //전체 process 배열
+                    String lastNumSqr = "";                //root 적용할 값
+                    result = "";                        //출력할 값
+                    processSqr = edit_process.getText().toString().split(" ");
+                    lastNumSqr = processSqr[processSqr.length-1];
+                    if (!isDot) {                                       //정수면 정수로 실수면 실수로 타입 변환후 결과 값 출력
+                        int resultSqr = Integer.parseInt(lastNumSqr);
+                        int sqr = resultSqr * resultSqr;
+                        processSqr[processSqr.length-1] = String.valueOf(sqr);
                     } else {
-                        sqa[sqa.length-1] = String.valueOf(sqr);
+                        double resultSqr = Double.parseDouble(lastNumSqr);
+                        double sqr = resultSqr * resultSqr;
+                        sqr = Math.floor(sqr*100)/100;
+                        processSqr[processSqr.length-1] = String.valueOf(sqr);
                         isDot = true;
                     }
-                    for(String date : sqa){
+                    for(String date : processSqr){
                         result += date + " ";
                     }
                     edit_process.setText(result);
@@ -281,22 +282,22 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     break;
 
                 case R.id.root:
-                    String[] roa;
-                    String rob = "";
-                    result = "";
-                    roa = edit_process.getText().toString().split(" ");
-                    rob = roa[roa.length-1];
-                    double root = Math.sqrt(Double.parseDouble(rob));
+                    String[] processRoot;                   //전체 process 배열
+                    String lastNumRoot = "";                //root 적용할 값
+                    result = "";                        //출력할 값
+                    processRoot = edit_process.getText().toString().split(" ");
+                    lastNumRoot = processRoot[processRoot.length-1];
+                    double root = Math.sqrt(Double.parseDouble(lastNumRoot));
                     root = Math.floor(root*100)/100;
-                    int root1 = (int) root;
-                    double root2 = root - root1;
-                    if (!isDot && !(root2 > 0.0)) {
-                        roa[roa.length-1] = String.valueOf((int) root);
+                    int intNum = (int) root;                //root값 정수 변환
+                    double booleanNum = root - intNum;      //root값과 버림값을 빼서 값이 0.0이면 정수 소수점 뒤에 값이 있으면 실수
+                    if (!isDot && !(booleanNum > 0.0)) {    //isDot가 false이고 root값이 정수이면 int로 변경
+                        processRoot[processRoot.length-1] = String.valueOf((int) root);
                     }else {
-                        roa[roa.length-1] = String.valueOf(root);
+                        processRoot[processRoot.length-1] = String.valueOf(root);
                         isDot = true;
                     }
-                    for(String date : roa){
+                    for(String date : processRoot){
                         result += date + " ";
                     }
                     edit_process.setText(result);
