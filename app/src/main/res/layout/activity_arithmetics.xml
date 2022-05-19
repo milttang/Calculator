@@ -90,6 +90,16 @@
                     android:text="←" />
 
                 <Button
+                    android:id="@+id/sinBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_color_selector"
+                    android:text="sin"
+                    android:textAllCaps="false" />
+
+                <Button
                     android:id="@+id/sqr"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -149,6 +159,16 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_color_selector"
                     android:text="C" />
+
+                <Button
+                    android:id="@+id/cosBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_color_selector"
+                    android:text="cos"
+                    android:textAllCaps="false" />
 
                 <Button
                     android:id="@+id/root"
@@ -213,6 +233,16 @@
                     android:text="sort" />
 
                 <Button
+                    android:id="@+id/tanBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_color_selector"
+                    android:text="tan"
+                    android:textAllCaps="false" />
+
+                <Button
                     android:id="@+id/bracket"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -266,13 +296,18 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/hexa"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_color_selector"
-                    android:text="Hexa" />
+                    android:background="@drawable/btn_color_selector" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_color_selector" />
 
                 <Button
                     android:id="@+id/binary"
