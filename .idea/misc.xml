@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.2971014492753623" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics.xml" value="0.2" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.1" />
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_date.xml" value="0.16394927536231885" />
         <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_arithmetics.xml" value="0.25364583333333335" />
         <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.26145833333333335" />

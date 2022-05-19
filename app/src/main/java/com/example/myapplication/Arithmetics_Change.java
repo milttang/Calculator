@@ -36,10 +36,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     public String firstNum = "";
     public String secondNum = "";
     public String firstResultNum = "";
-    public String tefirstResultNum = "";
+    public String te_firstResultNum = "";
     public String operaTor = "";
     public String resultNum = "";
-    public String teresultNum = "";
+    public String te_resultNum = "";
     public String firstNumNo = "";
     private Toolbar mainToolBar;
     private ActionBarDrawerToggle drawerToggle;
@@ -121,7 +121,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         clear();
         select(view);
         resultNum = "";
-        teresultNum = "";
+        te_resultNum = "";
         switch (view.getId()) {
             case R.id.numBtn0:
                 inputNum = inputNum + "0";
@@ -135,7 +135,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 Log.v("realZeroArray", "realZeroArray : " + Arrays.toString(realZeroArray));
                 Log.v("reverseZeroArray", "reverseZeroArray : " + Arrays.toString(reverseZeroArray));
-                if (realZeroArray.length > 10){
+                if (realZeroArray.length > 10) {
                     AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Error.");
@@ -173,7 +173,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 Log.v("realOneArray", "realOneArray : " + Arrays.toString(realOneArray));
                 Log.v("reverseOneArray", "reverseOneArray : " + Arrays.toString(reverseOneArray));
-                if (realOneArray.length > 10){
+                if (realOneArray.length > 10) {
                     AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Error.");
@@ -405,7 +405,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 clear();
                 inputNum = "";
                 firstResultNum = "";
-                tefirstResultNum = "";
+                te_firstResultNum = "";
                 process.setText("");
                 operator.setText("");
                 break;
@@ -532,12 +532,12 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 Log.v("resultArray", "resultArray : " + Arrays.toString(resultArray));
                 Log.v("resultArrayLength", "resultArrayLength : " + resultArray.length);
 
-                String[] tebinaryArray = teresultNum.split("");
+                String[] te_binaryArray = te_resultNum.split("");
 
-                Log.v("tebinaryArray", "tebinaryArray : " + Arrays.toString(tebinaryArray));
+                Log.v("te_binaryArray", "te_binaryArray : " + Arrays.toString(te_binaryArray));
                 // 배열의 Empty Data 지우는 함수 호출
-                String[] teresultArray = deleteEmpty(tebinaryArray);
-                Log.v("teresultArray", "teresultArray : " + Arrays.toString(teresultArray));
+                String[] te_resultArray = deleteEmpty(te_binaryArray);
+                Log.v("te_resultArray", "te_resultArray : " + Arrays.toString(te_resultArray));
 
                 // 계산 값 10자리 넘어갈 때, Reset
                 if (resultArray.length > 10) {
@@ -560,7 +560,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
 
                 for (count = 0; count < resultArray.length; count++) {
-                    if (teresultArray[count].equals("0")) {
+                    if (te_resultArray[count].equals("0")) {
                         binaryView[count].setImageResource(R.drawable.zero);
                     } else {
                         binaryView[count].setImageResource(R.drawable.one);
@@ -592,8 +592,8 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
             c++;
         } while (n > 0);
         for (int i = 0; i < num.length(); i++) {
-            teresultNum += num.charAt(i);
-            tefirstResultNum += num.charAt(i);
+            te_resultNum += num.charAt(i);
+            te_firstResultNum += num.charAt(i);
         }
         for (int i = num.length() - 1; i >= 0; i--) {                 // 값을 거꾸로 저장
             resultNum += num.charAt(i);
