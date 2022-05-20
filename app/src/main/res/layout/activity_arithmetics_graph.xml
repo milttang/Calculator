@@ -9,7 +9,7 @@
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -35,48 +35,132 @@
             android:background="@color/teal_200"
             />
 
-        <TextView
-            android:id="@+id/equation1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:height="50dp"
-            android:fontFamily="@font/lab"
-            android:gravity="end"
-            android:inputType="numberDecimal"
-            android:maxLength="10"
-            android:textSize="20pt"
-            android:text="" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="2pt"
-            android:background="@color/teal_200"
-            />
-        <TextView
-            android:id="@+id/equation2"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="50dp"
-            android:fontFamily="@font/lab"
-            android:gravity="end"
-            android:inputType="numberDecimal"
-            android:maxLength="10"
-            android:textSize="20pt"
-            android:text="" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2pt"
-            android:background="@color/teal_200"
-            />
-        <TextView
-                android:id="@+id/equation3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/function1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:height="50dp"
                 android:fontFamily="@font/lab"
+                android:textSize="15pt"
+                android:layout_gravity=""
+                android:text="Function"/>
+
+            <TextView
+                android:id="@+id/equation1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:gravity="end"
                 android:inputType="numberDecimal"
                 android:maxLength="10"
                 android:textSize="20pt"
                 android:text="" />
+            <TextView
+                android:id="@+id/empty1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:textSize="20pt"
+                android:visibility="invisible"
+                android:text="" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2pt"
+            android:background="@color/teal_200"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/function2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:textSize="15pt"
+                android:layout_gravity=""
+                android:text="Function"/>
+
+            <TextView
+                android:id="@+id/equation2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:gravity="end"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:textSize="20pt"
+                android:text="" />
+            <TextView
+                android:id="@+id/empty2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:textSize="20pt"
+                android:visibility="invisible"
+                android:text="" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2pt"
+            android:background="@color/teal_200"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/function3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:textSize="15pt"
+                android:layout_gravity=""
+                android:text="Function"/>
+
+            <TextView
+                android:id="@+id/equation3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:gravity="end"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:textSize="20pt"
+                android:text="" />
+            <TextView
+                android:id="@+id/empty3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:fontFamily="@font/lab"
+                android:textSize="20pt"
+                android:visibility="invisible"
+                android:text="" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="2pt"
@@ -112,7 +196,7 @@
                     android:textAllCaps="false" />
 
                 <Button
-                    android:id="@+id/sqr"
+                    android:id="@+id/sqrBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -164,7 +248,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/clear"
+                    android:id="@+id/clearBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -183,7 +267,7 @@
                     android:textAllCaps="false" />
 
                 <Button
-                    android:id="@+id/root"
+                    android:id="@+id/rootBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -220,7 +304,7 @@
                     android:text="2" />
 
                 <Button
-                    android:id="@+id/dot"
+                    android:id="@+id/dotBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -236,7 +320,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/xValue"
+                    android:id="@+id/xBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -255,7 +339,7 @@
                     android:textAllCaps="false" />
 
                 <Button
-                    android:id="@+id/bracket"
+                    android:id="@+id/bracketBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -292,7 +376,7 @@
                     android:text="3" />
 
                 <Button
-                    android:id="@+id/equal"
+                    android:id="@+id/equalBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -308,7 +392,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/yValue"
+                    android:id="@+id/yBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -319,7 +403,7 @@
 
 
                 <Button
-                    android:id="@+id/home"
+                    android:id="@+id/homeBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -327,7 +411,7 @@
                     android:background="@drawable/btn_color_selector"
                     android:text="Home"/>
                 <Button
-                    android:id="@+id/graph"
+                    android:id="@+id/graphBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"

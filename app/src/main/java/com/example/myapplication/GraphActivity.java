@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private TextView functionTest, functionTest1;
     private LineChart chart;
     private Button home;
 
@@ -28,6 +30,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         chart = findViewById(R.id.linechart);
         home = findViewById(R.id.home);
+        functionTest = findViewById(R.id.functionTest);
+        functionTest1 = findViewById(R.id.functionTest1);
 
         home.setOnClickListener(this);
 
@@ -54,6 +58,16 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         // set data
         chart.setData(data);
+
+        // 전달 받은 Data 확인
+        Bundle extras = getIntent().getExtras();
+        String function1 = extras.getString("function1");
+        functionTest.setText(function1);
+
+        Intent intent = getIntent(); // Data 전달 받을 Intent
+        //text 키값으로 데이터를 받는다. String을 받아야 하므로 getStringExtra()를 사용함
+        String text = intent.getStringExtra("function1");
+        functionTest1.setText(text);
     }
     // Activity 종료 시 효과 제거
     @Override
