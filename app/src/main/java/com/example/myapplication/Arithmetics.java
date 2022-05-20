@@ -45,7 +45,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
 
     Button[] button = new Button[10];
 
-    private Button addBtn, subBtn, mulBtn, divBtn, clear, bracket, backBtn, dot, equal, sinBtn, cosBtn, tanBtn, binary, sqr, root, sort;
+    private Button addBtn, subBtn, mulBtn, divBtn, clear, bracket, backBtn, dot, equal, sinBtn, cosBtn, tanBtn, binary, sqr, root, sort, graph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +98,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
         sort = findViewById(R.id.sort);
         backBtn = findViewById(R.id.backBtn);
         dot = findViewById(R.id.dot);
+        graph = findViewById(R.id.graph);
         sinBtn = findViewById(R.id.sinBtn);
         cosBtn = findViewById(R.id.cosBtn);
         tanBtn = findViewById(R.id.tanBtn);
@@ -133,6 +134,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
         sort.setOnClickListener(markClickListener);
         backBtn.setOnClickListener(markClickListener);
         dot.setOnClickListener(markClickListener);
+        graph.setOnClickListener(markClickListener);
         sinBtn.setOnClickListener(markClickListener);
         cosBtn.setOnClickListener(markClickListener);
         tanBtn.setOnClickListener(markClickListener);
@@ -374,6 +376,12 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     Intent intent = new Intent(getApplicationContext(), Arithmetics_Change.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
+                    break;
+
+                case R.id.graph:
+                    Intent intentGra = new Intent(getApplicationContext(), Arithmetics_Graph.class);
+                    intentGra.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intentGra);
                     break;
             }
         }
