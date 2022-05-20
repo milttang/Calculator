@@ -439,7 +439,7 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                 }
 
             case R.id.homeBtn:
-                Intent homeIntent = new Intent(getApplicationContext(), Arithmetics_Graph.class);
+                Intent homeIntent = new Intent(getApplicationContext(), Arithmetics.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                 startActivity(homeIntent);
                 break;
