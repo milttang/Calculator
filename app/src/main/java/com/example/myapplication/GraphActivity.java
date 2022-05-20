@@ -18,6 +18,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +32,18 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+
+
+//        String function2 = extras.getString("function2");
+//        String empty2 = extras.getString("empty2");
+//        functionTest2.setText(function2);
+//        functionTest3.setText(empty2);
+//
+//        String function3 = extras.getString("function3");
+//        String empty3 = extras.getString("empty3");
+//        functionTest4.setText(function3);
+//        functionTest5.setText(empty3);
+
         chart = findViewById(R.id.linechart);
         graph = findViewById(R.id.graph);
         functionTest = findViewById(R.id.functionTest);
@@ -41,6 +55,21 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         graph.setOnClickListener(this);
 
+        // 전달 받은 Data 확인
+        Bundle extras = getIntent().getExtras();
+        String function1 = extras.getString("function1");
+        String empty1 = extras.getString("empty1");
+        functionTest.setText(function1);
+        functionTest1.setText(empty1);
+
+        String functionFirst = functionTest.getText().toString();
+        String functionFirstRemove = functionFirst.replaceFirst("y=","");
+        Log.v("functionFirst","functionFirst" + functionFirst);
+        Log.v("functionFirstRemove","functionFirstRemove" + functionFirstRemove);
+        String[] functionArray = functionFirstRemove.split("");
+        Log.v("functionArray","functionArray" + Arrays.toString(functionArray));
+        String[] functionResult = deleteEmpty(functionArray);
+        Log.v("functionResult","functionResult" + Arrays.toString(functionResult));
 
         ArrayList<Entry> values = new ArrayList<>();
 
@@ -83,12 +112,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         // set data
         chart.setData(data);
 
-        // 전달 받은 Data 확인
-        Bundle extras = getIntent().getExtras();
-        String function1 = extras.getString("function1");
-        String empty1 = extras.getString("empty1");
-        functionTest.setText(function1);
-        functionTest1.setText(empty1);
+
     }
 
     // Activity 종료 시 효과 제거
@@ -128,5 +152,10 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(homeIntent);
                 break;
         }
+    }
+    public static String[] deleteEmpty(final String[] array) {              // String[]의 Empty Data 삭제
+        List<String> list = new ArrayList<String>(Arrays.asList(array));
+        list.removeAll(Collections.singleton(""));                          // list 내부 Data "" 모두 제거
+        return list.toArray(new String[list.size()]);
     }
 }

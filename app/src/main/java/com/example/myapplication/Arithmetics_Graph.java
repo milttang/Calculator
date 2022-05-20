@@ -109,19 +109,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
     @Override
     protected void onPause() {
         super.onPause();
-//        Bundle extras = getIntent().getExtras();
-//        String functionOne = extras.getString("functionOne");
-//        String emptyOne = extras.getString("emptyOne");
-//        String functionTwo = extras.getString("functionTwo");
-//        String emptyTwo = extras.getString("emptyTwo");
-//        String functionThr = extras.getString("functionThr");
-//        String emptyThr = extras.getString("emptyThr");
-//        equation1.setText(functionOne);
-//        empty1.setText(emptyOne);
-//        equation2.setText(functionTwo);
-//        empty2.setText(emptyTwo);
-//        equation3.setText(functionThr);
-//        empty3.setText(emptyThr);
         overridePendingTransition(0, 0);
     }
 
@@ -433,24 +420,67 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     empty1.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-                    intent.putExtra("empty1",empty1.getText().toString());
-                    intent.putExtra("function1",equation1.getText().toString());
+                    intent.putExtra("empty1", empty1.getText().toString());
+                    intent.putExtra("function1", equation1.getText().toString());
+//                    if (empty2.getText().toString().equals("")) {
+//                        intent.putExtra("empty2", "");
+//                        intent.putExtra("function2", "");
+//                    } else {
+//                        intent.putExtra("empty2", empty2.getText().toString());
+//                        intent.putExtra("function2", equation2.getText().toString());
+//                    }
+//                    if (empty3.getText().toString().equals("")) {
+//                        intent.putExtra("empty3", "");
+//                        intent.putExtra("function3", "");
+//                    } else {
+//                        intent.putExtra("empty3", empty3.getText().toString());
+//                        intent.putExtra("function3", equation3.getText().toString());
+//                    }
                     startActivity(intent);
                     break;
                 } else if (empty2.getText().toString().equals("")) {
                     empty2.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-                    intent.putExtra("empty2",empty2.getText().toString());
-                    intent.putExtra("function2",equation2.getText().toString());               startActivity(intent);
+                    intent.putExtra("empty2", empty2.getText().toString());
+                    intent.putExtra("function2", equation2.getText().toString());
+//                    if (empty1.getText().toString().equals("")) {
+//                        intent.putExtra("empty1", "");
+//                        intent.putExtra("function1", "");
+//                    } else {
+//                        intent.putExtra("empty1", empty1.getText().toString());
+//                        intent.putExtra("function1", equation1.getText().toString());
+//                    }
+//                    if (empty3.getText().toString().equals("")) {
+//                        intent.putExtra("empty3", "");
+//                        intent.putExtra("function3", "");
+//                    } else {
+//                        intent.putExtra("empty3", empty3.getText().toString());
+//                        intent.putExtra("function3", equation3.getText().toString());
+//                    }
+                    startActivity(intent);
                     startActivity(intent);
                     break;
                 } else {
                     empty3.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-                    intent.putExtra("empty3",empty3.getText().toString());
-                    intent.putExtra("function3",equation3.getText().toString());
+                    intent.putExtra("empty3", empty3.getText().toString());
+                    intent.putExtra("function3", equation3.getText().toString());
+//                    if (empty1.getText().toString().equals("")) {
+//                        intent.putExtra("empty1", "");
+//                        intent.putExtra("function1", "");
+//                    } else {
+//                        intent.putExtra("empty1", empty1.getText().toString());
+//                        intent.putExtra("function1", equation1.getText().toString());
+//                    }
+//                    if (empty2.getText().toString().equals("")) {
+//                        intent.putExtra("empty2", "");
+//                        intent.putExtra("function2", "");
+//                    } else {
+//                        intent.putExtra("empty2", empty2.getText().toString());
+//                        intent.putExtra("function2", equation2.getText().toString());
+//                    }
                     startActivity(intent);
                     break;
                 }
