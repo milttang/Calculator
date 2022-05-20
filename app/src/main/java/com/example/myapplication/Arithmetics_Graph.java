@@ -9,17 +9,17 @@ import android.widget.Button;
 
 public class Arithmetics_Graph extends AppCompatActivity implements View.OnClickListener {
 
-    private Button click, home;
+    private Button graph, home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arithmetics_graph);
 
-        click = findViewById(R.id.click);
+        graph = findViewById(R.id.graph);
         home = findViewById(R.id.home);
 
-        click.setOnClickListener(this);
+        graph.setOnClickListener(this);
         home.setOnClickListener(this);
     }
 
@@ -33,13 +33,13 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.click:
+            case R.id.graph:
                 Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                 startActivity(intent);
                 break;
             case R.id.home:
-                Intent homeIntent = new Intent(getApplicationContext(), Arithmetics.class);
+                Intent homeIntent = new Intent(getApplicationContext(), Arithmetics_Graph.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                 startActivity(homeIntent);
                 break;
