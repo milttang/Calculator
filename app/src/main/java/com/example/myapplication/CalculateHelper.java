@@ -24,7 +24,7 @@ public class CalculateHelper {
             if (data.equals(" ")) {
                 continue;
             }
-            if (checkNumber(data)) {        //정수일 때
+            if (checkNumber(data)) {
                 number = number * 10 + Double.parseDouble(data);
                 flag = true;
             } else {
@@ -136,8 +136,11 @@ public class CalculateHelper {
         for (int i = 0; i < str.length(); i++) {
             check = str.charAt(i);
             if (check < 48 || check > 58) {
-                if (check != '.')
-                    return false;
+                if (check != '.') {
+                    if(str.length()<2){
+                        return false;
+                    }
+                }
             }
         }
         return true;
@@ -171,7 +174,7 @@ public class CalculateHelper {
         String addsubStr = "";
         String bracketMuldivStr = "";
         String bracketAddsubStr = "";
-        int count = 0;
+        int count = -1;
         for (int i = 0; i < resultList.size(); i++) {
             if (resultList.get(i).equals("(")) {
                 if (bracket.size() > 0) {
@@ -191,7 +194,6 @@ public class CalculateHelper {
                 if(i>1){
                     if(resultList.get(i-2).equals("+") || resultList.get(i-2).equals("-")){
                         muldiv.add(resultList.get(i-2));
-                        muldiv.add(resultList.get(i));
                     }
                 }
                 muldiv.add(resultList.get(i - 1));
@@ -202,7 +204,6 @@ public class CalculateHelper {
                         if (resultList.get(i).equals("(")) {
                             i = i-2;
                         }
-                        i++;
                     } else {
                         muldiv.add(resultList.get(i));
                         i++;
@@ -215,42 +216,36 @@ public class CalculateHelper {
                     break;
                 }
             }
-            if (i > 0) {
-                if(addsub.size() == 0){
-                    if (checkNumber(resultList.get(i - 1))) {
-                        addsub.add(resultList.get(i - 1));
-                    }else if(checkNumber(resultList.get(i))){
-                        addsub.add(resultList.get(i));
-                    }else{
-                        count = -1;
-                    }
-                }
-                if (resultList.get(i).equals("+") || resultList.get(i).equals("-")) {
-                    boolean bo = true;
-                    while (bo) {
-                        if (resultList.get(i).equals("*") || resultList.get(i).equals("/") || resultList.get(i).equals("(")) {  //곱셈 나눗셈 괄호열기 부호 나올때까지 다 남아라
-                            bo = false;
-                            if (resultList.get(i).equals("(")) {
-                                i--;
-                                addsub.remove(count);
-                            } else {
-                                addsub.remove(count);
-                                addsub.remove(count - 1);
-                                i--;
-                            }
+            if(addsub.size() == 0 && (resultList.get(1).equals("+") || resultList.get(1).equals("-"))){
+                addsub.add(resultList.get(0));
+                count++;
+            }
+            if (resultList.get(i).equals("+") || resultList.get(i).equals("-")) {
+                boolean bo = true;
+                while (bo) {
+                    if (resultList.get(i).equals("*") || resultList.get(i).equals("/") || resultList.get(i).equals("(")) {  //곱셈 나눗셈 괄호열기 부호 나올때까지 다 남아라
+                        bo = false;
+                        if (resultList.get(i).equals("(")) {        //괄호 열기가 나오면 괄호 열기 직전 부호 지워라  5 (+) (
+                            addsub.remove(count);
+                            count--;
                         } else {
-                            addsub.add(resultList.get(i));
-                            i++;
-                            count++;
+                            addsub.remove(count);                           // * , / 가 나오면 그 전 숫자와 부호를 지워라 2 (+ 5) *
+                            addsub.remove(count - 1);
+                            count = count -2;
                         }
-                        if (i == resultList.size()) {                 //i가 최대치일 경우 break;
-                            break;
-                        }
+                        i--;
+                    } else {
+                        addsub.add(resultList.get(i));
+                        i++;
+                        count++;
+                    }
+                    if (i == resultList.size()) {                 //i가 최대치일 경우 break;
+                        break;
                     }
                 }
             }
         }
-        if (bracket.size() != 0) {
+        if (bracket.size() != 0) {                              //괄호 배열 정렬
             ArrayList<String> resultList5 = new ArrayList<>();              //괄호 곱셈 나눗셈
             ArrayList<String> resultList6 = new ArrayList<>();              //괄호 덧셈 뺄셈
             if(bracket.contains("*") || bracket.contains("/")){                     //괄호 안에서 우선순위 적용해서 곱셈나눗셈, 뺄셈 덧셈 따로 나누기
@@ -268,7 +263,7 @@ public class CalculateHelper {
                             resultList6.add(bracket.get(i+1));
                         }
                     }
-                    if(i==1){
+                    if(i==1){                       //시작 부호[2]로 첫 숫자[1]를 어느 배열에 넣을지 정한다. [0]은 괄호
                         if(bracket.get(2).equals("*") || bracket.get(2).equals("/")){
                             resultList5.add(bracket.get(1));
                         }else{
@@ -286,14 +281,14 @@ public class CalculateHelper {
                 bracketStr = "( "+ bracketStr.substring(3) + " )";                //괄호안에 곱셈 나눗셈이 없을 경우 숫자 우선순위만 적용한다.
             }
         }
-        if (muldiv.size() != 0) {
+        if (muldiv.size() != 0) {                       //곱셈 나눗셈 배열 정렬
             muldivStr = merge(muldiv);
             if(bracket.size() != 0){
                 muldivStr = muldivStr.substring(3);
                 muldivStr = " + "+ muldivStr;
             }
         }
-        if(addsub.size() != 0){
+        if(addsub.size() != 0){                     //덧셈 뺄셈 배열 정렬
             addsubStr = merge(addsub);
         }
         String result = "";

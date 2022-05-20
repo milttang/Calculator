@@ -1,29 +1,22 @@
 package com.example.myapplication;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Arithmetics extends AppCompatActivity {  //터치따로
@@ -47,10 +40,25 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
 
     private Button addBtn, subBtn, mulBtn, divBtn, clear, bracket, backBtn, dot, equal, sinBtn, cosBtn, tanBtn, binary, sqr, root, sort, graph;
 
+    private Toolbar mainToolBar;
+
+    private ActionBarDrawerToggle drawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arithmetics);
+        // toolbar
+        mainToolBar = (Toolbar) findViewById(R.id.main_tool_bar);
+        setSupportActionBar(mainToolBar);
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mainToolBar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        MenuBarEvent menuBarEvent = new MenuBarEvent(this);
+        navigationView.setNavigationItemSelectedListener(menuBarEvent);
 
         calculateHelper = new CalculateHelper();
 
@@ -196,9 +204,15 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     break;
 
                 case R.id.subBtn:
-                    edit_arith.setText(" ");
-                    edit_process.append(" - ");
-                    edit_arith.append(" - ");
+                    String[] test_process = edit_process.getText().toString().split(" ");
+                    String lastarith = test_process[test_process.length-1];
+                    if(!(lastarith.equals("*") || lastarith.equals("/"))){
+                        edit_process.append(" - ");
+                        edit_arith.setText(" - ");
+                    }else{
+                        edit_process.append("-");
+                        return;
+                    }
                     isPreview = true;
                     break;
 
