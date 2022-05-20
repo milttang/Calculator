@@ -1,9 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +15,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class Arithmetics_Graph extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView equation1, equation2, equation3, empty1, empty2, empty3;
+    public static final int REQUEST_CODE = 1000;
+    private TextView equation1, equation2, equation3, empty1, empty2, empty3;           // 함수 입력을 위한 equation, 입력이 되어 있는 가를 확인할 empty
     private Button numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9,
             dotBtn, equalBtn, divBtn, mulBtn, subBtn, addBtn, sqrBtn, rootBtn, bracketBtn, sinBtn, cosBtn, tanBtn,
             xBtn, yBtn, backBtn, clearBtn, graphBtn, homeBtn;
@@ -110,6 +109,19 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
     @Override
     protected void onPause() {
         super.onPause();
+//        Bundle extras = getIntent().getExtras();
+//        String functionOne = extras.getString("functionOne");
+//        String emptyOne = extras.getString("emptyOne");
+//        String functionTwo = extras.getString("functionTwo");
+//        String emptyTwo = extras.getString("emptyTwo");
+//        String functionThr = extras.getString("functionThr");
+//        String emptyThr = extras.getString("emptyThr");
+//        equation1.setText(functionOne);
+//        empty1.setText(emptyOne);
+//        equation2.setText(functionTwo);
+//        empty2.setText(emptyTwo);
+//        equation3.setText(functionThr);
+//        empty3.setText(emptyThr);
         overridePendingTransition(0, 0);
     }
 
@@ -421,6 +433,7 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     empty1.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
+                    intent.putExtra("empty1",empty1.getText().toString());
                     intent.putExtra("function1",equation1.getText().toString());
                     startActivity(intent);
                     break;
@@ -428,12 +441,16 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     empty2.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
+                    intent.putExtra("empty2",empty2.getText().toString());
+                    intent.putExtra("function2",equation2.getText().toString());               startActivity(intent);
                     startActivity(intent);
                     break;
                 } else {
                     empty3.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
+                    intent.putExtra("empty3",empty3.getText().toString());
+                    intent.putExtra("function3",equation3.getText().toString());
                     startActivity(intent);
                     break;
                 }
