@@ -17,12 +17,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class Arithmetics_Graph extends AppCompatActivity implements View.OnClickListener {
 
-<<<<<<< HEAD
-    private TextView equation1, equation2, equation3, empty1, empty2, empty3;
-=======
     public static final int REQUEST_CODE = 1000;
     private TextView equation1, equation2, equation3, empty1, empty2, empty3;           // 함수 입력을 위한 equation, 입력이 되어 있는 가를 확인할 empty
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
     private Button numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9,
             dotBtn, equalBtn, divBtn, mulBtn, subBtn, addBtn, sqrBtn, rootBtn, bracketBtn, sinBtn, cosBtn, tanBtn,
             xBtn, yBtn, backBtn, clearBtn, graphBtn, homeBtn;
@@ -426,9 +422,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     empty1.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-<<<<<<< HEAD
-                    intent.putExtra("function1",equation1.getText().toString());
-=======
                     intent.putExtra("empty1", empty1.getText().toString());
                     intent.putExtra("function1", equation1.getText().toString());
 //                    if (empty2.getText().toString().equals("")) {
@@ -445,15 +438,12 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
 //                        intent.putExtra("empty3", empty3.getText().toString());
 //                        intent.putExtra("function3", equation3.getText().toString());
 //                    }
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
                     startActivity(intent);
                     break;
                 } else if (empty2.getText().toString().equals("")) {
                     empty2.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-<<<<<<< HEAD
-=======
                     intent.putExtra("empty2", empty2.getText().toString());
                     intent.putExtra("function2", equation2.getText().toString());
 //                    if (empty1.getText().toString().equals("")) {
@@ -470,15 +460,12 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
 //                        intent.putExtra("empty3", empty3.getText().toString());
 //                        intent.putExtra("function3", equation3.getText().toString());
 //                    }
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
                     startActivity(intent);
                     break;
                 } else {
                     empty3.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-<<<<<<< HEAD
-=======
                     intent.putExtra("empty3", empty3.getText().toString());
                     intent.putExtra("function3", equation3.getText().toString());
 //                    if (empty1.getText().toString().equals("")) {
@@ -495,7 +482,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
 //                        intent.putExtra("empty2", empty2.getText().toString());
 //                        intent.putExtra("function2", equation2.getText().toString());
 //                    }
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
                     startActivity(intent);
                     break;
                 }

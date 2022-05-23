@@ -23,11 +23,7 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
-<<<<<<< HEAD
-    private TextView functionTest, functionTest1;
-=======
     private TextView functionTest, functionTest1, functionTest2, functionTest3, functionTest4, functionTest5;
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
     private LineChart chart;
     private Button graph;
 
@@ -50,11 +46,6 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 //        functionTest5.setText(empty3);
 
         chart = findViewById(R.id.linechart);
-<<<<<<< HEAD
-        home = findViewById(R.id.home);
-        functionTest = findViewById(R.id.functionTest);
-        functionTest1 = findViewById(R.id.functionTest1);
-=======
         graph = findViewById(R.id.graph);
         functionTest = findViewById(R.id.functionTest);
         functionTest1 = findViewById(R.id.functionTest1);
@@ -62,7 +53,6 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         functionTest3 = findViewById(R.id.functionTest3);
         functionTest4 = findViewById(R.id.functionTest4);
         functionTest5 = findViewById(R.id.functionTest5);
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
 
         graph.setOnClickListener(this);
 
@@ -134,19 +124,15 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         // set data
         chart.setData(data);
 
-<<<<<<< HEAD
         // 전달 받은 Data 확인
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         String function1 = extras.getString("function1");
         functionTest.setText(function1);
 
         Intent intent = getIntent(); // Data 전달 받을 Intent
         //text 키값으로 데이터를 받는다. String을 받아야 하므로 getStringExtra()를 사용함
         String text = intent.getStringExtra("function1");
-        functionTest1.setText(text);
-=======
-
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
+        functionTest1.setText(text);*/
     }
 
     // Activity 종료 시 효과 제거
