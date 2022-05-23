@@ -206,12 +206,18 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                 case R.id.subBtn:
                     String[] test_process = edit_process.getText().toString().split(" ");
                     String lastarith = test_process[test_process.length-1];
-                    if(!(lastarith.equals("*") || lastarith.equals("/"))){
-                        edit_process.append(" - ");
-                        edit_arith.setText(" - ");
+                    if(edit_process.length() != 0){
+                        if(!(lastarith.equals("*") || lastarith.equals("/"))){
+                            edit_process.append(" - ");
+                            edit_arith.setText(" - ");
+                        }else{
+                            edit_process.append("-");
+                            edit_arith.setText(" - ");
+                            return;
+                        }
                     }else{
-                        edit_process.append("-");
-                        return;
+                        edit_process.setText("0 -");
+                        edit_arith.setText(" - ");
                     }
                     isPreview = true;
                     break;
@@ -270,6 +276,8 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     edit_process.setText("");
                     edit_result.setText("");
                     edit_arith.setText("");
+                    isDot = false;
+                    isBracket = false;
 
                     calculateHelper = new CalculateHelper();
 

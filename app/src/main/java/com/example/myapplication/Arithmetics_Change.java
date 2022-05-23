@@ -113,7 +113,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(0, 0);
+        overridePendingTransition(0, 0);            // 새로 나타나는 화면이 취해야 하는 Animation, 현재 화면이 취하는 Animation
     }
 
     @Override
@@ -124,10 +124,10 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         te_resultNum = "";
         switch (view.getId()) {
             case R.id.numBtn0:
-                inputNum = inputNum + "0";
+                inputNum = inputNum + "0";                                                  // Button Click 마다 Image 초기화 진행을 위한 입력 값 저장
                 String[] zeroArray = inputNum.split("");
-                String[] realZeroArray = deleteEmpty(zeroArray);
-                String[] reverseZeroArray = new String[realZeroArray.length];
+                String[] realZeroArray = deleteEmpty(zeroArray);                            // Array 생성시 [0] index 에 들어오는 null 값 제거
+                String[] reverseZeroArray = new String[realZeroArray.length];               // ImageView 표현을 위해 배열 Reverse 진행
                 for (int i = 0; i < realZeroArray.length; i++) {
                     String temp = realZeroArray[i];
                     reverseZeroArray[i] = realZeroArray[realZeroArray.length - i - 1];
@@ -135,7 +135,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 }
                 Log.v("realZeroArray", "realZeroArray : " + Arrays.toString(realZeroArray));
                 Log.v("reverseZeroArray", "reverseZeroArray : " + Arrays.toString(reverseZeroArray));
-                if (realZeroArray.length > 10) {
+                if (realZeroArray.length > 10) {                                            // 입력 값이 10자리 넘어갈 경우 Alert
                     AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(Arithmetics_Change.this);
                     myAlertBuilder.setTitle("Alert");
                     myAlertBuilder.setMessage("Error.");
@@ -202,11 +202,11 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
             case R.id.andBtn:
                 inputNum = "";
                 firstNum = process.getText().toString();
-                if (firstNum.equals("")) {
+                if (firstNum.equals("")) {                                                  // 이전 계산 결과 값이 없을 경우
                     if (firstResultNum.equals("")) {
                         firstNum = "0";
                         firstNumNo = firstNum + "AND";
-                    } else {
+                    } else {                                                              // 이전 계산 결과 값이 있을 경우
                         firstNum = firstResultNum;
                         firstNumNo = firstResultNum + "AND";
                     }
