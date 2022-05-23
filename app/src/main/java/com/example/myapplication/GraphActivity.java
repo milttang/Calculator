@@ -27,6 +27,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     private LineChart chart;
     private Button graph;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +72,9 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         String[] functionResult = deleteEmpty(functionArray);
         Log.v("functionResult","functionResult" + Arrays.toString(functionResult));
 
-        ArrayList<Entry> values = new ArrayList<>();
+        ArrayList<Entry> firstValues = new ArrayList<>();
+        ArrayList<Entry> secondValues = new ArrayList<>();
+        ArrayList<Entry> thirdsValues = new ArrayList<>();
 
         for (float i = -10.000f; i < 10; i += 0.001f) {
 //            String a = "i*i";
@@ -86,29 +89,38 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 ////            Log.v("z Value","c %f" + z);
 ////            Log.v("c Value","c %f" + z);
             float x = i;
-            values.add(new Entry(x, y));
+            firstValues.add(new Entry(x, y));
         }
 
-//        for (float i = -10.000f; i < 10; i += 0.001f) {
-//            String a = "i*i";
-//            float y = (float) Math.cos(i);
-//            float x = i;
-//            values.add(new Entry(x, y));
-//        }
-
-        LineDataSet set1;
-        set1 = new LineDataSet(values, "y=x+2");
+        for (float i = -10.000f; i < 10; i += 0.001f) {
+            float y = (float) Math.cos(i);
+            float x = i;
+            secondValues.add(new Entry(x, y));
+        }
+        for (float i = -10.000f; i < 10; i += 0.001f) {
+            float y = i + 2;
+            float x = i;
+            thirdsValues.add(new Entry(x, y));
+        }
+        LineDataSet set1, set2, set3;
+        set1 = new LineDataSet(firstValues, "y=x+2");
+        set2 = new LineDataSet(secondValues, "y=x+2");
+        set3 = new LineDataSet(thirdsValues, "y=x+2");
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1); // add the data sets
-
+        dataSets.add(set2); // add the data sets
+        dataSets.add(set3); // add the data sets
         // create a data object with the data sets
         LineData data = new LineData(dataSets);
 
         // black lines and points
         set1.setColor(Color.BLACK);
         set1.setCircleColor(Color.BLACK);
-
+        set2.setColor(Color.GREEN);
+        set2.setCircleColor(Color.GREEN);
+        set3.setColor(Color.BLUE);
+        set3.setCircleColor(Color.BLUE);
         // set data
         chart.setData(data);
 
@@ -153,6 +165,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
     public static String[] deleteEmpty(final String[] array) {              // String[]의 Empty Data 삭제
         List<String> list = new ArrayList<String>(Arrays.asList(array));
         list.removeAll(Collections.singleton(""));                          // list 내부 Data "" 모두 제거
