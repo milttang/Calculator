@@ -62,7 +62,7 @@ public class CalculateHelper {
             if (object.equals("(")) {           //object가 괄호 일때
                 stack.push(object);
             } else if (object.equals(")")) {
-                while (!stack.peek().equals("(")) { //앞에 "("있는지 확인
+                while (!stack.peek().equals("(")) { //바로 앞에 "("있는지 확인
                     Object val = stack.pop();
                     if (!val.equals("(")) {
                         result.add(val);
@@ -202,6 +202,11 @@ public class CalculateHelper {
                 }
                 boolean vo = true;
                 while (vo) {
+                    if(i < resultList.size()-1){
+                        if(resultList.get(i+1).equals("(")){
+                            break;
+                        }
+                    }
                     if (resultList.get(i).equals("+") || resultList.get(i).equals("-") || resultList.get(i).equals("(")) { //덧셈 뺄셈 괄호열기 부호 나올때까지 다 남아라
                         vo = false;
                         if (resultList.get(i).equals("(")) {
@@ -260,15 +265,26 @@ public class CalculateHelper {
                 for(int i = 0; i<bracket.size(); i++){
                     if(bracket.get(i).equals("*") || bracket.get(i).equals("/")){
                         resultList5.add(bracket.get(i));
-                        resultList5.add(bracket.get(i+1));
+                        if(checkNumber(bracket.get(i+1))){
+                            resultList5.add(bracket.get(i+1));
+                        }else{
+                            resultList5.add(bracket.get(i+2));
+                        }
                     }
                     if(bracket.get(i).equals("+") || bracket.get(i).equals("-")){
                         if(bracket.get(i+2).equals("*") || bracket.get(i+2).equals("/")){
                             resultList5.add(bracket.get(i+2));
                             resultList5.add(bracket.get(i+1));
+                        /*}else if(i+3<bracket.size()){
+                            if(bracket.get(i+3).equals("*") || bracket.get(i+3).equals("/"))
+                            resultList5.add(bracket.get(i+3));
+                            resultList5.add(bracket.get(i+1));*/
+                        }else if(bracket.get(i+1).equals("(")){
+                                resultList6.add(bracket.get(i));
+                                resultList6.add(bracket.get(i + 2));
                         }else{
                             resultList6.add(bracket.get(i));
-                            resultList6.add(bracket.get(i+1));
+                            resultList6.add(bracket.get(i + 1));
                         }
                     }
                     if(i==1){                       //시작 부호[2]로 첫 숫자[1]를 어느 배열에 넣을지 정한다. [0]은 괄호
@@ -319,6 +335,7 @@ public class CalculateHelper {
                 result = result.substring(3);
             }
             result.replace(" * - ", " * -");
+            result.replace(" / - ", " / -");
         }
         return result;
     }
