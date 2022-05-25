@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -28,16 +29,16 @@ import java.util.List;
 public class Arithmetics_Change extends AppCompatActivity implements View.OnClickListener {
     private final ImageView[] binaryView = new ImageView[10];               // 계산 결과 값 Image 표시
     private View selectView;                                                // 선택된 버튼 표시
-    private TextView process, operator;
+    private TextView process, operator;                                     // 연산 과정, 연산자
     private Button numBtn0, numBtn1, addBtn, subBtn, mulBtn, divBtn, remainBtn, equalBtn, backBtn, clearBtn, homeBtn, andBtn, orBtn, xorBtn, leftShiftBtn, rightShiftBtn;
     private int count = 0;                                                  // Image View 를 위한 Count
     private int result = 0;
-    public String inputNum = "";
-    public String firstNum = "";
-    public String secondNum = "";
-    public String firstResultNum = "";
-    public String te_firstResultNum = "";
-    public String operaTor = "";
+    public String inputNum = "";                                            // 입력 값 저장을 위한 변수
+    public String firstNum = "";                                            // 첫 번째 입력값
+    public String secondNum = "";                                           // 두 번째 입력값
+    public String firstResultNum = "";                                      // 이전 계산 결과 값이 있을 경우 저장할 변수
+    public String te_firstResultNum = "";                                   // Image View 표현을 위해 firstResultNum String 값을 반대로 작성한 변수
+    public String operaTor = "";                                            // 연산자
     public String resultNum = "";
     public String te_resultNum = "";
     public String firstNumNo = "";
@@ -128,6 +129,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
                 String[] zeroArray = inputNum.split("");
                 String[] realZeroArray = deleteEmpty(zeroArray);                            // Array 생성시 [0] index 에 들어오는 null 값 제거
                 String[] reverseZeroArray = new String[realZeroArray.length];               // ImageView 표현을 위해 배열 Reverse 진행
+
                 for (int i = 0; i < realZeroArray.length; i++) {
                     String temp = realZeroArray[i];
                     reverseZeroArray[i] = realZeroArray[realZeroArray.length - i - 1];
@@ -616,7 +618,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
     }
 
-    public void onConfigurationChanged(Configuration newConfig) {       // 화면 회전시 표시
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {       // 화면 회전시 표시
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -627,7 +629,7 @@ public class Arithmetics_Change extends AppCompatActivity implements View.OnClic
     }
 
     public static String[] deleteEmpty(final String[] array) {              // String[]의 Empty Data 삭제
-        List<String> list = new ArrayList<String>(Arrays.asList(array));
+        List<String> list = new ArrayList<>(Arrays.asList(array));
         list.removeAll(Collections.singleton(""));                          // list 내부 Data "" 모두 제거
         return list.toArray(new String[list.size()]);
     }

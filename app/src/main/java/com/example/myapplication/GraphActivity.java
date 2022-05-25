@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,13 +28,13 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     private TextView functionTest, functionTest1, functionTest2, functionTest3, functionTest4, functionTest5;
     private LineChart chart;
     private Button graph;
+    private String function1, function2, function3, empty1, empty2, empty3;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-
 
 
 //        String function2 = extras.getString("function2");
@@ -58,54 +60,91 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         // 전달 받은 Data 확인
         Bundle extras = getIntent().getExtras();
-        String function1 = extras.getString("function1");
-        String empty1 = extras.getString("empty1");
+        if (extras.getString("function1").equals("")) {
+            function1 = "";
+        } else {
+            function1 = extras.getString("function1");
+        }
+        if (extras.getString("empty1").equals("")) {
+            empty1 = "";
+        } else {
+            empty1 = extras.getString("empty1");
+        }
+        if (extras.getString("function2").equals(null)) {
+            function2 = "";
+        } else {
+            function2 = extras.getString("function2");
+        }
+        if (extras.getString("empty2").equals(null)) {
+            empty2 = "";
+        } else {
+            empty2 = extras.getString("empty2");
+        }
+        if (extras.getString("function3").equals(null)) {
+            function3 = "";
+        } else {
+            function3 = extras.getString("function3");
+        }
+        if (extras.getString("empty3").equals(null)) {
+            empty3 = "";
+        } else {
+            empty3 = extras.getString("empty3");
+        }
+
         functionTest.setText(function1);
         functionTest1.setText(empty1);
+        functionTest2.setText(function2);
+        functionTest3.setText(empty2);
+        functionTest4.setText(function3);
+        functionTest5.setText(empty3);
 
         String functionFirst = functionTest.getText().toString();
-        String functionFirstRemove = functionFirst.replaceFirst("y=","");
-        Log.v("functionFirst","functionFirst" + functionFirst);
-        Log.v("functionFirstRemove","functionFirstRemove" + functionFirstRemove);
-        String[] functionArray = functionFirstRemove.split("");
-        Log.v("functionArray","functionArray" + Arrays.toString(functionArray));
-        String[] functionResult = deleteEmpty(functionArray);
-        Log.v("functionResult","functionResult" + Arrays.toString(functionResult));
+        Log.v("functionFirst", "functionFirst : " + functionFirst);
+        String functionFirstRemove = functionFirst.replaceFirst("y=", "");
+        Log.v("functionFirstRemove", "functionFirstRemove : " + functionFirstRemove);
+        String functionOperator = functionFirstRemove.substring(1, 2);
+        Log.v("functionOperator", "functionOperator : " + functionOperator);
+        String functionNum = functionFirstRemove.substring(2);
+        Log.v("functionNum", "functionNum : " + functionNum);
 
+        // function2,3이 ""일 떄, 조건 추가하여 Data표시 안되도록
         ArrayList<Entry> firstValues = new ArrayList<>();
         ArrayList<Entry> secondValues = new ArrayList<>();
         ArrayList<Entry> thirdsValues = new ArrayList<>();
 
-        for (float i = -10.000f; i < 10; i += 0.001f) {
-//            String a = "i*i";
-////            String[] c = a.split("y=");
-////            Log.v("c Value","c %f" + Arrays.toString(c));
-////            Log.v("c Value","c %f" + a);
-////            int w = Integer.parseInt(a);
-////            Log.v("w Value","w %f" + w);
-////            float z = (float) w;
-////            float c =  Float.parseFloat(a);
-            float y = i*i;
-////            Log.v("z Value","c %f" + z);
-////            Log.v("c Value","c %f" + z);
-            float x = i;
-            firstValues.add(new Entry(x, y));
+        if (!function1.equals("")) {
+            if (functionOperator.equals("+")) {
+                for (float i = -10.000f; i < 10; i += 0.001f) {
+                    float y = i + Integer.parseInt(functionNum);
+                    float x = i;
+                    firstValues.add(new Entry(x, y));
+                }
+            }
         }
-
-        for (float i = -10.000f; i < 10; i += 0.001f) {
-            float y = (float) Math.cos(i);
-            float x = i;
-            secondValues.add(new Entry(x, y));
+        if (!function2.equals("")) {
+            if (functionOperator.equals("+")) {
+                for (float i = -10.000f; i < 10; i += 0.001f) {
+                    float y = i + Integer.parseInt(functionNum) + 2;
+                    float x = i;
+                    secondValues.add(new Entry(x, y));
+                }
+            }
         }
-        for (float i = -10.000f; i < 10; i += 0.001f) {
-            float y = i + 2;
-            float x = i;
-            thirdsValues.add(new Entry(x, y));
+        if (!function3.equals("")) {
+            if (functionOperator.equals("+")) {
+                for (float i = -10.000f; i < 10; i += 0.001f) {
+                    float y = i + Integer.parseInt(functionNum) + 4;
+                    float x = i;
+                    thirdsValues.add(new Entry(x, y));
+                }
+            }
         }
+        // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
         LineDataSet set1, set2, set3;
-        set1 = new LineDataSet(firstValues, "y=x+2");
-        set2 = new LineDataSet(secondValues, "y=x+2");
-        set3 = new LineDataSet(thirdsValues, "y=x+2");
+        set1 = new LineDataSet(firstValues, function1);
+        set2 = new LineDataSet(secondValues, function2);
+
+        set3 = new LineDataSet(thirdsValues, function3);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1); // add the data sets
@@ -123,16 +162,6 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         set3.setCircleColor(Color.BLUE);
         // set data
         chart.setData(data);
-
-        // 전달 받은 Data 확인
-        /*Bundle extras = getIntent().getExtras();
-        String function1 = extras.getString("function1");
-        functionTest.setText(function1);
-
-        Intent intent = getIntent(); // Data 전달 받을 Intent
-        //text 키값으로 데이터를 받는다. String을 받아야 하므로 getStringExtra()를 사용함
-        String text = intent.getStringExtra("function1");
-        functionTest1.setText(text);*/
     }
 
     // Activity 종료 시 효과 제거
@@ -148,28 +177,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             case R.id.graph:
                 Intent homeIntent = new Intent(getApplicationContext(), Arithmetics_Graph.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
-//                if(!functionTest.getText().toString().equals("")) {
-//                    homeIntent.putExtra("functionOne", functionTest.getText().toString());
-//                    homeIntent.putExtra("emptyOne", functionTest1.getText().toString());
-//                } else {
-//                    homeIntent.putExtra("functionOne", "");
-//                    homeIntent.putExtra("emptyOne", "");
-//                }
-//                if(!functionTest.getText().toString().equals("")) {
-//                    homeIntent.putExtra("functionTwo", functionTest2.getText().toString());
-//                    homeIntent.putExtra("emptyTwo", functionTest3.getText().toString());
-//                } else {
-//                    homeIntent.putExtra("functionTwo", "");
-//                    homeIntent.putExtra("emptyTwo", "");
-//                }
-//                if(!functionTest.getText().toString().equals("")) {
-//                    homeIntent.putExtra("functionThr", functionTest4.getText().toString());
-//                    homeIntent.putExtra("emptyThr", functionTest5.getText().toString());
-//                } else {
-//                    homeIntent.putExtra("functionThr", "");
-//                    homeIntent.putExtra("emptyThr", "");
-//                }
-                startActivity(homeIntent);
+                setResult(Activity.RESULT_OK);
+                finish();
                 break;
         }
     }

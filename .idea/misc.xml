@@ -3,31 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/font/font.xml" value="0.21770833333333334" />
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetic1s.xml" value="0.2971014492753623" />
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics.xml" value="0.2" />
-<<<<<<< HEAD
-        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.1" />
-        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_date.xml" value="0.16394927536231885" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/drawable-anydpi/ic_others.xml" value="0.208" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/drawable/btn_color.xml" value="0.208" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/drawable/btn_color_selector.xml" value="0.208" />
-=======
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.264" />
-        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics_graph.xml" value="0.1" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_arithmetics_graph.xml" value="0.152" />
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_date.xml" value="0.16394927536231885" />
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_graph.xml" value="0.2971014492753623" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/activity_graph_test.xml" value="0.264" />
         <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/calendar_view.xml" value="0.11170212765957446" />
->>>>>>> 35bfb4ac4f8e0aaa73391c9ba394e54e62f39207
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/general_datetime_main.xml" value="0.72" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/widget_analog_clock_2x2.xml" value="0.136" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/widget_digital_clock_2x1.xml" value="0.1" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/widget_digital_clock_2x2.xml" value="0.1" />
+        <entry key="..\:/Job/Document/01_Android/Calculator/app/src/main/res/layout/widget_digital_clock_nodate_2x1.xml" value="0.2" />
         <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_arithmetics.xml" value="0.25364583333333335" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.3425925925925926" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_arithmetics_graph.xml" value="0.3605128205128205" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_date.xml" value="0.36614583333333334" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_graph.xml" value="0.36614583333333334" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/calendar_view.xml" value="0.36614583333333334" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/tool_bar.xml" value="0.36614583333333334" />
-        <entry key="..\:/android-sdk/Calculator/app/src/main/res/menu/tool_bar_menu.xml" value="0.36614583333333334" />
-        <entry key="..\:/android-sdk/Calculator2/app/src/main/res/layout/activity_date.xml" value="0.25364583333333335" />
-        <entry key="..\:/android-sdk/Calculator2/app/src/main/res/layout/activity_graph.xml" value="0.25364583333333335" />
+        <entry key="..\:/android-sdk/Calculator/app/src/main/res/layout/activity_arithmetics_change.xml" value="0.26145833333333335" />
         <entry key="..\:/android/workspace/MyApplication/app/src/main/res/drawable/btn_color.xml" value="0.2035" />
         <entry key="..\:/android/workspace/MyApplication/app/src/main/res/drawable/btn_color_selector.xml" value="0.1" />
         <entry key="..\:/android/workspace/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />

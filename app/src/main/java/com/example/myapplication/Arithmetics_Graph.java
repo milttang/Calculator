@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,8 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 public class Arithmetics_Graph extends AppCompatActivity implements View.OnClickListener {
-
-    public static final int REQUEST_CODE = 1000;
+    private final String TAG = "Test";
+    private final int REQUEST_CODE = 1000;
     private TextView equation1, equation2, equation3, empty1, empty2, empty3;           // 함수 입력을 위한 equation, 입력이 되어 있는 가를 확인할 empty
     private Button numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9,
             dotBtn, equalBtn, divBtn, mulBtn, subBtn, addBtn, sqrBtn, rootBtn, bracketBtn, sinBtn, cosBtn, tanBtn,
@@ -29,6 +31,7 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_arithmetics_graph);
+
 
         // toolbar
         mainToolBar = (Toolbar) findViewById(R.id.main_tool_bar);
@@ -58,7 +61,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
         numBtn7 = findViewById(R.id.numBtn7);
         numBtn8 = findViewById(R.id.numBtn8);
         numBtn9 = findViewById(R.id.numBtn9);
-        dotBtn = findViewById(R.id.dotBtn);
         equalBtn = findViewById(R.id.equalBtn);
         divBtn = findViewById(R.id.divBtn);
         mulBtn = findViewById(R.id.mulBtn);
@@ -66,7 +68,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
         addBtn = findViewById(R.id.addBtn);
         sqrBtn = findViewById(R.id.sqrBtn);
         rootBtn = findViewById(R.id.rootBtn);
-        bracketBtn = findViewById(R.id.bracketBtn);
         sinBtn = findViewById(R.id.sinBtn);
         cosBtn = findViewById(R.id.cosBtn);
         tanBtn = findViewById(R.id.tanBtn);
@@ -87,7 +88,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
         numBtn7.setOnClickListener(this);
         numBtn8.setOnClickListener(this);
         numBtn9.setOnClickListener(this);
-        dotBtn.setOnClickListener(this);
         equalBtn.setOnClickListener(this);
         divBtn.setOnClickListener(this);
         mulBtn.setOnClickListener(this);
@@ -95,7 +95,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
         addBtn.setOnClickListener(this);
         sqrBtn.setOnClickListener(this);
         rootBtn.setOnClickListener(this);
-        bracketBtn.setOnClickListener(this);
         sinBtn.setOnClickListener(this);
         cosBtn.setOnClickListener(this);
         tanBtn.setOnClickListener(this);
@@ -227,17 +226,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     equation3.append("9");
                     break;
                 }
-            case R.id.dotBtn:
-                if (empty1.getText().toString().equals("")) {
-                    equation1.append(".");
-                    break;
-                } else if (empty2.getText().toString().equals("")) {
-                    equation2.append(".");
-                    break;
-                } else {
-                    equation3.append(".");
-                    break;
-                }
             case R.id.divBtn:
                 if (empty1.getText().toString().equals("")) {
                     equation1.append("/");
@@ -302,17 +290,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     break;
                 } else {
                     equation3.append("√x");
-                    break;
-                }
-            case R.id.bracketBtn:
-                if (empty1.getText().toString().equals("")) {
-                    equation1.append("(0)");
-                    break;
-                } else if (empty2.getText().toString().equals("")) {
-                    equation2.append("(0)");
-                    break;
-                } else {
-                    equation3.append("(0)");
                     break;
                 }
             case R.id.sinBtn:
@@ -424,64 +401,35 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                     intent.putExtra("empty1", empty1.getText().toString());
                     intent.putExtra("function1", equation1.getText().toString());
-//                    if (empty2.getText().toString().equals("")) {
-//                        intent.putExtra("empty2", "");
-//                        intent.putExtra("function2", "");
-//                    } else {
-//                        intent.putExtra("empty2", empty2.getText().toString());
-//                        intent.putExtra("function2", equation2.getText().toString());
-//                    }
-//                    if (empty3.getText().toString().equals("")) {
-//                        intent.putExtra("empty3", "");
-//                        intent.putExtra("function3", "");
-//                    } else {
-//                        intent.putExtra("empty3", empty3.getText().toString());
-//                        intent.putExtra("function3", equation3.getText().toString());
-//                    }
-                    startActivity(intent);
+                    intent.putExtra("empty2", empty2.getText().toString());
+                    intent.putExtra("function2", equation2.getText().toString());
+                    intent.putExtra("empty3", empty3.getText().toString());
+                    intent.putExtra("function3", equation3.getText().toString());
+                    startActivityForResult(intent, REQUEST_CODE);
                     break;
                 } else if (empty2.getText().toString().equals("")) {
                     empty2.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
+                    intent.putExtra("empty1", empty1.getText().toString());
+                    intent.putExtra("function1", equation1.getText().toString());
                     intent.putExtra("empty2", empty2.getText().toString());
                     intent.putExtra("function2", equation2.getText().toString());
-//                    if (empty1.getText().toString().equals("")) {
-//                        intent.putExtra("empty1", "");
-//                        intent.putExtra("function1", "");
-//                    } else {
-//                        intent.putExtra("empty1", empty1.getText().toString());
-//                        intent.putExtra("function1", equation1.getText().toString());
-//                    }
-//                    if (empty3.getText().toString().equals("")) {
-//                        intent.putExtra("empty3", "");
-//                        intent.putExtra("function3", "");
-//                    } else {
-//                        intent.putExtra("empty3", empty3.getText().toString());
-//                        intent.putExtra("function3", equation3.getText().toString());
-//                    }
-                    startActivity(intent);
+                    intent.putExtra("empty3", empty3.getText().toString());
+                    intent.putExtra("function3", equation3.getText().toString());
+                    startActivityForResult(intent, REQUEST_CODE);
                     break;
                 } else {
                     empty3.setText("1");
                     Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
+                    intent.putExtra("empty1", empty1.getText().toString());
+                    intent.putExtra("function1", equation1.getText().toString());
+                    intent.putExtra("empty2", empty2.getText().toString());
+                    intent.putExtra("function2", equation2.getText().toString());
                     intent.putExtra("empty3", empty3.getText().toString());
                     intent.putExtra("function3", equation3.getText().toString());
-//                    if (empty1.getText().toString().equals("")) {
-//                        intent.putExtra("empty1", "");
-//                        intent.putExtra("function1", "");
-//                    } else {
-//                        intent.putExtra("empty1", empty1.getText().toString());
-//                        intent.putExtra("function1", equation1.getText().toString());
-//                    }
-//                    if (empty2.getText().toString().equals("")) {
-//                        intent.putExtra("empty2", "");
-//                        intent.putExtra("function2", "");
-//                    } else {
-//                        intent.putExtra("empty2", empty2.getText().toString());
-//                        intent.putExtra("function2", equation2.getText().toString());
-//                    }
+                    startActivityForResult(intent, REQUEST_CODE);
                     startActivity(intent);
                     break;
                 }
@@ -491,6 +439,14 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                 startActivity(homeIntent);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            Log.d(TAG, "Test : " + resultCode);
         }
     }
 }
