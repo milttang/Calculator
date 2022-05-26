@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -70,22 +72,22 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         } else {
             empty1 = extras.getString("empty1");
         }
-        if (extras.getString("function2").equals(null)) {
+        if (extras.getString("function2").equals("")) {
             function2 = "";
         } else {
             function2 = extras.getString("function2");
         }
-        if (extras.getString("empty2").equals(null)) {
+        if (extras.getString("empty2").equals("")) {
             empty2 = "";
         } else {
             empty2 = extras.getString("empty2");
         }
-        if (extras.getString("function3").equals(null)) {
+        if (extras.getString("function3").equals("")) {
             function3 = "";
         } else {
             function3 = extras.getString("function3");
         }
-        if (extras.getString("empty3").equals(null)) {
+        if (extras.getString("empty3").equals("")) {
             empty3 = "";
         } else {
             empty3 = extras.getString("empty3");
@@ -108,6 +110,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         Log.v("functionNum", "functionNum : " + functionNum);
 
         // function2,3이 ""일 떄, 조건 추가하여 Data표시 안되도록
+        ArrayList<Entry> xValues = new ArrayList<>();
+        ArrayList<Entry> yValues = new ArrayList<>();
         ArrayList<Entry> firstValues = new ArrayList<>();
         ArrayList<Entry> secondValues = new ArrayList<>();
         ArrayList<Entry> thirdsValues = new ArrayList<>();
@@ -139,27 +143,50 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
-        // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
-        LineDataSet set1, set2, set3;
-        set1 = new LineDataSet(firstValues, function1);
-        set2 = new LineDataSet(secondValues, function2);
+                for (float i = -10.000f; i < 10; i += 0.001f) {
+                    float y = i;
+                    float x = 0;
+                    yValues.add(new Entry(x, y));
 
+        }
+                for (float i = -10.000f; i < 10; i += 0.001f) {
+                    float y = 0;
+                    float x = i;
+                    xValues.add(new Entry(x, y));
+
+        }
+        // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
+        LineDataSet set1, set2, set3, set4, set5;
+        set4 = new LineDataSet(xValues, "");
+        set5 = new LineDataSet(yValues, "");
+                set1 = new LineDataSet(firstValues, function1);
+        set2 = new LineDataSet(secondValues, function2);
         set3 = new LineDataSet(thirdsValues, function3);
 
+
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set4); // add the data sets
+        dataSets.add(set5); // add the data sets
         dataSets.add(set1); // add the data sets
         dataSets.add(set2); // add the data sets
         dataSets.add(set3); // add the data sets
+
+
         // create a data object with the data sets
         LineData data = new LineData(dataSets);
 
         // black lines and points
-        set1.setColor(Color.BLACK);
-        set1.setCircleColor(Color.BLACK);
+        set4.setColor(Color.LTGRAY);
+        set4.setCircleColor(Color.LTGRAY);
+        set5.setColor(Color.LTGRAY);
+        set5.setCircleColor(Color.LTGRAY);
+        set1.setColor(Color.DKGRAY);
+        set1.setCircleColor(Color.DKGRAY);
         set2.setColor(Color.GREEN);
         set2.setCircleColor(Color.GREEN);
         set3.setColor(Color.BLUE);
         set3.setCircleColor(Color.BLUE);
+
         // set data
         chart.setData(data);
     }
@@ -184,7 +211,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public static String[] deleteEmpty(final String[] array) {              // String[]의 Empty Data 삭제
-        List<String> list = new ArrayList<String>(Arrays.asList(array));
+        List<String> list = new ArrayList<>(Arrays.asList(array));
         list.removeAll(Collections.singleton(""));                          // list 내부 Data "" 모두 제거
         return list.toArray(new String[list.size()]);
     }
