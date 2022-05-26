@@ -326,21 +326,15 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     result = "";                        //출력할 값
                     processSqr = edit_process.getText().toString().split(" ");
                     lastNumSqr = processSqr[processSqr.length-1];
+                    double resultSqr = Double.parseDouble(lastNumSqr);
                     if (!isDot) {                                       //정수면 정수로 실수면 실수로 타입 변환후 결과 값 출력
-                        int resultSqr = Integer.parseInt(lastNumSqr);
-                        int sqr = resultSqr * resultSqr;
-                        processSqr[processSqr.length-1] = String.valueOf(sqr);
+                        result = String.valueOf((int) resultSqr);
                     } else {
-                        double resultSqr = Double.parseDouble(lastNumSqr);
-                        double sqr = resultSqr * resultSqr;
-                        sqr = Math.floor(sqr*100)/100;
-                        processSqr[processSqr.length-1] = String.valueOf(sqr);
+                        double sqr = Math.floor(resultSqr*100)/100;
+                        result = String.valueOf(sqr);
                         isDot = true;
                     }
-                    for(String date : processSqr){
-                        result += date + " ";
-                    }
-                    edit_process.setText(result);
+                    edit_process.append(" * " + result);
                     isPreview = true;
                     preview();
                     break;
