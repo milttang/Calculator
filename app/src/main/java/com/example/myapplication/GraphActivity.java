@@ -143,23 +143,23 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
-                for (float i = -10.000f; i < 10; i += 0.001f) {
-                    float y = i;
-                    float x = 0;
-                    yValues.add(new Entry(x, y));
+        for (float i = -10.000f; i < 10; i += 0.001f) {
+            float y = i;
+            float x = 0;
+            yValues.add(new Entry(x, y));
 
         }
-                for (float i = -10.000f; i < 10; i += 0.001f) {
-                    float y = 0;
-                    float x = i;
-                    xValues.add(new Entry(x, y));
+        for (float i = -10.000f; i < 10; i += 0.001f) {
+            float y = 0;
+            float x = i;
+            xValues.add(new Entry(x, y));
 
         }
         // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
         LineDataSet set1, set2, set3, set4, set5;
         set4 = new LineDataSet(xValues, "");
         set5 = new LineDataSet(yValues, "");
-                set1 = new LineDataSet(firstValues, function1);
+        set1 = new LineDataSet(firstValues, function1);
         set2 = new LineDataSet(secondValues, function2);
         set3 = new LineDataSet(thirdsValues, function3);
 
