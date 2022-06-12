@@ -31,7 +31,11 @@ public class CalculateHelper {
             } else {
                 if (flag) {
                     inputList.add(number);
-                    number = 0;
+                    if(data.equals("-")){
+                        number = -1;
+                    }else{
+                        number = 1;
+                    }
                 }
                 flag = false;
                 inputList.add(data);
