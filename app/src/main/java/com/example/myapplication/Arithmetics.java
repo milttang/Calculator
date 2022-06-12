@@ -216,7 +216,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                             return;
                         }
                     }else{
-                        edit_process.setText("0 -");
+                        edit_process.setText("0 - ");
                         edit_arith.setText(" - ");
                     }
                     isPreview = true;
