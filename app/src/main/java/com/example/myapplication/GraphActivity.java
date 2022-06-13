@@ -1,5 +1,9 @@
 package com.example.myapplication;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.tan;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +40,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
     private static final float startNum = -10.00f;
     private static final float range = 20;
     private static final float step = 0.01f;
+    private String xStringMinus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,25 +127,33 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         if (!function1.equals("")) {
 
+            /* 전체 함수 읽어온 String */
             String firstFunction = functionTest.getText().toString();
             Log.v("firstFunction", "firstFunction : " + firstFunction);
+            /* 전체 함수에서 y=을 제거한 String */
             String firstFunctionDeleteEqualY = firstFunction.replaceFirst("y=", "");
             Log.v("deleteEqualY", "firstFunctionDeleteEqualY : " + firstFunctionDeleteEqualY);
+
             String functionFirstOperator = firstFunctionDeleteEqualY.substring(1, 2);
             Log.v("functionFirstOperator", "functionFirstOperator : " + functionFirstOperator);
             String functionFirstNum = firstFunctionDeleteEqualY.substring(2);
             Log.v("functionFirstNum", "functionFirstNum : " + functionFirstNum);
+
+            /* 전체 함수에서 y=을 제거 후, x의 index 확인 */
             int functionFindXTest = firstFunctionDeleteEqualY.indexOf(xString);
             Log.v("functionFindXTest", "functionFindXTest : " + functionFindXTest);
 
+            /* x앞에 붙어 있는 숫자 및 문자열 확인 */
             String xStringFront = firstFunctionDeleteEqualY.substring(0, functionFindXTest);
             Log.v("xStringFront", "xStringFront : " + xStringFront);
 
-            /*    x항이 뒤로 갈 경우를 생각     */
+            /* x뒤에 붙어 있는 계산 및 연산 String 확인 */
             String xStringBehind = firstFunctionDeleteEqualY.substring(functionFindXTest + 1);
             Log.v("xStringBehind", "xStringBehind : " + xStringBehind);
 
+            /* 연산 String 을 Parsing 하여 계산 */
             String[] xStringBehindCal = xStringBehind.split("\\+|-|\\*|/");
+
             String[] xStringBehindCalTest = xStringBehind.split("");
 
             Log.v("xStringBehindCal", "xStringBehindCal : " + Arrays.toString(xStringBehindCal));
@@ -148,18 +161,16 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
             /*int xStringBehindCalculate =*/
 
+            /* x앞에 오는 값이 숫자인지 문자인지 확인 */
             boolean xFront = numberCheck(xStringFront);
-            String xStringMinus = "";
-            if (xStringFront.equals("-")) {
-                xStringMinus = xStringFront.substring(1);
-                Log.v("xStringMinus", "xStringMinus : " + xStringMinus);
-            }
 
             String operatorCheck = firstFunctionDeleteEqualY.substring(functionFindXTest + 1, functionFindXTest + 2);
             Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
-
+            int xIntFront =0;
+            if (xStringFront != "") {
+                xIntFront = Integer.parseInt(xStringFront);
+            }
             if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
-                int xIntFront = Integer.parseInt(xStringFront);
                 if (operatorCheck.equals("+")) {
                     for (float i = startNum; i < range; i += step) {
                         float y = xIntFront * i + 2;
@@ -186,39 +197,120 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             } else {
-                if (xStringMinus.equals("-")) {
-                    Log.v("xStringMinus", "xStringMinus + " + xStringMinus);
-                    if (xStringMinus.equals("")) {
-
+                if (xStringFront.charAt(0) == '-') {
+                    xStringMinus = xStringFront.substring(1);
+                    if (numberCheck(xStringMinus)) {
+                        if (operatorCheck.equals("+")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i + 2;
+                                float x = i;
+                                firstValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("-")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i - Integer.parseInt(functionFirstNum);
+                                float x = i;
+                                firstValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("*")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i * Integer.parseInt(functionFirstNum);
+                                float x = i;
+                                firstValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("/")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i / Integer.parseInt(functionFirstNum);
+                                float x = i;
+                                firstValues.add(new Entry(x, y));
+                            }
+                        } else if ("1" == "2") {
+                            // 부호다음에 cos sin 같은 문자 오는거 생각
+                        }
                     } else {
+                        if (xStringFront.charAt(1) == 's') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) + 2;
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) - Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) * Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) / Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            }
+                        } else if (xStringFront.charAt(1) == 'c') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) + 2;
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) - Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) * Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) / Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            }
+                        } else if (xStringFront.charAt(1) == 't') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) + 2;
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) - Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) * Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) / Integer.parseInt(functionFirstNum);
+                                    float x = i;
+                                    firstValues.add(new Entry(x, y));
+                                }
+                            }
+                        }
+                    }
+//                Log.v("xStringMinus", "xStringMinus : " + xStringMinus);
 
-                    }
-                    if (operatorCheck.equals("+")) {
-                        for (float i = startNum; i < range; i += step) {
-                            float y = -1 * i + 2;
-                            float x = i;
-                            firstValues.add(new Entry(x, y));
-                        }
-                    } else if (operatorCheck.equals("-")) {
-                        for (float i = startNum; i < range; i += step) {
-                            float y = -1 * i - Integer.parseInt(functionFirstNum);
-                            float x = i;
-                            firstValues.add(new Entry(x, y));
-                        }
-                    } else if (operatorCheck.equals("*")) {
-                        for (float i = startNum; i < range; i += step) {
-                            float y = -1 * i * Integer.parseInt(functionFirstNum);
-                            float x = i;
-                            firstValues.add(new Entry(x, y));
-                        }
-                    } else if (operatorCheck.equals("/")) {
-                        for (float i = startNum; i < range; i += step) {
-                            float y = -1 * i / Integer.parseInt(functionFirstNum);
-                            float x = i;
-                            firstValues.add(new Entry(x, y));
-                        }
-                    }
-                } else if (xStringFront.equals("")) {
+                } else if (xStringFront.equals("")){    //루트랑 스퀘어 추가 생각 필요
                     if (operatorCheck.equals("+")) {
                         for (float i = startNum; i < range; i += step) {
                             float y = i + 2;
@@ -244,13 +336,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                             firstValues.add(new Entry(x, y));
                         }
                     }
-                } else {
-                    /* cos sin tan loot square */
                 }
             }
-            Log.v("numberCheck", "numberCheck(xStringFront) : " + numberCheck(xStringFront));
-
-
         }
         if (!function2.equals("")) {
             String functionSecond = functionTest2.getText().toString();
@@ -324,13 +411,17 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
-        for (float i = startNum; i < range; i += step) {
+        for (
+                float i = startNum;
+                i < range; i += step) {
             float y = i;
             float x = 0;
             yValues.add(new Entry(x, y));
 
         }
-        for (float i = startNum; i < range; i += step) {
+        for (
+                float i = startNum;
+                i < range; i += step) {
             float y = 0;
             float x = i;
             xValues.add(new Entry(x, y));
@@ -339,11 +430,25 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
         // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
         LineDataSet set1, set2, set3, set4, set5;
-        set1 = new LineDataSet(firstValues, function1);
-        set2 = new LineDataSet(secondValues, function2);
-        set3 = new LineDataSet(thirdsValues, function3);
-        set4 = new LineDataSet(xValues, "");
-        set5 = new LineDataSet(yValues, "");
+        set1 = new
+
+                LineDataSet(firstValues, function1);
+
+        set2 = new
+
+                LineDataSet(secondValues, function2);
+
+        set3 = new
+
+                LineDataSet(thirdsValues, function3);
+
+        set4 = new
+
+                LineDataSet(xValues, "");
+
+        set5 = new
+
+                LineDataSet(yValues, "");
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set4); // add the data sets
