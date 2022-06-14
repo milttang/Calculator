@@ -359,7 +359,7 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     if(equation1.getText().toString().equals("")){
                         if(!equation2.getText().toString().equals("")){
                             equation1.setText(equation2.getText());
-                            equation2.setText("");
+                            equation2.setText("1");
                             empty2.setText("");
                         }
                         if(!equation3.getText().toString().equals("")){

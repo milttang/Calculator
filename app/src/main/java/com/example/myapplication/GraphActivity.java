@@ -167,8 +167,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             String operatorCheck = firstFunctionDeleteEqualY.substring(firstFindXTest + 1, firstFindXTest + 2);
             Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
             int xIntFront = 0;
-            if (!xFirstFront.equals("")) {
-                Log.d("xFirstFront : ", xFirstFront);
+            if (xFirstFront != "") {
                 xIntFront = Integer.parseInt(xFirstFront);
             }
             if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
@@ -198,7 +197,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             } else {
-                if (xFirstFront.equals("-")) {
+                if (xFirstFront.charAt(0) == '-') {
                     xStringMinus = xFirstFront.substring(1);
                     if (numberCheck(xStringMinus)) {
                         if (operatorCheck.equals("+")) {
