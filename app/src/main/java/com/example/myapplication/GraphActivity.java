@@ -149,49 +149,65 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
 
             /* x뒤에 붙어 있는 계산 및 연산 String 확인 */
             String xStringBehind = firstFunctionDeleteEqualY.substring(functionFindXTest + 1);
+            String xStringBehindNumber = xStringBehind.replaceAll("[^0-9]", "");
             Log.v("xStringBehind", "xStringBehind : " + xStringBehind);
+            Log.v("xStringBehindNumber", "xStringBehindNumber : " + xStringBehindNumber);
 
             /* 연산 String 을 Parsing 하여 계산 */
-            String[] xStringBehindCal = xStringBehind.split("\\+|-|\\*|/");
-
-            String[] xStringBehindCalTest = xStringBehind.split("");
-
-            Log.v("xStringBehindCal", "xStringBehindCal : " + Arrays.toString(xStringBehindCal));
-            Log.v("xStringBehindCalTest", "xStringBehindCalTest : " + Arrays.toString(xStringBehindCalTest));
-
-            /*int xStringBehindCalculate =*/
+            String[] xStringBehindArray = xStringBehind.split("");
+            String xStringBehindCalculate = "";
+            int behindCalculateResult = 0;
+            if (xStringBehindArray.length >= 4) {
+                switch (xStringBehindArray[3]) {
+                    case "+":
+                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) + Integer.parseInt(xStringBehindArray[4]);
+                        break;
+                    case "-":
+                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) - Integer.parseInt(xStringBehindArray[4]);
+                        break;
+                    case "*":
+                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) * Integer.parseInt(xStringBehindArray[4]);
+                        break;
+                    case "/":
+                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) / Integer.parseInt(xStringBehindArray[4]);
+                        break;
+                }
+            } else if (xStringBehindArray.length >= 3) {
+                behindCalculateResult = Integer.parseInt(xStringBehindArray[2]);
+            }
+            String behindCalculate = Integer.toString(behindCalculateResult);
 
             /* x앞에 오는 값이 숫자인지 문자인지 확인 */
             boolean xFront = numberCheck(xStringFront);
 
             String operatorCheck = firstFunctionDeleteEqualY.substring(functionFindXTest + 1, functionFindXTest + 2);
             Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
-            int xIntFront =0;
+            int xIntFront = 0;
             if (xStringFront != "") {
                 xIntFront = Integer.parseInt(xStringFront);
             }
             if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
                 if (operatorCheck.equals("+")) {
                     for (float i = startNum; i < range; i += step) {
-                        float y = xIntFront * i + 2;
+                        float y = xIntFront * i + Integer.parseInt(behindCalculate);
                         float x = i;
                         firstValues.add(new Entry(x, y));
                     }
                 } else if (operatorCheck.equals("-")) {
                     for (float i = startNum; i < range; i += step) {
-                        float y = xIntFront * i - Integer.parseInt(functionFirstNum);
+                        float y = xIntFront * i - Integer.parseInt(behindCalculate);
                         float x = i;
                         firstValues.add(new Entry(x, y));
                     }
                 } else if (operatorCheck.equals("*")) {
                     for (float i = startNum; i < range; i += step) {
-                        float y = xIntFront * i * Integer.parseInt(functionFirstNum);
+                        float y = xIntFront * i * Integer.parseInt(behindCalculate);
                         float x = i;
                         firstValues.add(new Entry(x, y));
                     }
                 } else if (operatorCheck.equals("/")) {
                     for (float i = startNum; i < range; i += step) {
-                        float y = xIntFront * i / Integer.parseInt(functionFirstNum);
+                        float y = xIntFront * i / Integer.parseInt(behindCalculate);
                         float x = i;
                         firstValues.add(new Entry(x, y));
                     }
@@ -208,19 +224,19 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                             }
                         } else if (operatorCheck.equals("-")) {
                             for (float i = startNum; i < range; i += step) {
-                                float y = xIntFront * i - Integer.parseInt(functionFirstNum);
+                                float y = xIntFront * i - Integer.parseInt(behindCalculate);
                                 float x = i;
                                 firstValues.add(new Entry(x, y));
                             }
                         } else if (operatorCheck.equals("*")) {
                             for (float i = startNum; i < range; i += step) {
-                                float y = xIntFront * i * Integer.parseInt(functionFirstNum);
+                                float y = xIntFront * i * Integer.parseInt(behindCalculate);
                                 float x = i;
                                 firstValues.add(new Entry(x, y));
                             }
                         } else if (operatorCheck.equals("/")) {
                             for (float i = startNum; i < range; i += step) {
-                                float y = xIntFront * i / Integer.parseInt(functionFirstNum);
+                                float y = xIntFront * i / Integer.parseInt(behindCalculate);
                                 float x = i;
                                 firstValues.add(new Entry(x, y));
                             }
@@ -237,19 +253,19 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             } else if (operatorCheck.equals("-")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) sin(i) - Integer.parseInt(functionFirstNum);
+                                    float y = (float) sin(i) - Integer.parseInt(behindCalculate);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
-                            } else if (operatorCheck.equals("*")) {
+                            } else if (behindCalculate.equals("*")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) sin(i) * Integer.parseInt(functionFirstNum);
+                                    float y = (float) sin(i) * Integer.parseInt(behindCalculate);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
-                            } else if (operatorCheck.equals("/")) {
+                            } else if (behindCalculate.equals("/")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) sin(i) / Integer.parseInt(functionFirstNum);
+                                    float y = (float) sin(i) / Integer.parseInt(xStringBehindNumber);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
@@ -263,19 +279,19 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             } else if (operatorCheck.equals("-")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) cos(i) - Integer.parseInt(functionFirstNum);
+                                    float y = (float) cos(i) - Integer.parseInt(xStringBehindNumber);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
                             } else if (operatorCheck.equals("*")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) cos(i) * Integer.parseInt(functionFirstNum);
+                                    float y = (float) cos(i) * Integer.parseInt(xStringBehindNumber);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
                             } else if (operatorCheck.equals("/")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) cos(i) / Integer.parseInt(functionFirstNum);
+                                    float y = (float) cos(i) / Integer.parseInt(behindCalculate);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
@@ -289,19 +305,19 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             } else if (operatorCheck.equals("-")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) tan(i) - Integer.parseInt(functionFirstNum);
+                                    float y = (float) tan(i) - Integer.parseInt(behindCalculate);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
                             } else if (operatorCheck.equals("*")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) tan(i) * Integer.parseInt(functionFirstNum);
+                                    float y = (float) tan(i) * Integer.parseInt(behindCalculate);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
                             } else if (operatorCheck.equals("/")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) tan(i) / Integer.parseInt(functionFirstNum);
+                                    float y = (float) tan(i) / Integer.parseInt(behindCalculate);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
@@ -310,7 +326,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     }
 //                Log.v("xStringMinus", "xStringMinus : " + xStringMinus);
 
-                } else if (xStringFront.equals("")){    //루트랑 스퀘어 추가 생각 필요
+                } else if (xStringFront.equals("")) {    //루트랑 스퀘어 추가 생각 필요
                     if (operatorCheck.equals("+")) {
                         for (float i = startNum; i < range; i += step) {
                             float y = i + 2;
@@ -319,19 +335,19 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                         }
                     } else if (operatorCheck.equals("-")) {
                         for (float i = startNum; i < range; i += step) {
-                            float y = i - Integer.parseInt(functionFirstNum);
+                            float y = i - Integer.parseInt(behindCalculate);
                             float x = i;
                             firstValues.add(new Entry(x, y));
                         }
                     } else if (operatorCheck.equals("*")) {
                         for (float i = startNum; i < range; i += step) {
-                            float y = i * Integer.parseInt(functionFirstNum);
+                            float y = i * Integer.parseInt(behindCalculate);
                             float x = i;
                             firstValues.add(new Entry(x, y));
                         }
                     } else if (operatorCheck.equals("/")) {
                         for (float i = startNum; i < range; i += step) {
-                            float y = i / Integer.parseInt(functionFirstNum);
+                            float y = i / Integer.parseInt(behindCalculate);
                             float x = i;
                             firstValues.add(new Entry(x, y));
                         }
