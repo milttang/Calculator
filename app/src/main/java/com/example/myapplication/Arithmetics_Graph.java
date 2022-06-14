@@ -430,7 +430,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     intent.putExtra("empty3", empty3.getText().toString());
                     intent.putExtra("function3", equation3.getText().toString());
                     startActivityForResult(intent, REQUEST_CODE);
-                    startActivity(intent);
                     break;
                 }
 

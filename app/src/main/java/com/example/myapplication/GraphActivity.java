@@ -31,7 +31,7 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView functionTest, functionTest1, functionTest2, functionTest3, functionTest4, functionTest5;
+    private TextView functionOne, functionTwo, functionThree, emptyOne, emptyTwo, emptyThree;
     private LineChart chart;
     private Button graph;
     private String function1, function2, function3, empty1, empty2, empty3;
@@ -47,25 +47,14 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-
-//        String function2 = extras.getString("function2");
-//        String empty2 = extras.getString("empty2");
-//        functionTest2.setText(function2);
-//        functionTest3.setText(empty2);
-//
-//        String function3 = extras.getString("function3");
-//        String empty3 = extras.getString("empty3");
-//        functionTest4.setText(function3);
-//        functionTest5.setText(empty3);
-
         chart = findViewById(R.id.linechart);
         graph = findViewById(R.id.graph);
-        functionTest = findViewById(R.id.functionTest);
-        functionTest1 = findViewById(R.id.functionTest1);
-        functionTest2 = findViewById(R.id.functionTest2);
-        functionTest3 = findViewById(R.id.functionTest3);
-        functionTest4 = findViewById(R.id.functionTest4);
-        functionTest5 = findViewById(R.id.functionTest5);
+        functionOne = findViewById(R.id.functionOne);
+        functionTwo = findViewById(R.id.functionTwo);
+        functionThree = findViewById(R.id.functionThree);
+        emptyOne = findViewById(R.id.emptyOne);
+        emptyTwo = findViewById(R.id.emptyTwo);
+        emptyThree = findViewById(R.id.emptyThree);
 
         graph.setOnClickListener(this);
 
@@ -102,89 +91,83 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             empty3 = extras.getString("empty3");
         }
 
-        functionTest.setText(function1);
-        functionTest1.setText(empty1);
-        functionTest2.setText(function2);
-        functionTest3.setText(empty2);
-        functionTest4.setText(function3);
-        functionTest5.setText(empty3);
-
-/*        String functionFirst = functionTest.getText().toString();
-        Log.v("functionFirst", "functionFirst : " + functionFirst);
-        String functionFirstRemove = functionFirst.replaceFirst("y=", "");
-        Log.v("functionFirstRemove", "functionFirstRemove : " + functionFirstRemove);
-        String functionOperator = functionFirstRemove.substring(1, 2);
-        Log.v("functionOperator", "functionOperator : " + functionOperator);
-        String functionNum = functionFirstRemove.substring(2);
-        Log.v("functionNum", "functionNum : " + functionNum);*/
+        // 각각의 항목에 Data Setting
+        functionOne.setText(function1);
+        emptyOne.setText(empty1);
+        functionTwo.setText(function2);
+        emptyTwo.setText(empty2);
+        functionThree.setText(function3);
+        emptyThree.setText(empty3);
 
         // function2,3이 ""일 떄, 조건 추가하여 Data표시 안되도록
         ArrayList<Entry> xValues = new ArrayList<>();
         ArrayList<Entry> yValues = new ArrayList<>();
         ArrayList<Entry> firstValues = new ArrayList<>();
         ArrayList<Entry> secondValues = new ArrayList<>();
-        ArrayList<Entry> thirdsValues = new ArrayList<>();
+        ArrayList<Entry> thirdValues = new ArrayList<>();
 
+        // function1
         if (!function1.equals("")) {
 
             /* 전체 함수 읽어온 String */
-            String firstFunction = functionTest.getText().toString();
+            String firstFunction = functionOne.getText().toString();
             Log.v("firstFunction", "firstFunction : " + firstFunction);
+
             /* 전체 함수에서 y=을 제거한 String */
             String firstFunctionDeleteEqualY = firstFunction.replaceFirst("y=", "");
             Log.v("deleteEqualY", "firstFunctionDeleteEqualY : " + firstFunctionDeleteEqualY);
 
-            String functionFirstOperator = firstFunctionDeleteEqualY.substring(1, 2);
-            Log.v("functionFirstOperator", "functionFirstOperator : " + functionFirstOperator);
-            String functionFirstNum = firstFunctionDeleteEqualY.substring(2);
-            Log.v("functionFirstNum", "functionFirstNum : " + functionFirstNum);
+            String firstfunctionOperator = firstFunctionDeleteEqualY.substring(1, 2);
+            Log.v("firstfunctionOperator", "firstfunctionOperator : " + firstfunctionOperator);
+            String firstNum = firstFunctionDeleteEqualY.substring(2);
+            Log.v("firstNum", "firstNum : " + firstNum);
 
             /* 전체 함수에서 y=을 제거 후, x의 index 확인 */
-            int functionFindXTest = firstFunctionDeleteEqualY.indexOf(xString);
-            Log.v("functionFindXTest", "functionFindXTest : " + functionFindXTest);
+            int firstFindXTest = firstFunctionDeleteEqualY.indexOf(xString);
+            Log.v("firstFindXTest", "firstFindXTest : " + firstFindXTest);
 
             /* x앞에 붙어 있는 숫자 및 문자열 확인 */
-            String xStringFront = firstFunctionDeleteEqualY.substring(0, functionFindXTest);
-            Log.v("xStringFront", "xStringFront : " + xStringFront);
+            String xFirstFront = firstFunctionDeleteEqualY.substring(0, firstFindXTest);
+            Log.v("xFirstFront", "xFirstFront : " + xFirstFront);
 
             /* x뒤에 붙어 있는 계산 및 연산 String 확인 */
-            String xStringBehind = firstFunctionDeleteEqualY.substring(functionFindXTest + 1);
-            String xStringBehindNumber = xStringBehind.replaceAll("[^0-9]", "");
-            Log.v("xStringBehind", "xStringBehind : " + xStringBehind);
-            Log.v("xStringBehindNumber", "xStringBehindNumber : " + xStringBehindNumber);
+            String xFirstBehind = firstFunctionDeleteEqualY.substring(firstFindXTest + 1);
+            String xFirstBehindNumber = xFirstBehind.replaceAll("[^0-9]", "");
+            Log.v("xFirstBehind", "xFirstBehind : " + xFirstBehind);
+            Log.v("xFirstBehindNumber", "xFirstBehindNumber : " + xFirstBehindNumber);
 
             /* 연산 String 을 Parsing 하여 계산 */
-            String[] xStringBehindArray = xStringBehind.split("");
-            String xStringBehindCalculate = "";
+            String[] xFirstBehindArray = xFirstBehind.split("");
+            String xFirstBehindCalculate = "";
             int behindCalculateResult = 0;
-            if (xStringBehindArray.length >= 4) {
-                switch (xStringBehindArray[3]) {
+            if (xFirstBehindArray.length >= 4) {
+                switch (xFirstBehindArray[3]) {
                     case "+":
-                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) + Integer.parseInt(xStringBehindArray[4]);
+                        behindCalculateResult = Integer.parseInt(xFirstBehindArray[2]) + Integer.parseInt(xFirstBehindArray[4]);
                         break;
                     case "-":
-                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) - Integer.parseInt(xStringBehindArray[4]);
+                        behindCalculateResult = Integer.parseInt(xFirstBehindArray[2]) - Integer.parseInt(xFirstBehindArray[4]);
                         break;
                     case "*":
-                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) * Integer.parseInt(xStringBehindArray[4]);
+                        behindCalculateResult = Integer.parseInt(xFirstBehindArray[2]) * Integer.parseInt(xFirstBehindArray[4]);
                         break;
                     case "/":
-                        behindCalculateResult = Integer.parseInt(xStringBehindArray[2]) / Integer.parseInt(xStringBehindArray[4]);
+                        behindCalculateResult = Integer.parseInt(xFirstBehindArray[2]) / Integer.parseInt(xFirstBehindArray[4]);
                         break;
                 }
-            } else if (xStringBehindArray.length >= 3) {
-                behindCalculateResult = Integer.parseInt(xStringBehindArray[2]);
+            } else if (xFirstBehindArray.length >= 3) {
+                behindCalculateResult = Integer.parseInt(xFirstBehindArray[2]);
             }
             String behindCalculate = Integer.toString(behindCalculateResult);
 
             /* x앞에 오는 값이 숫자인지 문자인지 확인 */
-            boolean xFront = numberCheck(xStringFront);
+            boolean xFront = numberCheck(xFirstFront);
 
-            String operatorCheck = firstFunctionDeleteEqualY.substring(functionFindXTest + 1, functionFindXTest + 2);
+            String operatorCheck = firstFunctionDeleteEqualY.substring(firstFindXTest + 1, firstFindXTest + 2);
             Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
             int xIntFront = 0;
-            if (xStringFront != "") {
-                xIntFront = Integer.parseInt(xStringFront);
+            if (xFirstFront != "") {
+                xIntFront = Integer.parseInt(xFirstFront);
             }
             if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
                 if (operatorCheck.equals("+")) {
@@ -213,8 +196,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             } else {
-                if (xStringFront.charAt(0) == '-') {
-                    xStringMinus = xStringFront.substring(1);
+                if (xFirstFront.charAt(0) == '-') {
+                    xStringMinus = xFirstFront.substring(1);
                     if (numberCheck(xStringMinus)) {
                         if (operatorCheck.equals("+")) {
                             for (float i = startNum; i < range; i += step) {
@@ -244,7 +227,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                             // 부호다음에 cos sin 같은 문자 오는거 생각
                         }
                     } else {
-                        if (xStringFront.charAt(1) == 's') {
+                        if (xFirstFront.charAt(1) == 's') {
                             if (operatorCheck.equals("+")) {
                                 for (float i = startNum; i < range; i += step) {
                                     float y = (float) sin(i) + 2;
@@ -265,12 +248,12 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             } else if (behindCalculate.equals("/")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) sin(i) / Integer.parseInt(xStringBehindNumber);
+                                    float y = (float) sin(i) / Integer.parseInt(xFirstBehindNumber);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
                             }
-                        } else if (xStringFront.charAt(1) == 'c') {
+                        } else if (xFirstFront.charAt(1) == 'c') {
                             if (operatorCheck.equals("+")) {
                                 for (float i = startNum; i < range; i += step) {
                                     float y = (float) cos(i) + 2;
@@ -279,13 +262,13 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                 }
                             } else if (operatorCheck.equals("-")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) cos(i) - Integer.parseInt(xStringBehindNumber);
+                                    float y = (float) cos(i) - Integer.parseInt(xFirstBehindNumber);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
                             } else if (operatorCheck.equals("*")) {
                                 for (float i = startNum; i < range; i += step) {
-                                    float y = (float) cos(i) * Integer.parseInt(xStringBehindNumber);
+                                    float y = (float) cos(i) * Integer.parseInt(xFirstBehindNumber);
                                     float x = i;
                                     firstValues.add(new Entry(x, y));
                                 }
@@ -296,7 +279,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                                     firstValues.add(new Entry(x, y));
                                 }
                             }
-                        } else if (xStringFront.charAt(1) == 't') {
+                        } else if (xFirstFront.charAt(1) == 't') {
                             if (operatorCheck.equals("+")) {
                                 for (float i = startNum; i < range; i += step) {
                                     float y = (float) tan(i) + 2;
@@ -326,7 +309,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     }
 //                Log.v("xStringMinus", "xStringMinus : " + xStringMinus);
 
-                } else if (xStringFront.equals("")) {    //루트랑 스퀘어 추가 생각 필요
+                } else if (xFirstFront.equals("")) {    //루트랑 스퀘어 추가 생각 필요
                     if (operatorCheck.equals("+")) {
                         for (float i = startNum; i < range; i += step) {
                             float y = i + 2;
@@ -355,116 +338,492 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         }
+
+        // function2
         if (!function2.equals("")) {
-            String functionSecond = functionTest2.getText().toString();
-            Log.v("functionSecond", "functionSecond : " + functionSecond);
-            String functionSecondRemove = functionSecond.replaceFirst("y=", "");
-            Log.v("functionSecondRemove", "functionSecondRemove : " + functionSecondRemove);
-            String functionSecondOperator = functionSecondRemove.substring(1, 2);
-            Log.v("functionSecondOperator", "functionSecondOperator : " + functionSecondOperator);
-            String functionSecondNum = functionSecondRemove.substring(2);
-            Log.v("functionSecondNum", "functionSecondNum : " + functionSecondNum);
 
-            if (functionSecondOperator.equals("+")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i + Integer.parseInt(functionSecondNum);
-                    float x = i;
-                    secondValues.add(new Entry(x, y));
+            /* 전체 함수 읽어온 String */
+            String secondFunction = functionTwo.getText().toString();
+            Log.v("secondFunction", "secondFunction : " + secondFunction);
+
+            /* 전체 함수에서 y=을 제거한 String */
+            String secondFunctionDeleteEqualY = secondFunction.replaceFirst("y=", "");
+            Log.v("deleteEqualY", "secondFunctionDeleteEqualY : " + secondFunctionDeleteEqualY);
+
+            String secondfunctionOperator = secondFunctionDeleteEqualY.substring(1, 2);
+            Log.v("secondfunctionOperator", "secondfunctionOperator : " + secondfunctionOperator);
+            String secondNum = secondFunctionDeleteEqualY.substring(2);
+            Log.v("secondNum", "secondNum : " + secondNum);
+
+            /* 전체 함수에서 y=을 제거 후, x의 index 확인 */
+            int secondFindXTest = secondFunctionDeleteEqualY.indexOf(xString);
+            Log.v("secondFindXTest", "secondFindXTest : " + secondFindXTest);
+
+            /* x앞에 붙어 있는 숫자 및 문자열 확인 */
+            String xSecondFront = secondFunctionDeleteEqualY.substring(0, secondFindXTest);
+            Log.v("xSecondFront", "xSecondFront : " + xSecondFront);
+
+            /* x뒤에 붙어 있는 계산 및 연산 String 확인 */
+            String xSecondBehind = secondFunctionDeleteEqualY.substring(secondFindXTest + 1);
+            String xSecondBehindNumber = xSecondBehind.replaceAll("[^0-9]", "");
+            Log.v("xSecondBehind", "xSecondBehind : " + xSecondBehind);
+            Log.v("xSecondBehindNumber", "xSecondBehindNumber : " + xSecondBehindNumber);
+
+            /* 연산 String 을 Parsing 하여 계산 */
+            String[] xSecondBehindArray = xSecondBehind.split("");
+            String xSecondBehindCalculate = "";
+            int behindCalculateResult = 0;
+            if (xSecondBehindArray.length >= 4) {
+                switch (xSecondBehindArray[3]) {
+                    case "+":
+                        behindCalculateResult = Integer.parseInt(xSecondBehindArray[2]) + Integer.parseInt(xSecondBehindArray[4]);
+                        break;
+                    case "-":
+                        behindCalculateResult = Integer.parseInt(xSecondBehindArray[2]) - Integer.parseInt(xSecondBehindArray[4]);
+                        break;
+                    case "*":
+                        behindCalculateResult = Integer.parseInt(xSecondBehindArray[2]) * Integer.parseInt(xSecondBehindArray[4]);
+                        break;
+                    case "/":
+                        behindCalculateResult = Integer.parseInt(xSecondBehindArray[2]) / Integer.parseInt(xSecondBehindArray[4]);
+                        break;
                 }
-            } else if (functionSecondOperator.equals("-")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i - Integer.parseInt(functionSecondNum);
-                    float x = i;
-                    secondValues.add(new Entry(x, y));
+            } else if (xSecondBehindArray.length >= 3) {
+                behindCalculateResult = Integer.parseInt(xSecondBehindArray[2]);
+            }
+            String behindCalculate = Integer.toString(behindCalculateResult);
+
+            /* x앞에 오는 값이 숫자인지 문자인지 확인 */
+            boolean xFront = numberCheck(xSecondFront);
+
+            String operatorCheck = secondFunctionDeleteEqualY.substring(secondFindXTest + 1, secondFindXTest + 2);
+            Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
+            int xIntFront = 0;
+            if (xSecondFront != "") {
+                xIntFront = Integer.parseInt(xSecondFront);
+            }
+            if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
+                if (operatorCheck.equals("+")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i + Integer.parseInt(behindCalculate);
+                        float x = i;
+                        secondValues.add(new Entry(x, y));
+                    }
+                } else if (operatorCheck.equals("-")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i - Integer.parseInt(behindCalculate);
+                        float x = i;
+                        secondValues.add(new Entry(x, y));
+                    }
+                } else if (operatorCheck.equals("*")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i * Integer.parseInt(behindCalculate);
+                        float x = i;
+                        secondValues.add(new Entry(x, y));
+                    }
+                } else if (operatorCheck.equals("/")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i / Integer.parseInt(behindCalculate);
+                        float x = i;
+                        secondValues.add(new Entry(x, y));
+                    }
                 }
-            } else if (functionSecondOperator.equals("*")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i * Integer.parseInt(functionSecondNum);
-                    float x = i;
-                    secondValues.add(new Entry(x, y));
-                }
-            } else if (functionSecondOperator.equals("/")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i / Integer.parseInt(functionSecondNum);
-                    float x = i;
-                    secondValues.add(new Entry(x, y));
+            } else {
+                if (xSecondFront.charAt(0) == '-') {
+                    xStringMinus = xSecondFront.substring(1);
+                    if (numberCheck(xStringMinus)) {
+                        if (operatorCheck.equals("+")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i + 2;
+                                float x = i;
+                                secondValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("-")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i - Integer.parseInt(behindCalculate);
+                                float x = i;
+                                secondValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("*")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i * Integer.parseInt(behindCalculate);
+                                float x = i;
+                                secondValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("/")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i / Integer.parseInt(behindCalculate);
+                                float x = i;
+                                secondValues.add(new Entry(x, y));
+                            }
+                        } else if ("1" == "2") {
+                            // 부호다음에 cos sin 같은 문자 오는거 생각
+                        }
+                    } else {
+                        if (xSecondFront.charAt(1) == 's') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) + 2;
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) - Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (behindCalculate.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) * Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (behindCalculate.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) / Integer.parseInt(xSecondBehindNumber);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            }
+                        } else if (xSecondFront.charAt(1) == 'c') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) + 2;
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) - Integer.parseInt(xSecondBehindNumber);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) * Integer.parseInt(xSecondBehindNumber);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) / Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            }
+                        } else if (xSecondFront.charAt(1) == 't') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) + 2;
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) - Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) * Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) / Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    secondValues.add(new Entry(x, y));
+                                }
+                            }
+                        }
+                    }
+//                Log.v("xStringMinus", "xStringMinus : " + xStringMinus);
+
+                } else if (xSecondFront.equals("")) {    //루트랑 스퀘어 추가 생각 필요
+                    if (operatorCheck.equals("+")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i + 2;
+                            float x = i;
+                            secondValues.add(new Entry(x, y));
+                        }
+                    } else if (operatorCheck.equals("-")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i - Integer.parseInt(behindCalculate);
+                            float x = i;
+                            secondValues.add(new Entry(x, y));
+                        }
+                    } else if (operatorCheck.equals("*")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i * Integer.parseInt(behindCalculate);
+                            float x = i;
+                            secondValues.add(new Entry(x, y));
+                        }
+                    } else if (operatorCheck.equals("/")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i / Integer.parseInt(behindCalculate);
+                            float x = i;
+                            secondValues.add(new Entry(x, y));
+                        }
+                    }
                 }
             }
         }
+
+        // function3
         if (!function3.equals("")) {
-            String functionThird = functionTest4.getText().toString();
-            Log.v("functionThird", "functionThird : " + functionThird);
-            String functionThirdRemove = functionThird.replaceFirst("y=", "");
-            Log.v("functionThirdRemove", "functionThirdRemove : " + functionThirdRemove);
-            String functionThirdOperator = functionThirdRemove.substring(1, 2);
-            Log.v("functionThirdOperator", "functionThirdOperator : " + functionThirdOperator);
-            String functionThirdNum = functionThirdRemove.substring(2);
-            Log.v("functionThirdNum", "functionThirdNum : " + functionThirdNum);
 
-            if (functionThirdOperator.equals("+")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i + Integer.parseInt(functionThirdNum);
-                    float x = i;
-                    thirdsValues.add(new Entry(x, y));
+            /* 전체 함수 읽어온 String */
+            String thirdFunction = functionThree.getText().toString();
+            Log.v("thirdFunction", "thirdFunction : " + thirdFunction);
+
+            /* 전체 함수에서 y=을 제거한 String */
+            String thirdFunctionDeleteEqualY = thirdFunction.replaceFirst("y=", "");
+            Log.v("deleteEqualY", "thirdFunctionDeleteEqualY : " + thirdFunctionDeleteEqualY);
+
+            String thirdfunctionOperator = thirdFunctionDeleteEqualY.substring(1, 2);
+            Log.v("thirdfunctionOperator", "thirdfunctionOperator : " + thirdfunctionOperator);
+            String thirdNum = thirdFunctionDeleteEqualY.substring(2);
+            Log.v("thirdNum", "thirdNum : " + thirdNum);
+
+            /* 전체 함수에서 y=을 제거 후, x의 index 확인 */
+            int thirdFindXTest = thirdFunctionDeleteEqualY.indexOf(xString);
+            Log.v("thirdFindXTest", "thirdFindXTest : " + thirdFindXTest);
+
+            /* x앞에 붙어 있는 숫자 및 문자열 확인 */
+            String xThirdFront = thirdFunctionDeleteEqualY.substring(0, thirdFindXTest);
+            Log.v("xThirdFront", "xThirdFront : " + xThirdFront);
+
+            /* x뒤에 붙어 있는 계산 및 연산 String 확인 */
+            String xThirdBehind = thirdFunctionDeleteEqualY.substring(thirdFindXTest + 1);
+            String xThirdBehindNumber = xThirdBehind.replaceAll("[^0-9]", "");
+            Log.v("xThirdBehind", "xThirdBehind : " + xThirdBehind);
+            Log.v("xThirdBehindNumber", "xThirdBehindNumber : " + xThirdBehindNumber);
+
+            /* 연산 String 을 Parsing 하여 계산 */
+            String[] xThirdBehindArray = xThirdBehind.split("");
+            String xThirdBehindCalculate = "";
+            int behindCalculateResult = 0;
+            if (xThirdBehindArray.length >= 4) {
+                switch (xThirdBehindArray[3]) {
+                    case "+":
+                        behindCalculateResult = Integer.parseInt(xThirdBehindArray[2]) + Integer.parseInt(xThirdBehindArray[4]);
+                        break;
+                    case "-":
+                        behindCalculateResult = Integer.parseInt(xThirdBehindArray[2]) - Integer.parseInt(xThirdBehindArray[4]);
+                        break;
+                    case "*":
+                        behindCalculateResult = Integer.parseInt(xThirdBehindArray[2]) * Integer.parseInt(xThirdBehindArray[4]);
+                        break;
+                    case "/":
+                        behindCalculateResult = Integer.parseInt(xThirdBehindArray[2]) / Integer.parseInt(xThirdBehindArray[4]);
+                        break;
                 }
-            } else if (functionThirdOperator.equals("-")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i - Integer.parseInt(functionThirdNum);
-                    float x = i;
-                    thirdsValues.add(new Entry(x, y));
+            } else if (xThirdBehindArray.length >= 3) {
+                behindCalculateResult = Integer.parseInt(xThirdBehindArray[2]);
+            }
+            String behindCalculate = Integer.toString(behindCalculateResult);
+
+            /* x앞에 오는 값이 숫자인지 문자인지 확인 */
+            boolean xFront = numberCheck(xThirdFront);
+
+            String operatorCheck = thirdFunctionDeleteEqualY.substring(thirdFindXTest + 1, thirdFindXTest + 2);
+            Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
+            int xIntFront = 0;
+            if (xThirdFront != "") {
+                xIntFront = Integer.parseInt(xThirdFront);
+            }
+            if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
+                if (operatorCheck.equals("+")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i + Integer.parseInt(behindCalculate);
+                        float x = i;
+                        thirdValues.add(new Entry(x, y));
+                    }
+                } else if (operatorCheck.equals("-")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i - Integer.parseInt(behindCalculate);
+                        float x = i;
+                        thirdValues.add(new Entry(x, y));
+                    }
+                } else if (operatorCheck.equals("*")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i * Integer.parseInt(behindCalculate);
+                        float x = i;
+                        thirdValues.add(new Entry(x, y));
+                    }
+                } else if (operatorCheck.equals("/")) {
+                    for (float i = startNum; i < range; i += step) {
+                        float y = xIntFront * i / Integer.parseInt(behindCalculate);
+                        float x = i;
+                        thirdValues.add(new Entry(x, y));
+                    }
                 }
-            } else if (functionThirdOperator.equals("*")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i * Integer.parseInt(functionThirdNum);
-                    float x = i;
-                    thirdsValues.add(new Entry(x, y));
-                }
-            } else if (functionThirdOperator.equals("/")) {
-                for (float i = startNum; i < range; i += step) {
-                    float y = i / Integer.parseInt(functionThirdNum);
-                    float x = i;
-                    thirdsValues.add(new Entry(x, y));
+            } else {
+                if (xThirdFront.charAt(0) == '-') {
+                    xStringMinus = xThirdFront.substring(1);
+                    if (numberCheck(xStringMinus)) {
+                        if (operatorCheck.equals("+")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i + 2;
+                                float x = i;
+                                thirdValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("-")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i - Integer.parseInt(behindCalculate);
+                                float x = i;
+                                thirdValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("*")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i * Integer.parseInt(behindCalculate);
+                                float x = i;
+                                thirdValues.add(new Entry(x, y));
+                            }
+                        } else if (operatorCheck.equals("/")) {
+                            for (float i = startNum; i < range; i += step) {
+                                float y = xIntFront * i / Integer.parseInt(behindCalculate);
+                                float x = i;
+                                thirdValues.add(new Entry(x, y));
+                            }
+                        } else if ("1" == "2") {
+                            // 부호다음에 cos sin 같은 문자 오는거 생각
+                        }
+                    } else {
+                        if (xThirdFront.charAt(1) == 's') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) + 2;
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) - Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (behindCalculate.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) * Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (behindCalculate.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) sin(i) / Integer.parseInt(xThirdBehindNumber);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            }
+                        } else if (xThirdFront.charAt(1) == 'c') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) + 2;
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) - Integer.parseInt(xThirdBehindNumber);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) * Integer.parseInt(xThirdBehindNumber);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) cos(i) / Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            }
+                        } else if (xThirdFront.charAt(1) == 't') {
+                            if (operatorCheck.equals("+")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) + 2;
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("-")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) - Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("*")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) * Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            } else if (operatorCheck.equals("/")) {
+                                for (float i = startNum; i < range; i += step) {
+                                    float y = (float) tan(i) / Integer.parseInt(behindCalculate);
+                                    float x = i;
+                                    thirdValues.add(new Entry(x, y));
+                                }
+                            }
+                        }
+                    }
+//                Log.v("xStringMinus", "xStringMinus : " + xStringMinus);
+
+                } else if (xThirdFront.equals("")) {    //루트랑 스퀘어 추가 생각 필요
+                    if (operatorCheck.equals("+")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i + 2;
+                            float x = i;
+                            thirdValues.add(new Entry(x, y));
+                        }
+                    } else if (operatorCheck.equals("-")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i - Integer.parseInt(behindCalculate);
+                            float x = i;
+                            thirdValues.add(new Entry(x, y));
+                        }
+                    } else if (operatorCheck.equals("*")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i * Integer.parseInt(behindCalculate);
+                            float x = i;
+                            thirdValues.add(new Entry(x, y));
+                        }
+                    } else if (operatorCheck.equals("/")) {
+                        for (float i = startNum; i < range; i += step) {
+                            float y = i / Integer.parseInt(behindCalculate);
+                            float x = i;
+                            thirdValues.add(new Entry(x, y));
+                        }
+                    }
                 }
             }
         }
-        for (
-                float i = startNum;
-                i < range; i += step) {
+
+        for (float i = startNum; i < range; i += step) {
             float y = i;
             float x = 0;
             yValues.add(new Entry(x, y));
-
         }
-        for (
-                float i = startNum;
-                i < range; i += step) {
+
+        for (float i = startNum; i < range; i += step) {
             float y = 0;
             float x = i;
             xValues.add(new Entry(x, y));
-
         }
 
         // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
         LineDataSet set1, set2, set3, set4, set5;
-        set1 = new
-
-                LineDataSet(firstValues, function1);
-
-        set2 = new
-
-                LineDataSet(secondValues, function2);
-
-        set3 = new
-
-                LineDataSet(thirdsValues, function3);
-
-        set4 = new
-
-                LineDataSet(xValues, "");
-
-        set5 = new
-
-                LineDataSet(yValues, "");
+        set1 = new LineDataSet(firstValues, function1);
+        set2 = new LineDataSet(secondValues, function2);
+        set3 = new LineDataSet(thirdValues, function3);
+        set4 = new LineDataSet(xValues, "");
+        set5 = new LineDataSet(yValues, "");
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set4); // add the data sets
