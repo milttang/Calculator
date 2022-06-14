@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import static android.content.ContentValues.TAG;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.tan;
@@ -166,7 +167,8 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             String operatorCheck = firstFunctionDeleteEqualY.substring(firstFindXTest + 1, firstFindXTest + 2);
             Log.v("operatorCheck", "operatorCheck : " + operatorCheck);
             int xIntFront = 0;
-            if (xFirstFront != "") {
+            if (!xFirstFront.equals("")) {
+                Log.d("xFirstFront : ", xFirstFront);
                 xIntFront = Integer.parseInt(xFirstFront);
             }
             if (xFront) { /* y = 정수 , x = 정수 , x항과 숫자항이 존재할 때, x항이 뒤로가는 경우는 아직 생각 안함 */
@@ -196,7 +198,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             } else {
-                if (xFirstFront.charAt(0) == '-') {
+                if (xFirstFront.equals("-")) {
                     xStringMinus = xFirstFront.substring(1);
                     if (numberCheck(xStringMinus)) {
                         if (operatorCheck.equals("+")) {
@@ -805,17 +807,10 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
-        for (float i = startNum; i < range; i += step) {
-            float y = i;
-            float x = 0;
-            yValues.add(new Entry(x, y));
-        }
-
-        for (float i = startNum; i < range; i += step) {
-            float y = 0;
-            float x = i;
-            xValues.add(new Entry(x, y));
-        }
+        xValues.add(new Entry(-10,0));
+        xValues.add(new Entry(20,0));
+        yValues.add(new Entry(0,-10));
+        yValues.add(new Entry(0,20));
 
         // x와 y를 Array로 가져온 후, for 문을 통해 ArrayList 추가?
         LineDataSet set1, set2, set3, set4, set5;
@@ -837,8 +832,10 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         LineData data = new LineData(dataSets);
 
         // black lines and points
+        set4.setLineWidth(8.0F);
         set4.setColor(Color.LTGRAY);
         set4.setCircleColor(Color.LTGRAY);
+        set5.setLineWidth(8.0F);
         set5.setColor(Color.LTGRAY);
         set5.setCircleColor(Color.LTGRAY);
         set1.setColor(Color.DKGRAY);

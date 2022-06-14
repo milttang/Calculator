@@ -104,6 +104,9 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
         clearBtn.setOnClickListener(this);
         graphBtn.setOnClickListener(this);
         homeBtn.setOnClickListener(this);
+        equation1.setOnClickListener(this);
+        equation2.setOnClickListener(this);
+        equation3.setOnClickListener(this);
     }
 
     // Activity 종료 시 효과 제거
@@ -353,11 +356,32 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     if (size >= 1) {
                         equation1.setText(equation1.getText().toString().substring(0, size - 1));
                     }
+                    if(equation1.getText().toString().equals("")){
+                        if(!equation2.getText().toString().equals("")){
+                            equation1.setText(equation2.getText());
+                            equation2.setText("");
+                            empty2.setText("");
+                        }
+                        if(!equation3.getText().toString().equals("")){
+                            equation2.setText(equation3.getText());
+                            equation3.setText("");
+                            empty2.setText("1");
+                            empty3.setText("");
+                        }
+                    }
                     break;
                 } else if (empty2.getText().toString().equals("")) {
                     int size = equation2.getText().length();
                     if (size >= 1) {
                         equation2.setText(equation2.getText().toString().substring(0, size - 1));
+                    }
+                    if(equation2.getText().toString().equals("")){
+                        if(!equation3.getText().toString().equals("")){
+                            equation2.setText(equation3.getText());
+                            equation3.setText("");
+                            empty2.setText("1");
+                            empty3.setText("");
+                        }
                     }
                     break;
                 } else {
@@ -437,6 +461,24 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                 Intent homeIntent = new Intent(getApplicationContext(), Arithmetics.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);     // Activity 전환 시 효과 제거
                 startActivity(homeIntent);
+                break;
+
+            case R.id.equation1:
+                empty1.setText("");
+                break;
+            case R.id.equation2:
+                if(!equation1.getText().toString().equals("")){
+                    empty1.setText("1");
+                    empty2.setText("");
+                }
+                break;
+            case R.id.equation3:
+                if(!equation1.getText().toString().equals("")){
+                    empty1.setText("1");
+                }
+                if(!equation2.getText().toString().equals("")){
+                    empty2.setText("1");
+                }
                 break;
         }
     }

@@ -47,7 +47,10 @@
                 android:gravity="end"
                 android:maxLength="10"
                 android:text=""
-                android:textSize="20pt" />
+                android:textSize="20pt"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/empty1"
@@ -91,7 +94,10 @@
                 android:gravity="end"
                 android:maxLength="10"
                 android:text=""
-                android:textSize="20pt" />
+                android:textSize="20pt"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground" />
 
             <TextView
                 android:id="@+id/empty2"
@@ -135,7 +141,10 @@
                 android:gravity="end"
                 android:maxLength="10"
                 android:text=""
-                android:textSize="20pt" />
+                android:textSize="20pt"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/empty3"
