@@ -278,10 +278,6 @@ public class CalculateHelper {
                         if(bracket.get(i+2).equals("*") || bracket.get(i+2).equals("/")){
                             resultList5.add(bracket.get(i+2));
                             resultList5.add(bracket.get(i+1));
-                        /*}else if(i+3<bracket.size()){
-                            if(bracket.get(i+3).equals("*") || bracket.get(i+3).equals("/"))
-                            resultList5.add(bracket.get(i+3));
-                            resultList5.add(bracket.get(i+1));*/
                         }else if(bracket.get(i+1).equals("(")){
                             resultList6.add(bracket.get(i));
                             resultList6.add(bracket.get(i + 2));
@@ -304,8 +300,6 @@ public class CalculateHelper {
                     resultList6.remove(0);
                 }
                 String test_separa = separation(resultList6);
-                /*bracketMuldivStr = merge(resultList5);                              //괄호안에 곱셈, 나눗셈 먼저 적용
-                bracketAddsubStr = merge(resultList6);                              //괄호안에 덧셈, 뺄셈 적용*/
                 bracketMuldivStr = "( "+ test_separ.substring(3);
                 bracketAddsubStr = test_separa + " )";
                 bracketStr = bracketMuldivStr + bracketAddsubStr;
@@ -320,10 +314,6 @@ public class CalculateHelper {
                 muldiv.remove(0);
             }
             muldivStr = separation(muldiv);             //중간에 덧셈이 끼어있는 곱셈 나눗셈 묶어서 분류
-            /*if(bracket.size() != 0){*/
-            /*muldivStr = muldivStr.substring(3);*/
-            /*muldivStr = " + "+ muldivStr;*/
-            /*}*/
         }
         if(addsub.size() != 0){                     //덧셈 뺄셈 배열 정렬
             addsubStr = merge(addsub);
