@@ -297,35 +297,35 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                 }
             case R.id.sinBtn:
                 if (empty1.getText().toString().equals("")) {
-                    equation1.setText("y=sin(x)");
+                    equation1.append("sin");
                     break;
                 } else if (empty2.getText().toString().equals("")) {
-                    equation2.setText("y=sin(x)");
+                    equation2.append("sin");
                     break;
                 } else {
-                    equation3.setText("y=sin(x)");
+                    equation3.append("sin");
                     break;
                 }
             case R.id.cosBtn:
                 if (empty1.getText().toString().equals("")) {
-                    equation1.setText("y=cos(x)");
+                    equation1.append("cos");
                     break;
                 } else if (empty2.getText().toString().equals("")) {
-                    equation2.setText("y=cos(x)");
+                    equation2.append("cos");
                     break;
                 } else {
-                    equation3.setText("y=cos(x)");
+                    equation3.append("cos");
                     break;
                 }
             case R.id.tanBtn:
                 if (empty1.getText().toString().equals("")) {
-                    equation1.setText("y=tan(x)");
+                    equation1.append("tan");
                     break;
                 } else if (empty2.getText().toString().equals("")) {
-                    equation2.setText("y=tan(x)");
+                    equation2.append("tan");
                     break;
                 } else {
-                    equation3.setText("y=tan(x)");
+                    equation3.append("tan");
                     break;
                 }
             case R.id.xBtn:
@@ -352,13 +352,6 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                 }
             case R.id.backBtn:
                 if (empty1.getText().toString().equals("")) {
-                    if (equation1.getText().toString().equals("Y=X")) {
-                        equation1.setText("");
-                        empty1.setText("");
-                        empty2.setText("");
-                        empty3.setText("");
-                        break;
-                    }
                     int size = equation1.getText().length();
                     if (size >= 1) {
                         equation1.setText(equation1.getText().toString().substring(0, size - 1));
@@ -366,24 +359,18 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                     if(equation1.getText().toString().equals("")){
                         if(!equation2.getText().toString().equals("")){
                             equation1.setText(equation2.getText());
-                            equation2.setText("");
-                            empty1.setText("");
+                            equation2.setText("1");
+                            empty2.setText("");
                         }
                         if(!equation3.getText().toString().equals("")){
                             equation2.setText(equation3.getText());
                             equation3.setText("");
-                            empty2.setText("");
+                            empty2.setText("1");
+                            empty3.setText("");
                         }
                     }
                     break;
                 } else if (empty2.getText().toString().equals("")) {
-                    if (equation2.getText().toString().equals("y=x")) {
-                        equation2.setText("");
-                        empty1.setText("");
-                        empty2.setText("");
-                        empty3.setText("");
-                        break;
-                    }
                     int size = equation2.getText().length();
                     if (size >= 1) {
                         equation2.setText(equation2.getText().toString().substring(0, size - 1));
@@ -392,17 +379,12 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                         if(!equation3.getText().toString().equals("")){
                             equation2.setText(equation3.getText());
                             equation3.setText("");
-                            empty2.setText("");
+                            empty2.setText("1");
+                            empty3.setText("");
                         }
                     }
                     break;
                 } else {
-                    if (equation3.getText().toString().equals("y=x")){
-                        equation3.setText("");
-                        empty2.setText("");
-                        empty3.setText("");
-                        break;
-                    }
                     int size = equation3.getText().length();
                     if (size >= 1) {
                         equation3.setText(equation3.getText().toString().substring(0, size - 1));
@@ -482,40 +464,20 @@ public class Arithmetics_Graph extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.equation1:
-                if(equation1.getText().toString().equals("")){
-                    equation1.setText("y=x");
-                }
                 empty1.setText("");
                 break;
             case R.id.equation2:
                 if(!equation1.getText().toString().equals("")){
                     empty1.setText("1");
                     empty2.setText("");
-                    if(equation2.getText().toString().equals("")){
-                        equation2.setText("y=x");
-                    }
-                }else{
-                    equation1.setText("y=x");
-                    empty1.setText("");
                 }
                 break;
             case R.id.equation3:
-                if(!equation1.getText().toString().equals("")) {
-                    if (!equation2.getText().toString().equals("")) {
-                        empty2.setText("1");
-                        if (equation3.getText().toString().equals("")) {
-                            equation3.setText("y=x");
-                        }
-                    }
-                    if (!equation1.getText().toString().equals("")) {
-                        empty1.setText("1");
-                        if (equation2.getText().toString().equals("")) {
-                            equation2.setText("y=x");
-                        }
-                    }
-                }else{
-                    equation1.setText("y=x");
-                    empty1.setText("");
+                if(!equation1.getText().toString().equals("")){
+                    empty1.setText("1");
+                }
+                if(!equation2.getText().toString().equals("")){
+                    empty2.setText("1");
                 }
                 break;
         }
