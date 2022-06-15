@@ -192,12 +192,6 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public static String[] deleteEmpty(final String[] array) {              // String[]의 Empty Data 삭제
-        List<String> list = new ArrayList<>(Arrays.asList(array));
-        list.removeAll(Collections.singleton(""));                          // list 내부 Data "" 모두 제거
-        return list.toArray(new String[list.size()]);
-    }
-
     public static synchronized boolean numberCheck(String str) {
         try {
             Integer.parseInt(str);
