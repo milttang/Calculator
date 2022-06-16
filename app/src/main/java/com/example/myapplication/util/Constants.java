@@ -1,4 +1,4 @@
-package com.example.calculator.util;
+package com.example.myapplication.util;
 
 public class Constants {
     // Graph
