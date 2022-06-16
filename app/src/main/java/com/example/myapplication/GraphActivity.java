@@ -111,6 +111,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         functionThree.setText(function3);
         emptyThree.setText(empty3);
 
+        // function2,3이 ""일 떄, 조건 추가하여 Data표시 안되도록
         ArrayList<Entry> xValues = new ArrayList<>();
         ArrayList<Entry> yValues = new ArrayList<>();
         ArrayList<Entry> firstValues = new ArrayList<>();
@@ -140,7 +141,7 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
             thirdFunction = functionThree.getText().toString();
             Log.v("thirdFunction", "thirdFunction : " + thirdFunction);
         }
-        
+
         graphAsyncTask3 = new GraphAsyncTask(thirdFunction, this, FUNCTION_3);
 
         Thread handlerThread = new Thread(new Runnable() {
@@ -160,11 +161,11 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
         });
 
         dataSets = new ArrayList<>();
-        
+
         // create a data object with the data sets
         LineData data = new LineData(dataSets);
-
         handlerThread.start();
+        if(CHECK_LOG) Log.v(GRAPH_LOG_TAG, "handlerThread.start()");
         // set data
         chart.setData(data);
     }
@@ -190,6 +191,12 @@ public class GraphActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 break;
         }
+    }
+
+    public static String[] deleteEmpty(final String[] array) {              // String[]의 Empty Data 삭제
+        List<String> list = new ArrayList<>(Arrays.asList(array));
+        list.removeAll(Collections.singleton(""));                          // list 내부 Data "" 모두 제거
+        return list.toArray(new String[list.size()]);
     }
 
     public static synchronized boolean numberCheck(String str) {
