@@ -30,11 +30,11 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
 
     private View view;                                              //버튼 클릭 효과 처리할 view값
 
-    private Runnable runnable_up, runnable_down;                    //
+    private Runnable runnable_up, runnable_down;                    //Number Touch Thread
 
-    private Handler handler_up, handler_down;
+    private Handler handler_up, handler_down;                       //Number Touch Handler
 
-    Button[] button = new Button[10];
+    Button[] button = new Button[10];                               //Button
 
     private Button addBtn, subBtn, mulBtn, divBtn, clear, bracket, backBtn, dot, equal, sinBtn, cosBtn, tanBtn, binary, sqr, root, sort, graph;
 
@@ -153,6 +153,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                 if (edit_process.getText().toString().charAt(0) == 's'
                         || edit_process.getText().toString().charAt(0) == 't'
                         || edit_process.getText().toString().charAt(0) == 'c') {
+                    Toast.makeText(Arithmetics.this,"Please click C or <-", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -204,6 +205,7 @@ public class Arithmetics extends AppCompatActivity {  //터치따로
                     if (edit_process.getText().toString().charAt(0) == 's'
                             || edit_process.getText().toString().charAt(0) == 't'
                             || edit_process.getText().toString().charAt(0) == 'c') {
+                        Toast.makeText(Arithmetics.this,"Please click C or <-", Toast.LENGTH_LONG).show();
                         return;
                     }
                 }
